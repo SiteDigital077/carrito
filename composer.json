@@ -1,0 +1,22 @@
+{
+    "name": "digitalsite/carrito",
+    "description": "Modulo Carrito de Compras",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sitedigital",
+            "email": "info@sitedigital.com.co"
+        }
+    ],
+    "autoload": {
+
+        "psr-4": {
+            "Digitalsite\\Carrito\\": "src/"
+        }
+
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/support": "~5"
+    }
+}
