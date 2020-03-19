@@ -1,22 +1,14 @@
 {
-    "name": "digitalsite/carrito",
-    "description": "Modulo Carrito de Compras",
+    "name": "digitalsitesaas/carrito",
+    "description": "Módulo carrito",
+    "type": "project",
     "license": "MIT",
     "authors": [
         {
-            "name": "Sitedigital",
-            "email": "info@sitedigital.com.co"
+            "name": "SiteDigital",
+            "email": "admin@sitedigital.com.co"
         }
     ],
-    "autoload": {
-
-        "psr-4": {
-            "Digitalsite\\Carrito\\": "src/"
-        }
-
-    },
     "minimum-stability": "dev",
-    "require": {
-        "illuminate/support": "~5"
-    }
+    "require": {}
 }
