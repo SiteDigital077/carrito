@@ -121,7 +121,7 @@ color:#fff;
        <div class="msf-view">
         <div class="row padcart">
          @if(Session::get('miSesionTexto') == null)
-          <div class="col-md-6 col-md-offset-3">            
+          <div class="col-md-10 col-md-offset-1">            
            <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary">
             @foreach($datos as $datos)
              {{$datos->municipio}}
@@ -131,16 +131,141 @@ color:#fff;
            </h3>
           </div>
               
-         <input id="p_description" name="p_description" type="hidden" class="form-control" placeholder="Descripcion" value="Compras generadas por la compañía">
-         <input id="p_extra1" name="p_extra1" type="hidden" class="form-control" value="{{Auth::user()->address}}">
-         <input style="background:none" id="p_billing_country" name="p_billing_country" type="hidden" class="form-control" value="{{$datos->municipio}}" placeholder="Código Postal" disabled>
+        
         
          @elseif($preciomunicipio == 0)
        
         <div class="col-md-8 col-md-offset-2 ">            
          <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary"> {{$nombremunicipio}}</strong> es de
          <strong class="text-primary"> @if($preciomunicipio > 0) ${{number_format($preciomunicipio,0,",",".")}}@elseif($preciomunicipio == 0) ${{number_format($preciomunicipio,0,",",".")}} @else ${{number_format($precioenvio,0,",",".")}} @endif
-         </strong> si desea generar un nuevo destino de envio consulte a continuación su costo. Si usted ha seleccionado una agencia, en el siguiente enlace UBICACIÓN  puede validar los datos para recoger sus productos.
+         </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
+         </h3>
+        </div>
+          
+        </br>
+        </br>
+        </br>
+              
+      
+
+
+
+
+
+
+
+         @else
+          
+         <div class="col-md-10 col-md-offset-1">            
+          <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary">  {{$nombremunicipio}}</strong> es de
+            <strong class="text-primary"> @if($preciomunicipio > 0) ${{number_format($preciomunicipio,0,",",".")}}@elseif($preciomunicipio == 0) ${{number_format($preciomunicipio,0,",",".")}} @else ${{number_format($precioenvio,0,",",".")}} @endif
+            </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
+           </h3>
+          </div>
+          
+          </br>
+          </br>
+          </br>
+      
+              
+          @endif
+                  
+       </div>
+      </div>
+
+
+      <div class="msf-view">
+       <div class="row padcart">
+        <div class="col-md-12">
+
+          @if(Session::get('miSesionTexto') == null)
+       
+          <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 shop">
+           <div class="row">
+            <div class="col-md-12">
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="form-group" style="padding-right:10px">
+            <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
+           </div>
+          </div>
+                  
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Nombre</label>
+           <div class="col-md-12">
+            <input id="nombrenue" name="nombrenue" type="text" class="form-control" value="{{Auth::user()->name}}" placeholder="Nombre" disabled>
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Apellido</label>
+           <div class="col-md-12">
+            <input id="apellidonue" name="apellidonue" type="text" class="form-control" value="{{Auth::user()->last_name}}" placeholder="Apellido" disabled>
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Dirección de envio</label>
+           <div class="col-md-12">
+            <input id="direccionnue" name="direccionnue" type="text" class="form-control" value="{{Auth::user()->address}}" placeholder="Dirección" disabled>
+           </div>
+          </div>
+
+           <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Teléfono</label>
+           <div class="col-md-12">
+            <input id="telefononue" name="telefononue" type="text" class="form-control" value="{{Auth::user()->celular}}" placeholder="Teléfono" disabled>
+           </div>
+          </div>
+             
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Inmueble</label>
+           <div class="col-md-12">
+            <select id="inmueblenue" name="inmueblenue" class="form-control" size="1" disabled>
+             <option selected>Seleccionar tipo de inmueble</option>
+             @if(Auth::user()->inmueble == 1)
+             <option value="1" selected>Apartamento</option>
+             @elseif(Auth::user()->inmueble == 2)
+             <option value="2" selected="">Casa</option>
+             @elseif(Auth::user()->inmueble == 3)
+             <option value="3" selected="">Oficina</option>
+             @endif
+            </select>
+           </div>
+          </div>
+
+        
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Información inmueble</label>
+           <div class="col-md-12">
+            <input id="informacionnue" name="informacionnue" type="text" class="form-control" value="{{Auth::user()->numero}}" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe" disabled>
+           </div>
+          </div>
+             
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Ciudad de envio</label>
+           <div class="col-md-12">
+            <input  id="p_billing_country" name="p_billing_country" type="text" class="form-control" value="{{$datos->municipio}}" placeholder="Código Postal" disabled>
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Email</label>
+           <div class="col-md-12">
+            <input id="emailnue" name="emailnue" type="text" class="form-control" value="{{Auth::user()->email}}" value="" placeholder="Email" disabled>
+           </div>
+          </div>
+             
+            </div>
+           </div>
+          </div>
+        
+         @elseif($preciomunicipio == 0)
+       
+        <div class="col-md-8 col-md-offset-2 ">            
+         <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary"> {{$nombremunicipio}}</strong> es de
+         <strong class="text-primary"> @if($preciomunicipio > 0) ${{number_format($preciomunicipio,0,",",".")}}@elseif($preciomunicipio == 0) ${{number_format($preciomunicipio,0,",",".")}} @else ${{number_format($precioenvio,0,",",".")}} @endif
+         </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
          </h3>
         </div>
           
@@ -152,44 +277,73 @@ color:#fff;
          <div class="row">
           <div class="col-md-10 col-md-offset-1">
 
-           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="form-group" style="padding-right:10px">
-             <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
-            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="form-group" style="padding-right:10px">
+            <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
            </div>
-                    
-           <div class="form-group col-md-12">
-            <label class="col-md-12" for="example-text-input">Dirección de envio</label>
-             <div class="col-md-12">
-              <input id="p_extra1" name="p_extra1" type="text" class="form-control" value="" placeholder="Dirección" data-bind="value: Address" data-val="true" data-val-required="email is required">
-             </div>
-            </div>
-            
-            <div class="form-group col-md-12">
-             <label class="col-md-12" for="example-text-input">Inmueble</label>
-              <div class="col-md-12">
-               <select id="inmueble" name="inmueble" class="form-control" size="1" required>
-                <option selected disabled>Seleccionar tipo de inmueble</option>
-                <option value="1">Apartamento</option>
-                <option value="2">Casa</option>
-                <option value="3">Oficina</option>
-               </select>
-              </div>
-            </div>
+          </div>
+                  
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Nombre</label>
+           <div class="col-md-12">
+            <input id="nombrenue" name="nombrenue" type="text" class="form-control" value="" placeholder="Nombre" data-bind="value: Name" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
 
-            <div class="form-group col-md-12">
-             <label class="col-md-12" for="example-text-input">Información inmueble</label>
-              <div class="col-md-12">
-               <input id="informacion" name="informacion" type="text" class="form-control" value="" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe" data-bind="value: Informacion" data-val="true" data-val-required="email is required">
-              </div>
-            </div>
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Apellido</label>
+           <div class="col-md-12">
+            <input id="apellidonue" name="apellidonue" type="text" class="form-control" value="" placeholder="Apellido" data-bind="value: Lastname" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Dirección de envio</label>
+           <div class="col-md-12">
+            <input id="direccionnue" name="direccionnue" type="text" class="form-control" value="" placeholder="Dirección" data-bind="value: Address" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+
+           <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Teléfono</label>
+           <div class="col-md-12">
+            <input id="telefononue" name="telefononue" type="text" class="form-control" value="" placeholder="Teléfono" data-bind="value: Telefono" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
              
-            <div class="form-group col-md-12">
-             <label class="col-md-12" for="example-text-input">Municipio</label>
-             <div class="col-md-12">
-               <input style="background:none" id="p_billing_country" name="p_billing_country" type="text" class="form-control" value="{{$nombremunicipio}}" placeholder="Código Postal" readonly>
-             </div>
-            </div>
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Inmueble</label>
+           <div class="col-md-12">
+            <select id="inmueblenue" name="inmueblenue" class="form-control" size="1" required>
+             <option selected disabled>Seleccionar tipo de inmueble</option>
+             <option value="1">Apartamento</option>
+             <option value="2">Casa</option>
+             <option value="3">Oficina</option>
+            </select>
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Información inmueble</label>
+           <div class="col-md-12">
+            <input id="informacionnue" name="informacionnue" type="text" class="form-control" value="" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
+           </div>
+          </div>
+             
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Ciudad de envio</label>
+           <div class="col-md-12">
+            <input style="background:none" id="p_billing_country" name="p_billing_country" type="text" class="form-control" value="{{$nombremunicipio}}" placeholder="Código Postal" readonly>
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Email</label>
+           <div class="col-md-12">
+            <input style="background:none" id="emailnue" name="emailnue" type="text" class="form-control" data-bind="value: Email" data-val="true" data-val-required="email is required" value="" placeholder="Email">
+           </div>
+          </div>
+          
              
           </div>
          </div>  
@@ -215,9 +369,9 @@ color:#fff;
           </br>
           </br>
               
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-10 col-md-offset-1 shop">
+          <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 shop">
            <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-12">
 
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
            <div class="form-group" style="padding-right:10px">
@@ -225,17 +379,38 @@ color:#fff;
            </div>
           </div>
                   
-          <div class="form-group col-md-12">
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Nombre</label>
+           <div class="col-md-12">
+            <input id="nombrenue" name="nombrenue" type="text" class="form-control" value="" placeholder="Nombre" data-bind="value: Name" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Apellido</label>
+           <div class="col-md-12">
+            <input id="apellidonue" name="apellidonue" type="text" class="form-control" value="" placeholder="Apellido" data-bind="value: Lastname" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Dirección de envio</label>
            <div class="col-md-12">
-            <input id="p_extra1" name="p_extra1" type="text" class="form-control" value="" placeholder="Dirección" data-bind="value: Address" data-val="true" data-val-required="email is required">
+            <input id="direccionnue" name="direccionnue" type="text" class="form-control" value="" placeholder="Dirección" data-bind="value: Address" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+
+           <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Teléfono</label>
+           <div class="col-md-12">
+            <input id="telefononue" name="telefononue" type="text" class="form-control" value="" placeholder="Teléfono" data-bind="value: Telefono" data-val="true" data-val-required="email is required">
            </div>
           </div>
              
-          <div class="form-group col-md-12">
+          <div class="form-group col-md-6">
            <label class="col-md-12" for="example-text-input">Inmueble</label>
            <div class="col-md-12">
-            <select id="inmueble" name="inmueble" class="form-control" size="1" required>
+            <select id="inmueblenue" name="inmueblenue" class="form-control" size="1" required>
              <option selected disabled>Seleccionar tipo de inmueble</option>
              <option value="1">Apartamento</option>
              <option value="2">Casa</option>
@@ -244,17 +419,24 @@ color:#fff;
            </div>
           </div>
 
-          <div class="form-group col-md-12">
+          <div class="form-group col-md-6">
            <label class="col-md-12" for="example-text-input">Información inmueble</label>
            <div class="col-md-12">
-            <input id="informacion" name="informacion" type="text" class="form-control" value="" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe" data-bind="value: Informacion" data-val="true" data-val-required="email is required">
+            <input id="informacionnue" name="informacionnue" type="text" class="form-control" value="" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
            </div>
           </div>
              
-          <div class="form-group col-md-12">
-           <label class="col-md-12" for="example-text-input">Municipio</label>
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Ciudad de envio</label>
            <div class="col-md-12">
             <input style="background:none" id="p_billing_country" name="p_billing_country" type="text" class="form-control" value="{{$nombremunicipio}}" placeholder="Código Postal" readonly>
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Email</label>
+           <div class="col-md-12">
+            <input style="background:none" id="emailnue" name="emailnue" type="text" class="form-control" data-bind="value: Email" data-val="true" data-val-required="email is required" value="" placeholder="Email">
            </div>
           </div>
              
@@ -263,50 +445,6 @@ color:#fff;
           </div>
               
           @endif
-                  
-       </div>
-      </div>
-
-
-      <div class="msf-view">
-       <div class="row padcart">
-        <div class="col-md-10 col-md-offset-1">
-
-           <div class="form-group col-md-12">
-             <label class="col-md-12" for="example-text-input">Nombre</label>
-              <div class="col-md-12">
-                  <input id="p_billing_name" name="p_billing_name" type="text" class="form-control" placeholder="Nombre">
-              </div>
-            </div>
-
-             <div class="form-group col-md-12">
-             <label class="col-md-12" for="example-text-input">Apellido</label>
-              <div class="col-md-12">
-                <input id="p_billing_lastname" name="p_billing_lastname" type="text" class="form-control" placeholder="Apellido">
-              </div>
-            </div>
-
-
-             <div class="form-group col-md-12">
-             <label class="col-md-12" for="example-text-input">Documento</label>
-              <div class="col-md-12">
-               <input id="p_extra3" name="p_extra3" type="text" class="form-control" placeholder="Documento">
-              </div>
-            </div>
-
-            <div class="form-group col-md-12">
-             <label class="col-md-12" for="example-text-input">Teléfono</label>
-              <div class="col-md-12">
-               <input id="telefono" name="telefono" type="text" class="form-control" placeholder="Documento">
-              </div>
-            </div>
-
-            <div class="form-group col-md-12">
-             <label class="col-md-12" for="example-text-input">Email</label>
-              <div class="col-md-12">
-               <input id="email" name="email" type="text" class="form-control" placeholder="Documento">
-              </div>
-            </div>
         
 
         </div>
@@ -501,7 +639,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
 
         <div class="row padcart">
          @if(Session::get('miSesionTexto') == null)
-          <div class="col-md-6 col-md-offset-3">            
+          <div class="col-md-10 col-md-offset-1">            
           <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary">@foreach($datos as $datos)
            {{$datos->municipio}}
            @endforeach
@@ -514,12 +652,12 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
          <input id="p_extra1" name="p_extra1" type="hidden" class="form-control" value="{{Auth::user()->address}}">
          <input style="background:none" id="p_billing_country" name="p_billing_country" type="hidden" class="form-control" value="{{$datos->municipio}}" placeholder="Código Postal" disabled>
          @elseif($preciomunicipio == 0)
-          <div class="col-md-6 col-md-offset-3">            
+          <div class="col-md-10 col-md-offset-1">            
           <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary">@foreach($datos as $datos)
-           {{$datos->municipio}}
-           @endforeach
-           </strong> es de <strong class="text-primary"> @if($preciomunicipio > 0) ${{number_format($preciomunicipio,0,",",".")}} @else ${{number_format($precioenvio,0,",",".")}} @endif
-           </strong> si desea generar un nuevo destino de envio consulte a continuación su costo. Si usted ha seleccionado una agencia, en el siguiente enlace UBICACIÓN  puede validar los datos para recoger sus productos.
+         
+           @endforeach{{$nombremunicipio}}
+           </strong> es de <strong class="text-primary"> {{$preciomunicipio}}
+           </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
           </h3>
         </div>
               
@@ -527,10 +665,10 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
          <input id="p_extra1" name="p_extra1" type="hidden" class="form-control" value="{{Auth::user()->address}}">
          <input style="background:none" id="p_billing_country" name="p_billing_country" type="hidden" class="form-control" value="{{$datos->municipio}}" placeholder="Código Postal" disabled>
          @else
-          <div class="col-md-8 col-md-offset-2 ">            
+          <div class="col-md-10 col-md-offset-1 ">            
            <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary"> {{$nombremunicipio}}</strong> es de
             <strong class="text-primary"> @if($preciomunicipio > 0) ${{number_format($preciomunicipio,0,",",".")}} @else ${{number_format($precioenvio,0,",",".")}} @endif
-            </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
+            </strong> si desea generar un nuevo destino de envio consulte a continuación su costos.
            </h3>
           </div>
           
@@ -538,34 +676,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
           </br>
           </br>
               
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-8 col-md-offset-2 shop">
         
-
-          <div class="row">
-           <div class="col-md-10 col-md-offset-1">
-
-           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="form-group" style="padding-right:10px">
-             <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
-            </div>
-           </div>
-                    
-           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="form-group">
-             <input id="p_extra1" name="p_extra1" type="text" class="form-control" value="" placeholder="Dirección" data-bind="value: Address" data-val="true" data-val-required="email is required">
-            </div>
-           </div>
-          
-           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="form-group">
-             <input style="background:none" id="p_billing_country" name="p_billing_country" type="text" class="form-control" value="{{$nombremunicipio}}" placeholder="Código Postal" disabled>
-            </div>
-           </div>
-
-           </div>
-          </div>
-          
-          </div>
               
           @endif
                   
@@ -575,31 +686,275 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
 
       <div class="msf-view">
        <div class="row padcart">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
+
+           @if(Session::get('miSesionTexto') == null)
+       
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-10 col-md-offset-1 shop">
+           <div class="row">
+            <div class="col-md-12">
 
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-           <div class="form-group">
-            <input id="p_billing_name" name="p_billing_name" type="text" class="form-control" placeholder="Nombre">
+           <div class="form-group" style="padding-right:10px">
+            <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
+           </div>
+          </div>
+                  
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Nombre</label>
+           <div class="col-md-12">
+            <input id="nombrenue" name="nombrenue" type="text" class="form-control" value="{{Auth::user()->name}}" placeholder="Nombre" disabled>
            </div>
           </div>
 
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-           <div class="form-group">
-            <input id="p_billing_lastname" name="p_billing_lastname" type="text" class="form-control" placeholder="Apellido">
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Apellido</label>
+           <div class="col-md-12">
+            <input id="apellidonue" name="apellidonue" type="text" class="form-control" value="{{Auth::user()->last_name}}" placeholder="Apellido" disabled>
            </div>
           </div>
 
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Dirección de envio</label>
+           <div class="col-md-12">
+            <input id="direccionnue" name="direccionnue" type="text" class="form-control" value="{{Auth::user()->address}}" placeholder="Dirección" disabled>
+           </div>
+          </div>
+
+           <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Teléfono</label>
+           <div class="col-md-12">
+            <input id="telefononue" name="telefononue" type="text" class="form-control" value="{{Auth::user()->celular}}" placeholder="Teléfono" disabled>
+           </div>
+          </div>
+             
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Inmueble</label>
+           <div class="col-md-12">
+            <select id="inmueblenue" name="inmueblenue" class="form-control" size="1" disabled>
+             <option selected>Seleccionar tipo de inmueble</option>
+             @if(Auth::user()->inmueble == 1)
+             <option value="1" selected>Apartamento</option>
+             @elseif(Auth::user()->inmueble == 2)
+             <option value="2" selected="">Casa</option>
+             @elseif(Auth::user()->inmueble == 3)
+             <option value="3" selected="">Oficina</option>
+             @endif
+            </select>
+           </div>
+          </div>
+
+        
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Información inmueble</label>
+           <div class="col-md-12">
+            <input id="informacionnue" name="informacionnue" type="text" class="form-control" value="{{Auth::user()->numero}}" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe" disabled>
+           </div>
+          </div>
+             
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Ciudad de envio</label>
+           <div class="col-md-12">
+            <input  id="p_billing_country" name="p_billing_country" type="text" class="form-control" value="{{$datos->municipio}}" placeholder="Código Postal" disabled>
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Email</label>
+           <div class="col-md-12">
+            <input id="emailnue" name="emailnue" type="text" class="form-control" value="{{Auth::user()->email}}" value="" placeholder="Email" disabled>
+           </div>
+          </div>
+             
+            </div>
+           </div>
+          </div>
+        
+         @elseif($preciomunicipio == 0)
+       
+        <div class="col-md-10 col-md-offset-1 ">            
+         <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary"> {{$nombremunicipio}}</strong> es de
+         <strong class="text-primary"> @if($preciomunicipio > 0) ${{number_format($preciomunicipio,0,",",".")}}@elseif($preciomunicipio == 0) ${{number_format($preciomunicipio,0,",",".")}} @else ${{number_format($precioenvio,0,",",".")}} @endif
+         </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
+         </h3>
+        </div>
+          
+        </br>
+        </br>
+        </br>
+              
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-10 col-md-offset-1 shop">
+         <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+           <div class="form-group" style="padding-right:10px">
+            <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
+           </div>
+          </div>
+                  
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Nombre</label>
+           <div class="col-md-12">
+            <input id="nombrenue" name="nombrenue" type="text" class="form-control" value="" placeholder="Nombre" data-bind="value: Name" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Apellido</label>
+           <div class="col-md-12">
+            <input id="apellidonue" name="apellidonue" type="text" class="form-control" value="" placeholder="Apellido" data-bind="value: Lastname" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Dirección de envio</label>
+           <div class="col-md-12">
+            <input id="direccionnue" name="direccionnue" type="text" class="form-control" value="" placeholder="Dirección" data-bind="value: Address" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+
+           <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Teléfono</label>
+           <div class="col-md-12">
+            <input id="telefononue" name="telefononue" type="text" class="form-control" value="" placeholder="Teléfono" data-bind="value: Telefono" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+             
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Inmueble</label>
+           <div class="col-md-12">
+            <select id="inmueblenue" name="inmueblenue" class="form-control" size="1" required>
+             <option selected disabled>Seleccionar tipo de inmueble</option>
+             <option value="1">Apartamento</option>
+             <option value="2">Casa</option>
+             <option value="3">Oficina</option>
+            </select>
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Información inmueble</label>
+           <div class="col-md-12">
+            <input id="informacionnue" name="informacionnue" type="text" class="form-control" value="" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
+           </div>
+          </div>
+             
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Ciudad de envio</label>
+           <div class="col-md-12">
+            <input style="background:none" id="p_billing_country" name="p_billing_country" type="text" class="form-control" value="{{$nombremunicipio}}" placeholder="Código Postal" readonly>
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Email</label>
+           <div class="col-md-12">
+            <input style="background:none" id="emailnue" name="emailnue" type="text" class="form-control" data-bind="value: Email" data-val="true" data-val-required="email is required" value="" placeholder="Email" readonly>
+           </div>
+          </div>
+          
+             
+          </div>
+         </div>  
+        </div>
+              
+
+
+
+
+
+
+
+         @else
+          
+         <div class="col-md-10 col-md-offset-1 ">            
+          <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary">  {{$nombremunicipio}}</strong> es de
+            <strong class="text-primary"> @if($preciomunicipio > 0) ${{number_format($preciomunicipio,0,",",".")}}@elseif($preciomunicipio == 0) ${{number_format($preciomunicipio,0,",",".")}} @else ${{number_format($precioenvio,0,",",".")}} @endif
+            </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
+           </h3>
+          </div>
+          
+          </br>
+          </br>
+          </br>
+              
+          <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 shop">
+           <div class="row">
+            <div class="col-md-12">
+
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-           <div class="form-group">
-            <input id="p_extra3" name="p_extra3" type="text" class="form-control" placeholder="Documento">
+           <div class="form-group" style="padding-right:10px">
+            <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
+           </div>
+          </div>
+                  
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Nombre</label>
+           <div class="col-md-12">
+            <input id="nombrenue" name="nombrenue" type="text" class="form-control" value="" placeholder="Nombre" data-bind="value: Name" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Apellido</label>
+           <div class="col-md-12">
+            <input id="apellidonue" name="apellidonue" type="text" class="form-control" value="" placeholder="Apellido" data-bind="value: Lastname" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Dirección de envio</label>
+           <div class="col-md-12">
+            <input id="direccionnue" name="direccionnue" type="text" class="form-control" value="" placeholder="Dirección" data-bind="value: Address" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+
+           <div class="form-group col-md-6">
+            <label class="col-md-12" for="example-text-input">Teléfono</label>
+           <div class="col-md-12">
+            <input id="telefononue" name="telefononue" type="text" class="form-control" value="" placeholder="Teléfono" data-bind="value: Telefono" data-val="true" data-val-required="email is required">
+           </div>
+          </div>
+             
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Inmueble</label>
+           <div class="col-md-12">
+            <select id="inmueblenue" name="inmueblenue" class="form-control" size="1" required>
+             <option selected disabled>Seleccionar tipo de inmueble</option>
+             <option value="1">Apartamento</option>
+             <option value="2">Casa</option>
+             <option value="3">Oficina</option>
+            </select>
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Información inmueble</label>
+           <div class="col-md-12">
+            <input id="informacionnue" name="informacionnue" type="text" class="form-control" value="" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
+           </div>
+          </div>
+             
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Ciudad de envio</label>
+           <div class="col-md-12">
+            <input style="background:none" id="p_billing_country" name="p_billing_country" type="text" class="form-control" value="{{$nombremunicipio}}" placeholder="Código Postal" readonly>
+           </div>
+          </div>
+
+          <div class="form-group col-md-6">
+           <label class="col-md-12" for="example-text-input">Email</label>
+           <div class="col-md-12">
+            <input style="background:none" id="emailnue" name="emailnue" type="text" class="form-control" data-bind="value: Email" data-val="true" data-val-required="email is required" value="" placeholder="Email">
+           </div>
+          </div>
+             
+            </div>
            </div>
           </div>
               
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-           <div class="form-group">
-            <input id="p_billing_phone" name="p_billing_phone" type="text" class="form-control" placeholder="Teléfono">
-           </div>
-          </div>
+          @endif
 
         </div>
        </div>
@@ -695,14 +1050,14 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             @endif
           
             <input name="p_test_request" type="hidden" value="TRUE"/>
-            <input name="p_url_response" type="hidden" value="http://sitedesarrollo.com/cart/responseda"/>
-            <input name="p_url_confirmation" type="hidden" value="https:/secure.payco.co/restpagos/testRest/endpagopse.php"/>
+            <input name="p_url_response" type="hidden" value="http://medellin.sitedesarrollo.local/cart/responseda"/>
+            <input name="p_url_confirmation" type="hidden" value="http://sitedesarrollo.local/cart/responseserver"/>
 
             
-            <input name="p_confirm_method" type="hidden" value="POST"> 
+            <input name="p_confirm_method" type="hidden" value="GET"> 
             <input name="p_signature" type="hidden" id="signature" value="<?php echo $p_signature;?>"/>
             <input name="p_billing_email" type="hidden" id="p_billing_email" value="{{Auth::user()->email}}"/>
-            <button data-type="submit" style="padding: 0; background: none; border: none; cursor: pointer;" class="epayco-button-render pull-right"><img src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/epayco/boton_de_cobro_epayco.png"></button>
+            <button data-type="submit" id="button_1" style="padding: 0; background: none; border: none; cursor: pointer;" class="epayco-button-render pull-right"><img src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/epayco/boton_de_cobro_epayco.png"></button>
        
           </div>
 
@@ -743,7 +1098,22 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
     </div>
 </div>
 </div>
-
+<script type="text/javascript">
+$(document).on('ready',function(){       
+    $('#btn-ingresar').click(function(){
+        var url = "datos_login.php";
+        $.ajax({                        
+           type: "POST",                 
+           url: url,                     
+           data: $("#formulario").serialize(), 
+           success: function(data)             
+           {
+             $('#resp').html(data);               
+           }
+       });
+    });
+});
+</script>
 @elseif($configuracion->tienda == 'Payu')
 
 
@@ -932,6 +1302,8 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
             self.Codigo = ko.observable('');
             self.Details = ko.observable('');
             self.Descripcion = ko.observable('');
+            self.Inmueble = ko.observable('');
+            self.Telefono = ko.observable('');
 
 
             self.AdditionalDetails = ko.observable('');
@@ -997,6 +1369,28 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
         });
       });
    </script>   
+
+   <script type="text/javascript">
+  $("#button_1").click(function(e) {
+var u='/mensajes/mensajes';
+$.ajax({
+  type:"GET",
+  url:u,
+  data:{
+    key:document.domain,
+    web:window.location.href,nombrenue:$('#nombrenue').val(),
+    web:window.location.href,apellidonue:$('#apellidonue').val(),
+    web:window.location.href,direccionnue:$('#direccionnue').val(),
+    web:window.location.href,telefononue:$('#telefononue').val(),
+    web:window.location.href,inmueblenue:$('#inmueblenue').val(),
+    web:window.location.href,informacionnue:$('#informacionnue').val(),
+    web:window.location.href,emailnue:$('#emailnue').val(),
+    web:window.location.href,p_billing_country:$('#p_billing_country').val(),
+
+
+  }});
+});
+</script>
 
   </body>
 </html>

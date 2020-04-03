@@ -56,7 +56,7 @@ Route::get('cart/show', [
 	'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@show'
 	]);
 
-Route::get('cart/add/{product}', [
+Route::get('cart/add/{id}', [
 	'middleware' => 'web',
 	'as' => 'cart-add',
 	'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@add'
@@ -74,7 +74,7 @@ Route::get('cart/update/{product}/{quantity?}', [
 	'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@update'
 	]);
 
-Route::get('cart/delete/{product}', [
+Route::get('cart/delete/{id}', [
 	'middleware' => 'web',
 	'as' => 'cart-delete',
 	'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@delete'
@@ -94,10 +94,10 @@ Route::get('cart/responseda', [
 
 Route::post('cart/response', array('uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@response', 'middleware' => 'web'));
 
-Route::post('cart/responseserver', array('uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@responseserver', 'middleware' => 'web'));
+Route::get('cart/responseserver', array('uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@responseserver', 'middleware' => 'web'));
 
 
-	Route::post('cart/responseda', [
+	Route::get('cart/responseda', [
 	'middleware' => 'web',
 	'as' => 'cart/response',
 	'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@response'
@@ -107,15 +107,13 @@ Route::post('cart/responseserver', array('uses' => 'DigitalsiteSaaS\Carrito\Http
 
 	Route::group(['middleware' => ['auths','administrador']], function (){
 
-Route::get('/gestion/carrito/autores', function(){
-    $autores = DB::table('autor')->get();  
-    return View::make('carrito::admin.autores')->with('autores', $autores);
-});
 
-Route::get('/gestion/carrito/subcategorias/{id}', function($id){
-    $subcategorias = DB::table('categoriessd')->where('categoriapro_id', '=', $id)->get();  
-    return View::make('carrito::admin.subcategorias')->with('subcategorias', $subcategorias);
-});
+
+Route::get('gestion/carrito/autores', 'DigitalsiteSaaS\Carrito\Http\CategoryController@webautores');
+
+Route::get('gestion/carrito/subcategorias/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@versubcategorias');
+
+
 
 Route::get('/gestion/carrito/crear-subcategoria/{id}', function(){
  
@@ -150,7 +148,7 @@ Route::get('gestion/carrito/dashboard', 'DigitalsiteSaaS\Carrito\Http\CategoryCo
 Route::get('gestion/carrito/crearconfiguracion', 'DigitalsiteSaaS\Carrito\Http\CategoryController@crearconfiguracion');
 Route::get('gestion/carrito/crearconfiguraciontienda', 'DigitalsiteSaaS\Carrito\Http\CategoryController@crearconfiguraciontienda');
 Route::post('gestion/carrito/crearconfiguracionepayco', 'DigitalsiteSaaS\Carrito\Http\CategoryController@crearconfiguracionepayco');
-Route::resource('gestion/carrito/crearconfiguracionplace', 'DigitalsiteSaaS\Carrito\Http\CategoryController@crearconfiguracionplace');
+Route::post('gestion/carrito/crearconfiguracionplace', 'DigitalsiteSaaS\Carrito\Http\CategoryController@crearconfiguracionplace');
 Route::get('gestion/autor/editar/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@autoreditar'); 
 
 Route::get('gestion/autor/eliminar/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@autoreliminar');
@@ -165,7 +163,7 @@ Route::get('gestion/productos/eliminar/{id}', 'DigitalsiteSaaS\Carrito\Http\Prod
 
 
 
-Route::resource('gestion/carrito', 'DigitalsiteSaaSCarrito\Http\UserController'); 
+Route::resource('gestion/carrito', 'DigitalsiteSaaS\Carrito\Http\UserController'); 
 
 
 
@@ -183,22 +181,12 @@ Route::resource('gestion/usuarios/pruebas', 'DigitalsiteSaaS\Carrito\Http\UserCo
 Route::post('gestion/usuarios/crear', 'DigitalsiteSaaS\Carrito\Http\UserController@crear'); 
 
 
+Route::get('memo/ajax-subcatweb', 'DigitalsiteSaaS\Carrito\Http\CartController@webdepartamentos');
+Route::get('mema/ajax-subcatweb', 'DigitalsiteSaaS\Carrito\Http\CartController@webmunicipios');
 
 
 
-Route::get('/memo/ajax-subcatweb',function(){
 
-		$cat_id = Input::get('cat_id');
-		$subcategories = DigitalsiteSaaS\Carrito\Departamento::where('pais_id', '=', $cat_id)->get();
-		return Response::json($subcategories);
-});
-
-Route::get('/mema/ajax-subcatweb',function(){
-
-        $cat_id = Input::get('cat_id');
-        $subcategories = DigitalsiteSaaS\Carrito\Municipio::where('departamento_id', '=', $cat_id)->get();
-        return Response::json($subcategories);
-});
 
 
 Route::get('/memaproducts/ajax-subcatweb',function(){
@@ -241,11 +229,13 @@ Route::any('gestion/costoenvio', 'DigitalsiteSaaS\Carrito\Http\CartController@co
 
 Route::group(['middleware' => ['comprador']], function (){
 Route::post('placetopay/pagoweb', 'DigitalsiteSaaS\Carrito\Http\CartController@generaplace');
+Route::post('placetopay/pagowebsite', 'DigitalsiteSaaS\Carrito\Http\CartController@responsesite');
 Route::get('placetopay/pagowebrequest/{id}', 'DigitalsiteSaaS\Carrito\Http\CartController@ejecutaplace');
 Route::get('gestion/detalle/usuario', 'DigitalsiteSaaS\Carrito\Http\CartController@detalleuser');
 
+Route::get('gestion/datosesion', 'DigitalsiteSaaS\Carrito\Http\CartController@datosesion');
 
-
+ Route::get('mensajes/mensajes', 'DigitalsiteSaaS\Carrito\Http\CartController@mensajes');
 
 });
 
@@ -259,19 +249,9 @@ Route::any('web/limpieza', 'Digitalsite\Carrito\Http\CartController@limpieza');
 Route::any('web/limpiezaweb', 'Digitalsite\Carrito\Http\CartController@limpiezaweb');
 */
 
-Route::get('validacion/email', function () {
-          $user = DB::table('users')->where('email', Input::get('email'))->count();
-    if($user > 0) {
-        $isAvailable = FALSE;
-    } else {
-        $isAvailable = TRUE;
-    }
-    echo json_encode(
-            array(
-                'valid' => $isAvailable
-            )); 
+Route::get('validacion/email', 'DigitalsiteSaaS\Carrito\Http\UserController@valiemail');
 
-});
+
 
 
 

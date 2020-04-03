@@ -11,7 +11,7 @@ use DigitalsiteSaaS\Carrito\Departamento;
 use DigitalsiteSaaS\Carrito\Pais;
 use DigitalsiteSaaS\Carrito\Municipio;
 use DigitalsiteSaaS\Carrito\Category;
-use Illuminate\Support\Facades\Input;
+use Input;
 use Illuminate\Support\Str;
 use DB;
 use Mail;
@@ -22,13 +22,31 @@ use DigitalsiteSaaS\Usuario\Usuario;
 use GuzzleHttp\Client;
 use Session;
 use Response;
+use Hyn\Tenancy\Models\Hostname;
+use Hyn\Tenancy\Models\Website;
+use Hyn\Tenancy\Repositories\HostnameRepository;
+use Hyn\Tenancy\Repositories\WebsiteRepository;
 
-class UserController extends Controller
-{
-    
+class UserController extends Controller{
+
+  protected $tenantName = null;
+
+  public function __construct(){
+
+  $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
+        if ($hostname){
+            $fqdn = $hostname->fqdn;
+            $this->tenantName = explode(".", $fqdn)[0];
+        }
+    }
+
 	public function index()
     {
+    if(!$this->tenantName){
     $usuarios = User::all();
+    }else{
+    $usuarios = \DigitalsiteSaaS\Carrito\Tenant\User::all();
+    } 
     //dd($usuarios);
     return view('carrito::users.index', compact('usuarios'));
     }
@@ -129,11 +147,13 @@ Session::put('miSesionTextoaaaa',$urlprocessa);
 
 public function crear() {
 
-    
-
     $password = Input::get('password');
     $remember = Input::get('_token');
+    if(!$this->tenantName){
     $user = new Usuario;
+    }else{
+    $user = new \DigitalsiteSaaS\Usuario\Tenant\Usuario;  
+    }
     $user->name = Input::get('name');
     $user->tipo_documento = Input::get('tdocumento');
     $user->documento = Input::get('documento');
@@ -173,6 +193,25 @@ public function crear() {
     $user = User::find($id);
      return view('carrito::users.editar', compact('user'));
     }
+
+     public function valiemail(){
+     if(!$this->tenantName){
+     $user = User::where('email', Input::get('email'))->count();
+     }else{
+     $user = \DigitalsiteSaaS\Carrito\Tenant\User::where('email', Input::get('email'))->count(); 
+     }
+     if($user > 0){
+     $isAvailable = FALSE;
+     }else{
+     $isAvailable = TRUE;
+     }
+     echo json_encode(
+     array(
+     'valid' => $isAvailable
+     )); 
+    }
+
+
 
 
     public function actualizar($id){

@@ -275,16 +275,20 @@
                                     <h4><strong>{{$informacion->nombre}} {{$informacion->apellido}}</strong></h4>
                                     @endif
                                     <address>
+
                                     @if($informacion->documento == '')
-                                        {{$usuarios->documento}} <br>
-                                    @else
-                                    {{$informacion->documento}}<br>
+                                     {{$usuarios->documento}} <br>
+                                     @else
+                                     {{$informacion->documento}}<br>
                                     @endif
+                                    
                                     @if($informacion->ciudad == '0')
                                        {{$usuarios->departamento}} - {{$usuarios->municipio}} <br>
                                     @else
                                     {{$informacion->departamento}} - {{$informacion->municipio}}<br>
                                     @endif
+
+
                                     @if($informacion->direccion == '')
                                      {{$usuarios->address}},
                                      @if($usuarios->inmueble == 1)
@@ -296,19 +300,23 @@
                                         @endif
                                         <strong>{{$usuarios->numero}}</strong>
                                      <br><br>
-                                    @else
+                                     @else
                                         {{$informacion->direccion}},
                                         @if($informacion->inmueble == 1)
-                                        <strong>Casa</strong>
+                                        <strong>Casaf</strong>
                                         @elseif($informacion->inmueble == 2)
                                         <strong>Apartamento</strong>
                                         @elseif($informacion->inmueble == 3)
                                         <strong>Oficina</strong>
-                                        @endif
+                                     @endif
                                         <strong>{{$informacion->informacion}}</strong>
                                         <br><br>
                                         @endif
+                                      @if($informacion->telefono == '')
                                         <i class="fa fa-phone"></i> {{$usuarios->celular}}<br>
+                                      @else
+                                        <i class="fa fa-phone"></i> {{$informacion->telefono}}<br>
+                                      @endif
                                         <i class="fa fa-envelope-o"></i> <a href="javascript:void(0)">{{$usuarios->email}}</a>
                                     </address>
                                     <!-- END Shipping Address Content -->

@@ -6,14 +6,31 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use DigitalsiteSaaS\Carrito\Product;
+use DigitalsiteSaaS\Carrito\Autor;
+use DigitalsiteSaaS\Carrito\Area;
+use DigitalsiteSaaS\Carrito\Parametro;
 use DigitalsiteSaaS\Carrito\Category;
-use Illuminate\Support\Facades\Input;
+use Input;
 use Illuminate\Support\Str;
 use DB;
 use Session;
+use Hyn\Tenancy\Models\Hostname;
+use Hyn\Tenancy\Models\Website;
+use Hyn\Tenancy\Repositories\HostnameRepository;
+use Hyn\Tenancy\Repositories\WebsiteRepository;
 
-class ProductoController extends Controller
-{
+class ProductoController extends Controller{
+
+         protected $tenantName = null;
+
+  public function __construct(){
+
+  $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
+        if ($hostname){
+            $fqdn = $hostname->fqdn;
+            $this->tenantName = explode(".", $fqdn)[0];
+        }
+    }
     
 	public function index()
     {
@@ -22,52 +39,82 @@ class ProductoController extends Controller
     }    
     
     public function digitales($id){
+    if(!$this->tenantName){   
 	$productos = Category::find($id)->Products;
-
-	 return view('carrito::productos.index', compact('productos'));
+    }else{
+    $productos = \DigitalsiteSaaS\Carrito\Tenant\Category::find($id)->Products;
+    }
+	return view('carrito::productos.index', compact('productos'));
 	}
 
-	 public function editarproducto($id){
-    $autores = DB::table('autor')->get();
-    $areas = DB::table('areas')->get();
-    $parametros = DB::table('parametro')->get();
+	public function editarproducto($id){
+    if(!$this->tenantName){   
+    $autores = Autor::all();
+    $areas = Area::all();
+    $parametros = Parametro::all();
     $pages = \DigitalsiteSaaS\Pagina\Page::all();
-    
-    if(DB::table('venta')->where('id', '1')->value('comunidad') == 1)
-    $productos = DB::table('products')
-    ->join('areas', 'areas.id', '=', 'products.area_id')
+    if(\DigitalsiteSaaS\Pagina\Venta::where('id', '1')->value('comunidad') == 1)
+    $productos = Product::leftJoin('areas', 'areas.id', '=', 'products.area_id')
     ->join('autor', 'autor.id', '=', 'products.autor_id')
-    ->join('parametro', 'parametro.id', '=', 'products.parametro_id')
+    ->leftJoin('parametro', 'parametro.id', '=', 'products.parametro_id')
     ->where('products.id', '=' ,$id)->get();
     else
-    $productos = DB::table('products')
-    ->join('autor', 'autor.id', '=', 'products.autor_id')
+    $productos = Product::join('autor', 'autor.id', '=', 'products.autor_id')
     ->where('products.id', '=' ,$id)->get();
 
     //$paginas =DB::table('pages')
       //      ->join('products', 'products.page_id', '=', 'pages.id')
         //    ->where('products.id', '=' ,$id)->get();
-            
-     return view('carrito::productos.editar', compact('productos','paginas','pages','autores','areas','pages','parametros'))->with('status', 'ok_update');
+    }else{
+
+     $autores = \DigitalsiteSaaS\Carrito\Tenant\Autor::all();
+    $areas = \DigitalsiteSaaS\Carrito\Tenant\Area::all();
+    $parametros = \DigitalsiteSaaS\Carrito\Tenant\Parametro::all();
+    $pages = \DigitalsiteSaaS\Pagina\Tenant\Page::all();
+    if(\DigitalsiteSaaS\Pagina\Tenant\Venta::where('id', '1')->value('comunidad') == 1)
+    $productos = \DigitalsiteSaaS\Carrito\Tenant\Product::leftJoin('areas', 'areas.id', '=', 'products.area_id')
+    ->join('autor', 'autor.id', '=', 'products.autor_id')
+    ->leftJoin('parametro', 'parametro.id', '=', 'products.parametro_id')
+    ->where('products.id', '=' ,$id)->get();
+    else
+    $productos = Product::join('autor', 'autor.id', '=', 'products.autor_id')
+    ->where('products.id', '=' ,$id)->get();
+
+    //$paginas =DB::table('pages')
+      //      ->join('products', 'products.page_id', '=', 'pages.id')
+        //    ->where('products.id', '=' ,$id)->get();
+
+    }     
+
+     return view('carrito::productos.editar', compact('productos','pages','autores','areas','pages','parametros'))->with('status', 'ok_update');
 
     }
 
      public function crear($id)
     {
+        if(!$this->tenantName){
         $paginas = \DigitalsiteSaaS\Pagina\Page::all();
-        $autores = DB::table('autor')->get();
-        $categoria = DB::table('categoriessd')->where('id', '=', $id )->get();
-        $areas = DB::table('areas')->get();
-        $parametros = DB::table('parametro')->get();
+        $autores = Autor::all();
+        $categoria = Category::where('id', '=', $id )->get();
+        $areas = Area::all();
+        $parametros = Parametro::all();
+        }else{
+        $paginas = \DigitalsiteSaaS\Pagina\Tenant\Page::all();
+        $autores = \DigitalsiteSaaS\Carrito\Tenant\Autor::all();
+        $categoria = \DigitalsiteSaaS\Carrito\Tenant\Category::where('id', '=', $id )->get();
+        $areas = \DigitalsiteSaaS\Carrito\Tenant\Area::all();
+        $parametros = \DigitalsiteSaaS\Carrito\Tenant\Parametro::all();
+        }
         return view('carrito::productos.crear')->with('paginas', $paginas)->with('autores', $autores)->with('areas', $areas)->with('parametros', $parametros)->with('categoria', $categoria);
     }
 
 
-       public function show()
-    {
-
-
+    public function show(){
+    if(!$this->tenantName){
     $categoria = new Product;
+    }else{
+    $categoria = new \DigitalsiteSaaS\Carrito\Tenant\Product;   
+    }
     $categoria->name = Input::get('nombre');
     $categoria->slug = Str::slug($categoria->name);
     $categoria->description = Input::get('descripcion');
@@ -101,7 +148,11 @@ class ProductoController extends Controller
  
     public function actualizar($id){
     $input = Input::all();
+    if(!$this->tenantName){
     $categoria = Product::find($id);
+    }else{
+    $categoria = \DigitalsiteSaaS\Carrito\Tenant\Product::find($id);   
+    }
     $categoria->name = Input::get('nombre');
     $categoria->slug = Str::slug($categoria->name);
     $categoria->description = Input::get('descripcion');
@@ -133,11 +184,14 @@ class ProductoController extends Controller
 
 
    public function eliminar($id){
-
-        $categoria = Product::find($id);
-        $categoria->delete();
+    if(!$this->tenantName){
+    $categoria = Product::find($id);
+    }else{
+    $categoria = \DigitalsiteSaaS\Carrito\Tenant\Product::find($id);    
+    }
+    $categoria->delete();
         
-        return Redirect('/gestion/productos/digitales/'.$categoria->category_id)->with('status', 'ok_delete');
+    return Redirect('/gestion/productos/digitales/'.$categoria->category_id)->with('status', 'ok_delete');
     }
 
 
