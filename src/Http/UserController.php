@@ -160,7 +160,7 @@ public function crear() {
     $user->celular = Input::get('celular');
     $user->fax = Input::get('fax');
     $user->compania = Input::get('compania');
-    $user->pais = Input::get('pais');
+    $user->pais_id = Input::get('pais');
     $user->ciudad = Input::get('ciudad');
     $user->region = Input::get('municipio');
     $user->last_name = Input::get('last_name');

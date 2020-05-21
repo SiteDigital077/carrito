@@ -160,22 +160,11 @@
                                         {{Form::hidden('categoriapro', $categoria->categoriapro_id, array('class' => 'form-control','placeholder'=>'Ingrese Iva'))}}
                                         @endforeach
 
-                                          @if(DB::table('venta')->where('id', '1')->value('comunidad') == 1)
-                                            <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-text-input">Área</label>
-                                            <div class="col-md-9">
-                                                <select name="area" class="form-control" required>
-                                                   <option value="" selected="selected" disabled>Seleccione área</option>
-                                                  @foreach($areas as $areas)
-                                                 <option value="{{$areas->id}}">{{$areas->areaweb}}</option>
-                                                  @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+                                        
+                                       
+                                        <!-- 
 
-
-
-                                      <div class="form-group">
+                                       <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-text-input">Grado</label>
                                             <div class="col-md-9">
                                                 <select name="parametro" class="form-control" required>
@@ -186,8 +175,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        @else
-                                        @endif
+                                        -->
 
                                           <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-text-input">Autor</label>
@@ -203,11 +191,14 @@
 
 
                                     
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-password-input">Imagen</label>
-                                            <div class="col-md-9">
-                                                <input type="text" name="FilePath" readonly="readonly" onclick="openKCFinder(this)" value="" class="form-control" placeholder="Seleccione Imagen Para El Producto" />
-                                            </div>
+                                       <div class="form-group">
+                                         <label class="col-md-3 control-label" for="example-password-input">Imagen</label>
+                                          <div class="col-md-9">
+                                           <div class="input-group">
+                                            <input type="text" id="image_label" class="form-control" name="FilePath" placeholder="Seleccionar imagen" aria-label="Image" aria-describedby="button-image">
+                                            <span class="input-group-btn"><button class="btn btn-primary" type="button" id="button-image">Seleccionar imagen</button></span>
+                                           </div>
+                                          </div>
                                         </div>
 
 
@@ -251,29 +242,25 @@
 <script src="/validaciones/carrito/crear-producto.js" type="text/javascript"></script>
 
 
-  <script type="text/javascript">  
-       CKEDITOR.replace( 'editor' );  
-    </script>  
-
-
-
-<script type="text/javascript">
-function openKCFinder(field) {
-    window.KCFinder = {
-        callBack: function(url) {
-            field.value = url;
-            window.KCFinder = null;
-        }
-    };
-    window.open('/vendors/kcfinder/browse.php?type=images&dir=files/public', 'kcfinder_textbox',
-        'status=0, toolbar=0, location=0, menubar=0, directories=0, ' +
-        'resizable=1, scrollbars=0, width=800, height=600'
-    );
-}
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('button-image').addEventListener('click', (event) => {
+      event.preventDefault();
+      window.open('/file-manager/fm-button', 'fm', 'width=900,height=500');
+    });
+  });
+  // set file link
+  function fmSetLink($url) {
+    document.getElementById('image_label').value = $url;
+  }
 </script>
 
-<script src="/vendors/ckeditor/config.js?t=HBDD" type="text/javascript"></script>
 
+<script src="https://cdn.ckeditor.com/4.11.2/full/ckeditor.js"></script>
+
+<script>
+  CKEDITOR.replace( 'editor', {filebrowserImageBrowseUrl: '/file-manager/ckeditor'});
+</script>
   
 
   @stop

@@ -164,19 +164,9 @@
                                              </div>
                                         </div>
 
-                                        @if(DB::table('venta')->where('id', '1')->value('comunidad') == 1)
-                                          <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-text-input">Área</label>
-                                            <div class="col-md-9">
-                                                <select name="area" class="form-control">
-                                                   <option value="{{$productos->area_id}}" selected="selected">{{$productos->areaweb}}</option>
-                                                  @foreach($areas as $areas)
-                                                 <option value="{{$areas->id}}">{{$areas->areaweb}}</option>
-                                                  @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                     
+                                  
+                                         
+                                  <!-- 
 
 
                                       <div class="form-group">
@@ -190,9 +180,8 @@
                                                 </select>
                                             </div>
                                         </div>
-
-                                           @else
-                                        @endif
+                                      -->
+                                    
 
 
 

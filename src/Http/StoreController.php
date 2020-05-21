@@ -8,12 +8,26 @@ use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DigitalsiteSaaS\Carrito\Product;
+use DigitalsiteSaaS\Carrito\Autor;
+use Hyn\Tenancy\Models\Hostname;
+use Hyn\Tenancy\Models\Website;
+use Hyn\Tenancy\Repositories\HostnameRepository;
+use Hyn\Tenancy\Repositories\WebsiteRepository;
 
 
 
+class StoreController extends Controller{
 
-class StoreController extends Controller
-{
+            protected $tenantName = null;
+
+  public function __construct(){
+
+  $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
+        if ($hostname){
+            $fqdn = $hostname->fqdn;
+            $this->tenantName = explode(".", $fqdn)[0];
+        }
+    }
 
     private function total()
 {
@@ -62,19 +76,31 @@ if($cart == null){}
 
     public function show($slug)
     {
+        if(!$this->tenantName){
         $plantilla = \DigitalsiteSaaS\Pagina\Template::all();
         $menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
         $total = $this->total();
         $subtotal = $this->subtotal();
         $cart = session()->get('cart');
         $url = DB::table('configuracion')->where('id', '=', 1)->get();
-        $autores = DB::table('autor')->get();
+        $autores = Autor::all();
         $autoresweb = DB::table('autor')->get();
     	$product = Product::where('slug', $slug)->first();
         $categoriapro = DB::table('categoriapro')->get();
          $categoriessd = DB::table('categoriessd')->get();
-    	//dd($products);
-    	//dd($product);
+        }else{
+        $plantilla = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
+        $menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
+        $total = $this->total();
+        $subtotal = $this->subtotal();
+        $cart = session()->get('cart');
+        $url = DB::table('configuracion')->where('id', '=', 1)->get();
+        $autores = \DigitalsiteSaaS\Carrito\Tenant\Autor::all();
+        $autoresweb = Autor::all();
+        $product = \DigitalsiteSaaS\Carrito\Tenant\Product::where('slug', $slug)->first();
+        $categoriapro = DB::table('categoriapro')->get();
+         $categoriessd = DB::table('categoriessd')->get();  
+        }
     	return view('carrito::show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd'));
     }
 

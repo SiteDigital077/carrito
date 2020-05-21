@@ -50,12 +50,11 @@ class ProductoController extends Controller{
 	public function editarproducto($id){
     if(!$this->tenantName){   
     $autores = Autor::all();
-    $areas = Area::all();
+
     $parametros = Parametro::all();
     $pages = \DigitalsiteSaaS\Pagina\Page::all();
     if(\DigitalsiteSaaS\Pagina\Venta::where('id', '1')->value('comunidad') == 1)
-    $productos = Product::leftJoin('areas', 'areas.id', '=', 'products.area_id')
-    ->join('autor', 'autor.id', '=', 'products.autor_id')
+    $productos = Product::join('autor', 'autor.id', '=', 'products.autor_id')
     ->leftJoin('parametro', 'parametro.id', '=', 'products.parametro_id')
     ->where('products.id', '=' ,$id)->get();
     else
@@ -68,12 +67,11 @@ class ProductoController extends Controller{
     }else{
 
      $autores = \DigitalsiteSaaS\Carrito\Tenant\Autor::all();
-    $areas = \DigitalsiteSaaS\Carrito\Tenant\Area::all();
+
     $parametros = \DigitalsiteSaaS\Carrito\Tenant\Parametro::all();
     $pages = \DigitalsiteSaaS\Pagina\Tenant\Page::all();
     if(\DigitalsiteSaaS\Pagina\Tenant\Venta::where('id', '1')->value('comunidad') == 1)
-    $productos = \DigitalsiteSaaS\Carrito\Tenant\Product::leftJoin('areas', 'areas.id', '=', 'products.area_id')
-    ->join('autor', 'autor.id', '=', 'products.autor_id')
+    $productos = \DigitalsiteSaaS\Carrito\Tenant\Product::join('autor', 'autor.id', '=', 'products.autor_id')
     ->leftJoin('parametro', 'parametro.id', '=', 'products.parametro_id')
     ->where('products.id', '=' ,$id)->get();
     else
@@ -86,7 +84,7 @@ class ProductoController extends Controller{
 
     }     
 
-     return view('carrito::productos.editar', compact('productos','pages','autores','areas','pages','parametros'))->with('status', 'ok_update');
+     return view('carrito::productos.editar', compact('productos','pages','autores','pages','parametros'))->with('status', 'ok_update');
 
     }
 
@@ -96,16 +94,16 @@ class ProductoController extends Controller{
         $paginas = \DigitalsiteSaaS\Pagina\Page::all();
         $autores = Autor::all();
         $categoria = Category::where('id', '=', $id )->get();
-        $areas = Area::all();
+    
         $parametros = Parametro::all();
         }else{
         $paginas = \DigitalsiteSaaS\Pagina\Tenant\Page::all();
         $autores = \DigitalsiteSaaS\Carrito\Tenant\Autor::all();
         $categoria = \DigitalsiteSaaS\Carrito\Tenant\Category::where('id', '=', $id )->get();
-        $areas = \DigitalsiteSaaS\Carrito\Tenant\Area::all();
+        
         $parametros = \DigitalsiteSaaS\Carrito\Tenant\Parametro::all();
         }
-        return view('carrito::productos.crear')->with('paginas', $paginas)->with('autores', $autores)->with('areas', $areas)->with('parametros', $parametros)->with('categoria', $categoria);
+        return view('carrito::productos.crear')->with('paginas', $paginas)->with('autores', $autores)->with('parametros', $parametros)->with('categoria', $categoria);
     }
 
 
@@ -135,7 +133,6 @@ class ProductoController extends Controller{
     $categoria->stock = Input::get('stock');
     $categoria->responsive = Input::get('responsive');
     $categoria->animacion = Input::get('animacion');
-    $categoria->area_id = Input::get('area');
     $categoria->ano = Input::get('ano');
     $categoria->referencia = Input::get('referencia');
     $categoria->parametro_id = Input::get('parametro');
@@ -172,7 +169,7 @@ class ProductoController extends Controller{
     $categoria->stock = Input::get('stock');
     $categoria->responsive = Input::get('responsive');
     $categoria->animacion = Input::get('animacion');
-    $categoria->area_id = Input::get('area');
+
     $categoria->ano = Input::get('ano');
     $categoria->referencia = Input::get('referencia');
     $categoria->parametro_id = Input::get('parametro');
