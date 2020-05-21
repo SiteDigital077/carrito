@@ -1,4 +1,3 @@
-
 @extends ('LayoutsSD.Layout')
 
 
@@ -65,7 +64,7 @@ color:#fff;
    $p_amount = $total+$preciomunicipio;
   else
   $p_amount = $total+$precioenvio;                              
-  $p_currency_code = $configuracion->moneda; 
+  $p_currency_code = $configuracion->moneda;
   $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount.'^'.$p_currency_code);
 ?>
 
@@ -75,7 +74,7 @@ color:#fff;
    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     <h4><strong>Atención</strong> Actualmente usted tiene transacciones en estado pendiente</h4>
 
-     <table border="1" width="100%" bordercolor="#dbccad"> 
+     <table border="1" width="100%" bordercolor="#dbccad">
       <thead style="background:none; padding:5px">
        <tr>
         <td style="padding:5px"><b>Fecha y Hora</b></td>
@@ -85,9 +84,9 @@ color:#fff;
         <td style="padding:5px"><b>Valor</b></td>
        </tr>
       </thead>
-      
+     
      @foreach($ordenes as $ordenes)
-      <tbody> 
+      <tbody>
        <tr>
         <td style="padding:5px" width="30%">{{$ordenes->fecha}}</td>
         <td style="padding:5px" width="20%">{{$ordenes->codigo_apr}}</td>
@@ -108,7 +107,7 @@ color:#fff;
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
  <div class="container-fluid shop">
   <h2 class="secondary-title"><i class="fa fa-shopping-basket bg-primary"></i>  Confirmación del pedido</h2>
-   <div class="container-fluid regla"> 
+   <div class="container-fluid regla">
     <div id="row body-content">
      <form class="form-horizontal msf" method="post" action="/placetopay/pagoweb" target="_blank">
       <div class="msf-header transer">
@@ -130,9 +129,9 @@ color:#fff;
             </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
            </h3>
           </div>
-              
-        
-        
+             
+       
+       
          @elseif($preciomunicipio == 0)
        
         <div class="col-md-8 col-md-offset-2 ">            
@@ -141,12 +140,12 @@ color:#fff;
          </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
          </h3>
         </div>
-          
+         
         </br>
         </br>
         </br>
-              
-      
+             
+     
 
 
 
@@ -155,21 +154,21 @@ color:#fff;
 
 
          @else
-          
+         
          <div class="col-md-10 col-md-offset-1">            
           <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary">  {{$nombremunicipio}}</strong> es de
             <strong class="text-primary"> @if($preciomunicipio > 0) ${{number_format($preciomunicipio,0,",",".")}}@elseif($preciomunicipio == 0) ${{number_format($preciomunicipio,0,",",".")}} @else ${{number_format($precioenvio,0,",",".")}} @endif
             </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
            </h3>
           </div>
-          
+         
           </br>
           </br>
           </br>
-      
-              
+     
+             
           @endif
-                  
+                 
        </div>
       </div>
 
@@ -189,7 +188,7 @@ color:#fff;
             <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
            </div>
           </div>
-                  
+                 
           <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Nombre</label>
            <div class="col-md-12">
@@ -234,7 +233,7 @@ color:#fff;
            </div>
           </div>
 
-        
+       
           <div class="form-group col-md-6">
            <label class="col-md-12" for="example-text-input">Información inmueble</label>
            <div class="col-md-12">
@@ -259,7 +258,7 @@ color:#fff;
             </div>
            </div>
           </div>
-        
+       
          @elseif($preciomunicipio == 0)
        
         <div class="col-md-8 col-md-offset-2 ">            
@@ -268,11 +267,11 @@ color:#fff;
          </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
          </h3>
         </div>
-          
+         
         </br>
         </br>
         </br>
-              
+             
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-10 col-md-offset-1 shop">
          <div class="row">
           <div class="col-md-10 col-md-offset-1">
@@ -282,7 +281,7 @@ color:#fff;
             <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
            </div>
           </div>
-                  
+                 
           <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Nombre</label>
            <div class="col-md-12">
@@ -343,12 +342,12 @@ color:#fff;
             <input style="background:none" id="emailnue" name="emailnue" type="text" class="form-control" data-bind="value: Email" data-val="true" data-val-required="email is required" value="" placeholder="Email">
            </div>
           </div>
-          
+         
              
           </div>
          </div>  
         </div>
-              
+             
 
 
 
@@ -357,18 +356,18 @@ color:#fff;
 
 
          @else
-          
+         
          <div class="col-md-8 col-md-offset-2 ">            
           <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary">  {{$nombremunicipio}}</strong> es de
             <strong class="text-primary"> @if($preciomunicipio > 0) ${{number_format($preciomunicipio,0,",",".")}}@elseif($preciomunicipio == 0) ${{number_format($preciomunicipio,0,",",".")}} @else ${{number_format($precioenvio,0,",",".")}} @endif
             </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
            </h3>
           </div>
-          
+         
           </br>
           </br>
           </br>
-              
+             
           <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 shop">
            <div class="row">
             <div class="col-md-12">
@@ -378,7 +377,7 @@ color:#fff;
             <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
            </div>
           </div>
-                  
+                 
           <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Nombre</label>
            <div class="col-md-12">
@@ -443,14 +442,14 @@ color:#fff;
             </div>
            </div>
           </div>
-              
+             
           @endif
-        
+       
 
         </div>
        </div>
       </div>
-                    
+                   
       <div class="msf-view">
        <div class="container-fluid padcart">
        @if(count($cart))
@@ -488,7 +487,7 @@ color:#fff;
                  @endif
                </tr>
               @endforeach
-                        
+                       
                <tr>
                 <td colspan="3" class="text-right h4"><strong>Sub Total</strong></td>
                 <td class="text-right h4"><strong>$ {{ number_format($subtotal,0,",",".")}}</strong></td>
@@ -530,37 +529,37 @@ color:#fff;
              </tbody>
             </table>
           </div>
-            
+           
           <div class="container-fluid">
            
-    
+   
          
             <input name="p_id_invoice" type="hidden" value="{{$valora}}-{{rand(1,10000)}}"/>
-          
+         
             <input name="p_amount_base" type="hidden" value="{{$subtotal}}"/>
-            
+           
 
-          
+         
             @if(Session::get('miSesionTexto') == null)
             <input name="p_amount" id="p_amount" type="hidden" value="{{$total+$precioenvio}}"/>
             @elseif($preciomunicipio > 0)
             <input name="p_amount" id="p_amount" type="hidden" value="{{$total+$preciomunicipio}}"/>  
             @elseif($preciomunicipio == 0)
             <input name="p_amount" id="p_amount" type="hidden" value="{{$total+$preciomunicipio}}"/>  
-  
-            
+ 
+           
             @endif
 
-            <input name="p_tax" id="p_tax" type="hidden" value="{{$iva}}"/>
+            <input name="p_tax" id="p_tax" type="hidden" value="0"/>
             @if($preciomunicipio > 0)
             <input id="p_extra2" name="p_extra2" value="{{$preciomunicipio}}" type="hidden" class="form-control">
             @elseif($preciomunicipio == 0)
             <input id="p_extra2" name="p_extra2" value="{{$preciomunicipio}}" type="hidden" class="form-control">
             @else
             <input id="p_extra2" name="p_extra2" type="text" class="form-control" value="{{$datos->p_municipio}} fdg">
-            @endif     
+            @endif    
 
-          
+         
             <input name="p_billing_email" type="hidden" id="p_billing_email" value="{{Auth::user()->email}}"/>
             <button data-type="submit" style="padding: 0; background: none; border: none; cursor: pointer;" class="epayco-button-render pull-right"><img src="/placetopay/boton-pago.png"></button>
        
@@ -574,8 +573,8 @@ color:#fff;
             @endif
        </div>
       </div>
-      
-        
+     
+       
 
           <div class="msf-navigation">
            <div class="row">
@@ -616,14 +615,14 @@ if($preciomunicipio > 0)
 $p_amount = $total+$preciomunicipio;
 else
 $p_amount = $total+$precioenvio;                              
-$p_currency_code = $configuracion->moneda; 
+$p_currency_code = $configuracion->moneda;
 $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount.'^'.$p_currency_code);
 ?>
 
 <div class="container">
  <div class="container-fluid shop">
   <h2 class="secondary-title"><i class="fa fa-shopping-basket bg-primary"></i>  Confirmación del pedido</h2>
-   <div class="container-fluid regla"> 
+   <div class="container-fluid regla">
     <div id="wrapper">
      <div id="row body-content">
 
@@ -647,7 +646,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
            </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
           </h3>
         </div>
-              
+             
          <input id="p_description" name="p_description" type="hidden" class="form-control" placeholder="Descripcion" value="Compras generadas por la compañía">
          <input id="p_extra1" name="p_extra1" type="hidden" class="form-control" value="{{Auth::user()->address}}">
          <input style="background:none" id="p_billing_country" name="p_billing_country" type="hidden" class="form-control" value="{{$datos->municipio}}" placeholder="Código Postal" disabled>
@@ -660,7 +659,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
            </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
           </h3>
         </div>
-              
+             
          <input id="p_description" name="p_description" type="hidden" class="form-control" placeholder="Descripcion" value="Compras generadas por la compañía">
          <input id="p_extra1" name="p_extra1" type="hidden" class="form-control" value="{{Auth::user()->address}}">
          <input style="background:none" id="p_billing_country" name="p_billing_country" type="hidden" class="form-control" value="{{$datos->municipio}}" placeholder="Código Postal" disabled>
@@ -671,15 +670,15 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             </strong> si desea generar un nuevo destino de envio consulte a continuación su costos.
            </h3>
           </div>
-          
+         
           </br>
           </br>
           </br>
-              
-        
-              
+             
+       
+             
           @endif
-                  
+                 
        </div>
       </div>
 
@@ -699,7 +698,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
            </div>
           </div>
-                  
+                 
           <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Nombre</label>
            <div class="col-md-12">
@@ -744,7 +743,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
            </div>
           </div>
 
-        
+       
           <div class="form-group col-md-6">
            <label class="col-md-12" for="example-text-input">Información inmueble</label>
            <div class="col-md-12">
@@ -769,7 +768,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             </div>
            </div>
           </div>
-        
+       
          @elseif($preciomunicipio == 0)
        
         <div class="col-md-10 col-md-offset-1 ">            
@@ -778,11 +777,11 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
          </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
          </h3>
         </div>
-          
+         
         </br>
         </br>
         </br>
-              
+             
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-10 col-md-offset-1 shop">
          <div class="row">
           <div class="col-md-10 col-md-offset-1">
@@ -792,7 +791,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
            </div>
           </div>
-                  
+                 
           <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Nombre</label>
            <div class="col-md-12">
@@ -853,12 +852,12 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             <input style="background:none" id="emailnue" name="emailnue" type="text" class="form-control" data-bind="value: Email" data-val="true" data-val-required="email is required" value="" placeholder="Email" readonly>
            </div>
           </div>
-          
+         
              
           </div>
          </div>  
         </div>
-              
+             
 
 
 
@@ -867,18 +866,18 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
 
 
          @else
-          
+         
          <div class="col-md-10 col-md-offset-1 ">            
           <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary">  {{$nombremunicipio}}</strong> es de
             <strong class="text-primary"> @if($preciomunicipio > 0) ${{number_format($preciomunicipio,0,",",".")}}@elseif($preciomunicipio == 0) ${{number_format($preciomunicipio,0,",",".")}} @else ${{number_format($precioenvio,0,",",".")}} @endif
             </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
            </h3>
           </div>
-          
+         
           </br>
           </br>
           </br>
-              
+             
           <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 shop">
            <div class="row">
             <div class="col-md-12">
@@ -888,7 +887,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             <input id="p_description" name="p_description" type="hidden" class="form-control" value="Compras generadas por la compañía">
            </div>
           </div>
-                  
+                 
           <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Nombre</label>
            <div class="col-md-12">
@@ -953,13 +952,13 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             </div>
            </div>
           </div>
-              
+             
           @endif
 
         </div>
        </div>
       </div>
-                    
+                   
       <div class="msf-view">
        <div class="container-fluid padcart">
        @if(count($cart))
@@ -998,7 +997,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
                  @endif
                </tr>
               @endforeach
-                        
+                       
                <tr>
                 <td colspan="3" class="text-right h4"><strong>Sub Total</strong></td>
                 <td class="text-right h4"><strong>$ {{ number_format($subtotal,0,",",".")}}</strong></td>
@@ -1029,7 +1028,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
              </tbody>
             </table>
           </div>
-            
+           
           <div class="container-fluid">
            
             <input name="p_cust_id_cliente" type="hidden" value="<?php echo $p_cust_id_cliente?>"/>
@@ -1042,19 +1041,19 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             @else
             <input name="p_amount" id="p_amount" type="hidden" value="{{$total+$preciomunicipio}}"/>
             @endif
-            <input name="p_tax" id="p_tax" type="hidden" value="{{$iva}}"/>
+            <input name="p_tax" id="p_tax" type="text" value="0"/>
             @if($preciomunicipio == 0)
             <input id="p_extra2" name="p_extra2" type="hidden" class="form-control" value="{{$datos->p_municipio}}">
             @else
             <input id="p_extra2" name="p_extra2" value="{{$preciomunicipio}}" type="hidden" class="form-control">
             @endif
-          
+         
             <input name="p_test_request" type="hidden" value="TRUE"/>
-            <input name="p_url_response" type="hidden" value="http://medellin.sitedesarrollo.local/cart/responseda"/>
-            <input name="p_url_confirmation" type="hidden" value="http://sitedesarrollo.local/cart/responseserver"/>
+            <input name="p_url_response" type="hidden" value="http://pruebas.siteavanza.com/cart/responseda"/>
+            <input name="p_url_confirmation" type="hidden" value="http://pruebas.siteavanza.com/cart/responseserver"/>
 
-            
-            <input name="p_confirm_method" type="hidden" value="GET"> 
+           
+            <input name="p_confirm_method" type="hidden" value="POST">
             <input name="p_signature" type="hidden" id="signature" value="<?php echo $p_signature;?>"/>
             <input name="p_billing_email" type="hidden" id="p_billing_email" value="{{Auth::user()->email}}"/>
             <button data-type="submit" id="button_1" style="padding: 0; background: none; border: none; cursor: pointer;" class="epayco-button-render pull-right"><img src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/epayco/boton_de_cobro_epayco.png"></button>
@@ -1069,8 +1068,8 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             @endif
        </div>
       </div>
-      
-        
+     
+       
 
           <div class="msf-navigation">
            <div class="row">
@@ -1099,16 +1098,16 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
 </div>
 </div>
 <script type="text/javascript">
-$(document).on('ready',function(){       
+$(document).on('ready',function(){      
     $('#btn-ingresar').click(function(){
         var url = "datos_login.php";
         $.ajax({                        
-           type: "POST",                 
-           url: url,                     
-           data: $("#formulario").serialize(), 
-           success: function(data)             
+           type: "POST",                
+           url: url,                    
+           data: $("#formulario").serialize(),
+           success: function(data)            
            {
-             $('#resp').html(data);               
+             $('#resp').html(data);              
            }
        });
     });
@@ -1209,7 +1208,7 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
        <button class="btn btn-primary pull-right botcart" type="submit">Calcular Costo</button>
        <a href="/web/limpieza" class="btn btn-default pull-right botcart">Limpiar</a>
       </div>
-                
+               
     </form>
    </div>
   </div>
@@ -1224,12 +1223,12 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
          <td class="text-right" style="width: 50%;"><strong>Usuario</strong></td>
          <td>{{Auth::user()->name}} {{Auth::user()->last_name}}</td>
         </tr>
-        
+       
         <tr>
          <td class="text-right"><strong>Email</strong></td>
          <td>{{Auth::user()->email}}</td>
         </tr>
-        
+       
         <tr>
          <td class="text-right"><strong>Documento</strong></td>
          <td>
@@ -1253,7 +1252,7 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
          <td class="text-right"><strong>Dirección</strong></td>
          <td>{{Auth::user()->address}}</td>
         </tr>
-        
+       
         <tr>
          <td class="text-right"><strong>Usuario creado</strong></td>
          <td>{{Auth::user()->created_at}}</td>
@@ -1263,7 +1262,7 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
          <td class="text-right"><strong>Registro actividad</strong></td>
          <td><span class="label label-primary">Ir al registro</span></td>
         </tr>
-                                            
+                                           
        </tbody>
       </table>
   </div>
@@ -1368,7 +1367,7 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
             });
         });
       });
-   </script>   
+   </script>  
 
    <script type="text/javascript">
   $("#button_1").click(function(e) {
