@@ -146,10 +146,6 @@
 @endforeach
 
 
-@foreach($informacion as $informacion)
-
-@endforeach
-
 <div class="container">
  <div class="block">
                             <!-- Products Title -->
@@ -251,7 +247,7 @@
                                         <strong>Oficina</strong>
                                         @endif
                                         <strong>{{$usuarios->numero}}</strong><br><br>
-                                        <i class="fa fa-phone"></i> {{$usuarios->phone}}<br>
+                                        <i class="fa fa-phone"></i> {{$usuarios->celular}}<br>
                                         <i class="fa fa-envelope-o"></i> <a href="javascript:void(0)">{{$usuarios->email}}</a>
                                     </address>
                                     <!-- END Billing Address Content -->
@@ -265,66 +261,32 @@
                                     <div class="block-title">
                                         <h2><i class="gi gi-send"></i> <strong>Datos</strong> Envío</h2>
                                     </div>
-                                    <!-- END Shipping Address Title -->
-
-                                    <!-- Shipping Address Content -->
-
-                                    @if($informacion->nombre == '')
-                                    <h4><strong>{{$usuarios->name}} {{$usuarios->last_name}}</strong></h4>
-                                    @else
-                                    <h4><strong>{{$informacion->nombre}} {{$informacion->apellido}}</strong></h4>
-                                    @endif
+                                    @foreach($informacion as $informacion)
+                                      <h4><strong>{{$informacion->nombre}} {{$informacion->apellido}}</strong></h4>
                                     <address>
-
-                                    @if($informacion->documento == '')
-                                     {{$usuarios->documento}} <br>
-                                     @else
-                                     {{$informacion->documento}}<br>
-                                    @endif
-                                    
-                                    @if($informacion->ciudad == '0')
-                                       {{$usuarios->departamento}} - {{$usuarios->municipio}} <br>
-                                    @else
-                                    {{$informacion->departamento}} - {{$informacion->municipio}}<br>
-                                    @endif
-
-
-                                    @if($informacion->direccion == '')
-                                     {{$usuarios->address}},
-                                     @if($usuarios->inmueble == 1)
-                                        <strong>Casa</strong>
-                                        @elseif($usuarios->inmueble == 2)
-                                        <strong>Apartamento</strong>
-                                        @elseif($usuarios->inmueble == 3)
-                                        <strong>Oficina</strong>
-                                        @endif
-                                        <strong>{{$usuarios->numero}}</strong>
-                                     <br><br>
-                                     @else
+                                        {{$informacion->documento}}<br>
+                                        {{$informacion->departamento}} - {{$informacion->municipio}}<br>
                                         {{$informacion->direccion}},
                                         @if($informacion->inmueble == 1)
-                                        <strong>Casaf</strong>
+                                        <strong>Casa</strong>
                                         @elseif($informacion->inmueble == 2)
                                         <strong>Apartamento</strong>
                                         @elseif($informacion->inmueble == 3)
                                         <strong>Oficina</strong>
-                                     @endif
-                                        <strong>{{$informacion->informacion}}</strong>
-                                        <br><br>
                                         @endif
-                                      @if($informacion->telefono == '')
-                                        <i class="fa fa-phone"></i> {{$usuarios->celular}}<br>
-                                      @else
+                                        <strong>{{$informacion->informacion}}</strong><br><br>
                                         <i class="fa fa-phone"></i> {{$informacion->telefono}}<br>
-                                      @endif
-                                        <i class="fa fa-envelope-o"></i> <a href="javascript:void(0)">{{$usuarios->email}}</a>
+                                        <i class="fa fa-envelope-o"></i> <a href="javascript:void(0)">{{$informacion->email}}</a>
                                     </address>
-                                    <!-- END Shipping Address Content -->
+                                    @endforeach
+                                    <!-- END Billing Address Content -->
                                 </div>
+                              </div>
+                                <!-- END Billing Address Block -->
+                            </div>
                                 <!-- END Shipping Address Block -->
                             </div>
-                            </div>
-                        </div>
+                         
                         <!-- END Addresses -->
 
 

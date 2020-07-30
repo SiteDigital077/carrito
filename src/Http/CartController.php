@@ -17,6 +17,7 @@ use DigitalsiteSaaS\Carrito\Category;
 use DigitalsiteSaaS\Carrito\Transaccion;
 use DigitalsiteSaaS\Carrito\Departamento;
 use DigitalsiteSaaS\Pagina\Template;
+use DigitalsiteSaaS\Pagina\Seo;
 use App\User;
 use DB;
 use Input;
@@ -52,6 +53,7 @@ $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
 public function show()
 {
     if(!$this->tenantName){
+      $seo = Seo::where('id','=',1)->get(); 
 $plantilla = \DigitalsiteSaaS\Pagina\Template::all();
     $menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
 $cart = session()->get('cart');
@@ -63,6 +65,7 @@ $descuento = $this->descuento();
 $plantillaes = Template::all();
 $categoriapro = Category::all();
 }else{
+  $seo = \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get(); 
 $plantilla = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
     $menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
 $cart = session()->get('cart');
@@ -74,7 +77,7 @@ $descuento = $this->descuento();
 $plantillaes = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
 $categoriapro = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
 }
-return view('carrito::cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes'));
+return view('carrito::cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo'));
 }
 
 
@@ -270,6 +273,7 @@ return Redirect('/cart/show');
 
 public function orderDetail(){
 if(!$this->tenantName){
+$seo = Seo::where('id','=',1)->get();
 $price = Order::max('id');
 $suma = $price + 1;
 $configuracion = Configuracion::find(1);
@@ -292,6 +296,7 @@ $orderold  = Order::where('user_id', '=', Auth::user()->id)->get();
 $categories = Pais::all();
 $ordenes = Order::where('user_id', '=' ,Auth::user()->id)->where('estado', '=', 'PENDING')->get();
 }else{
+$seo = \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get();
 $price = \DigitalsiteSaaS\Carrito\Tenant\Order::max('id');
 $suma = $price + 1;
 $configuracion = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::find(1);
@@ -314,7 +319,7 @@ $orderold  = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=', Auth::
 $categories = \DigitalsiteSaaS\Carrito\Tenant\Pais::all();
 $ordenes = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=' ,Auth::user()->id)->where('estado', '=', 'PENDING')->get();
 }
-return view('carrito::order', compact('cart', 'total', 'subtotal', 'plantilla', 'menu','configuracion','price','suma', 'orderold', 'iva', 'descuento', 'costoenvio', 'categories', 'precioenvio', 'preciomunicipio', 'datos', 'plantillaes', 'nombremunicipio', 'ordenes'));
+return view('carrito::order', compact('cart', 'total', 'subtotal', 'plantilla', 'menu','configuracion','price','suma', 'orderold', 'iva', 'descuento', 'costoenvio', 'categories', 'precioenvio', 'preciomunicipio', 'datos', 'plantillaes', 'nombremunicipio', 'ordenes', 'seo'));
 
 }
 
@@ -520,6 +525,7 @@ $order = Order::create([
 'informacion' => Auth::user()->numero,
 'telefono' => Auth::user()->celular,
 'email' => Auth::user()->email,
+'departamento' => Auth::user()->ciudad,
 'codigo_apr' => '000000',
 'medio' => 'N/A',
 'preciodescuento' => $producto->preciodesc,
@@ -543,6 +549,7 @@ $order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
 'inmueble' => Auth::user()->inmueble,
 'informacion' => Auth::user()->numero,
 'telefono' => Auth::user()->celular,
+'departamento' => Auth::user()->ciudad,
 'email' => Auth::user()->email,
 'codigo_apr' => '000000',
 'medio' => 'N/A',
@@ -569,6 +576,8 @@ $order = Order::create([
 'telefono' => $telefonoalt,
 'inmueble' => $inmueblealt,
 'informacion' => $informacionalt,
+'departamento' => $this->nombredepartamentoid(),
+'ciudad' => $this->nombremunicipioid(),
 'email' => $emailalt,
 'codigo_apr' => '000000',
 'medio' => 'N/A',
@@ -592,6 +601,8 @@ $order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
 'telefono' => $telefonoalt,
 'inmueble' => $inmueblealt,
 'informacion' => $informacionalt,
+'departamento' => $this->nombredepartamentoid(),
+'ciudad' => $this->nombremunicipioid(),
 'email' => $emailalt,
 'codigo_apr' => '000000',
 'medio' => 'N/A',
@@ -620,6 +631,8 @@ $order = Order::create([
 'informacion' => $informacionalt,
 'email' => $emailalt,
 'codigo_apr' => '000000',
+'departamento' => $this->nombredepartamentoid(),
+'ciudad' => $this->nombremunicipioid(),
 'medio' => 'N/A',
 'preciodescuento' => $producto->preciodesc,
 'user_id'  => Auth::user()->id
@@ -643,6 +656,8 @@ $order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
 'informacion' => $informacionalt,
 'email' => $emailalt,
 'codigo_apr' => '000000',
+'departamento' => $this->nombredepartamentoid(),
+'ciudad' => $this->nombremunicipioid(),
 'medio' => 'N/A',
 'preciodescuento' => $producto->preciodesc,
 'user_id'  => Auth::user()->id
@@ -1728,6 +1743,7 @@ $codigo =  '1111';
 
         public function registrar(){
         if(!$this->tenantName){
+          $seo = Seo::where('id','=',1)->get();
     $plantilla = \DigitalsiteSaaS\Pagina\Template::all();
     $plantillaes = \DigitalsiteSaaS\Pagina\Template::all();
     $terminos = \DigitalsiteSaaS\Pagina\Template::all();
@@ -1738,6 +1754,7 @@ $menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'de
 $categories = Pais::all();
 $colors = DB::table('colors')->get();
 }else{
+  $seo = \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get();
 $plantilla = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
     $plantillaes = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
     $terminos = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
@@ -1748,7 +1765,7 @@ $menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('post
 $categories = \DigitalsiteSaaS\Carrito\Tenant\Pais::all();
 $colors = DB::table('colors')->get();
 }
-return view('carrito::users.registrar')->with('plantilla', $plantilla)->with('plantillaes', $plantillaes)->with('menu', $menu)->with('cart', $cart)->with('total', $total)->with('subtotal', $subtotal)->with('categories', $categories)->with('terminos', $terminos)->with('colors', $colors);
+return view('carrito::users.registrar')->with('plantilla', $plantilla)->with('plantillaes', $plantillaes)->with('menu', $menu)->with('cart', $cart)->with('total', $total)->with('subtotal', $subtotal)->with('categories', $categories)->with('terminos', $terminos)->with('colors', $colors)->with('seo', $seo);
 
    
 

@@ -1,13 +1,44 @@
-
-
 @extends ('LayoutsSD.Layout')
 
 
          <script type="text/javascript" src="/validaciones/vendor/jquery/jquery.min.js"></script>
 
+          @section('cabecera')
+ 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Site Digital">
+    <meta http-equiv="Cache-control" content="public">
+    <title></title>
+
+
+    @foreach($seo as $seo)
+    <link rel="canonical" href="{{$seo->canonical}}{{Request::getRequestUri()}}"/>
+    <meta property="og:locale" content="{{$seo->idioma}}">
+    <meta property="og:type" content="{{$seo->og_type}}">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="{{$seo->og_url}}">
+    <meta property="og:site_name" content="{{$seo->og_name}}">
+    <meta property="og:image" content="{{$seo->canonical}}/{{$seo->og_image}}">
+    <meta name="twitter:card" content="{{$seo->twitter_card}}"/>
+    <meta name="twitter:site" content="{{$seo->twitter_site}}" />
+    <meta name="twitter:creator" content="{{$seo->twitter_creator}}" />
+    <meta name="twitter:title" content="{{$seo->twitter_title}}" />
+    <meta name="twitter:description" content="{{$seo->twitter_description}}" />
+    <meta name="twitter:image" content="{{$seo->twitter_image}}" />
+    <link rel="shortcut icon" href="{{$seo->ico}}" type="image/icon">
+    <link rel="apple-touch-icon" href="{{$seo->icoapple}}" />
+    @endforeach
+ 
+  @stop
+
     @section('ContenidoSite-01')
 
-
+<br>
 <div class="container">
 
 
@@ -20,7 +51,7 @@
 
                             <div class="container-fluid">
                                  
-                            <div class="container-fluid">                                             
+                            <div class="container-fluid">                                            
                             <div class="form-group col-md-6">
                                             <label class="col-md-12" for="example-text-input">Tipo Documento</label>
                                             <div class="col-md-12">
@@ -43,7 +74,7 @@
                                             </div>
                                         </div>
 
-                             </div>           
+                             </div>          
 
                              <div class="container-fluid">
                             <div class="form-group col-md-6">
@@ -77,7 +108,7 @@
                                             </div>
                                         </div>
 
-                               </div>         
+                               </div>        
 
 
                                <div class="container-fluid">
@@ -146,7 +177,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                      
+                                     
                                         <div class="form-group col-md-6">
                                             <label class="col-md-12" for="example-text-input">Ciudad</label>
                                             <div class="col-md-12">
@@ -155,7 +186,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                </div>   
+                                </div>  
 
                                 <div class="container-fluid">
 
@@ -168,7 +199,7 @@
                                             </div>
                                         </div>
 
-                                  
+                                 
                              
 
                               <div class="form-group col-md-6">
@@ -180,7 +211,7 @@
                                          
                                       </div>
 
-                                   <div class="container-fluid">   
+                                   <div class="container-fluid">  
                                      <div class="form-group col-md-6">
                                             <label class="col-md-12" for="example-text-input">Contraseña</label>
                                             <div class="col-md-12">
@@ -196,7 +227,7 @@
                                       </div>
                                <input type="hidden" id="example-text-input" name="level" class="form-control" value="2">
 
-                            </div>   
+                            </div>  
 
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                              <div class="container-fluid">
@@ -233,20 +264,20 @@
                             <div class="col-md-12">
                               <div class="container-fluid">
                                 <button type="submit" class="btn btn-primary btn-lg pull-right">
-                                    <i class="fa fa-btn fa-sign-in"></i> Registrar Usuario 
+                                    <i class="fa fa-btn fa-sign-in"></i> Registrar Usuario
                                 </button>
                                 </div>
-                                
+                               
                             </div>
                         </div>
                     </form>
                 </div>
-                  
+                 
 
       </div>
         </div>
    
-  
+ 
 </div>
 
 
@@ -283,7 +314,7 @@
             });
         });
       });
-   </script>   
+   </script>  
 
 
 
@@ -295,11 +326,9 @@
 
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
  {{ Html::script('Usuario/js/registro.js') }}
-  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }} 
+  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }}
 
 
 
 
 @stop
-
-

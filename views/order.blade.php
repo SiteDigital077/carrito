@@ -1,5 +1,37 @@
 @extends ('LayoutsSD.Layout')
 
+     @section('cabecera')
+ 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Site Digital">
+    <meta http-equiv="Cache-control" content="public">
+    <title></title>
+
+
+    @foreach($seo as $seo)
+    <link rel="canonical" href="{{$seo->canonical}}{{Request::getRequestUri()}}"/>
+    <meta property="og:locale" content="{{$seo->idioma}}">
+    <meta property="og:type" content="{{$seo->og_type}}">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="{{$seo->og_url}}">
+    <meta property="og:site_name" content="{{$seo->og_name}}">
+    <meta property="og:image" content="{{$seo->canonical}}/{{$seo->og_image}}">
+    <meta name="twitter:card" content="{{$seo->twitter_card}}"/>
+    <meta name="twitter:site" content="{{$seo->twitter_site}}" />
+    <meta name="twitter:creator" content="{{$seo->twitter_creator}}" />
+    <meta name="twitter:title" content="{{$seo->twitter_title}}" />
+    <meta name="twitter:description" content="{{$seo->twitter_description}}" />
+    <meta name="twitter:image" content="{{$seo->twitter_image}}" />
+    <link rel="shortcut icon" href="{{$seo->ico}}" type="image/icon">
+    <link rel="apple-touch-icon" href="{{$seo->icoapple}}" />
+    @endforeach
+ 
+  @stop
 
 @section('ContenidoSite-01')
 
@@ -272,7 +304,7 @@ color:#fff;
         </br>
         </br>
              
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-10 col-md-offset-1 shop">
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-md-offset-1 shop">
          <div class="row">
           <div class="col-md-10 col-md-offset-1">
 
@@ -469,7 +501,7 @@ color:#fff;
               @foreach($cart as $item)
                <tr>
                 <td style="width: 7%;">
-                 <img class="img-responsive" src="{{$item->image}}">
+                 <img class="img-responsive" src="/{{$item->image}}">
                 </td>
                 <td>
                  <strong style="text-transform: uppercase;">{{$item->name}}</strong><br>
@@ -689,7 +721,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
 
            @if(Session::get('miSesionTexto') == null)
        
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-10 col-md-offset-1 shop">
+          <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 shop">
            <div class="row">
             <div class="col-md-12">
 
@@ -702,35 +734,35 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
           <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Nombre</label>
            <div class="col-md-12">
-            <input id="nombrenue" name="nombrenue" type="text" class="form-control" value="{{Auth::user()->name}}" placeholder="Nombre" disabled>
+            <input id="nombrenue" name="nombrenue" type="text" class="form-control" value="{{Auth::user()->name}}" placeholder="Nombre">
            </div>
           </div>
 
           <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Apellido</label>
            <div class="col-md-12">
-            <input id="apellidonue" name="apellidonue" type="text" class="form-control" value="{{Auth::user()->last_name}}" placeholder="Apellido" disabled>
+            <input id="apellidonue" name="apellidonue" type="text" class="form-control" value="{{Auth::user()->last_name}}" placeholder="Apellido">
            </div>
           </div>
 
           <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Dirección de envio</label>
            <div class="col-md-12">
-            <input id="direccionnue" name="direccionnue" type="text" class="form-control" value="{{Auth::user()->address}}" placeholder="Dirección" disabled>
+            <input id="direccionnue" name="direccionnue" type="text" class="form-control" value="{{Auth::user()->address}}" placeholder="Dirección">
            </div>
           </div>
 
            <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Teléfono</label>
            <div class="col-md-12">
-            <input id="telefononue" name="telefononue" type="text" class="form-control" value="{{Auth::user()->celular}}" placeholder="Teléfono" disabled>
+            <input id="telefononue" name="telefononue" type="text" class="form-control" value="{{Auth::user()->celular}}" placeholder="Teléfono">
            </div>
           </div>
              
           <div class="form-group col-md-6">
            <label class="col-md-12" for="example-text-input">Inmueble</label>
            <div class="col-md-12">
-            <select id="inmueblenue" name="inmueblenue" class="form-control" size="1" disabled>
+            <select id="inmueblenue" name="inmueblenue" class="form-control" size="1">
              <option selected>Seleccionar tipo de inmueble</option>
              @if(Auth::user()->inmueble == 1)
              <option value="1" selected>Apartamento</option>
@@ -747,7 +779,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
           <div class="form-group col-md-6">
            <label class="col-md-12" for="example-text-input">Información inmueble</label>
            <div class="col-md-12">
-            <input id="informacionnue" name="informacionnue" type="text" class="form-control" value="{{Auth::user()->numero}}" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe" disabled>
+            <input id="informacionnue" name="informacionnue" type="text" class="form-control" value="{{Auth::user()->numero}}" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
            </div>
           </div>
              
@@ -761,7 +793,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
           <div class="form-group col-md-6">
            <label class="col-md-12" for="example-text-input">Email</label>
            <div class="col-md-12">
-            <input id="emailnue" name="emailnue" type="text" class="form-control" value="{{Auth::user()->email}}" value="" placeholder="Email" disabled>
+            <input id="emailnue" name="emailnue" type="text" class="form-control" value="{{Auth::user()->email}}" value="" placeholder="Email">
            </div>
           </div>
              
@@ -807,7 +839,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
           </div>
 
           <div class="form-group col-md-6">
-            <label class="col-md-12" for="example-text-input">Dirección de envio</label>
+            <label class="col-md-12" for="example-text-input">Dirección de enviod</label>
            <div class="col-md-12">
             <input id="direccionnue" name="direccionnue" type="text" class="form-control" value="" placeholder="Dirección" data-bind="value: Address" data-val="true" data-val-required="email is required">
            </div>
@@ -889,30 +921,30 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
           </div>
                  
           <div class="form-group col-md-6">
-            <label class="col-md-12" for="example-text-input">Nombre</label>
+            <label class="col-md-12" for="example-text-input">Nombres</label>
            <div class="col-md-12">
-            <input id="nombrenue" name="nombrenue" type="text" class="form-control" value="" placeholder="Nombre" data-bind="value: Name" data-val="true" data-val-required="email is required">
+            <input id="nombrenue" name="nombrenue" type="text" class="form-control" value="{{Auth::user()->name}}" placeholder="Nombre" data-val="true" data-val-required="email is required">
            </div>
           </div>
 
           <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Apellido</label>
            <div class="col-md-12">
-            <input id="apellidonue" name="apellidonue" type="text" class="form-control" value="" placeholder="Apellido" data-bind="value: Lastname" data-val="true" data-val-required="email is required">
+            <input id="apellidonue" name="apellidonue" type="text" class="form-control" value="{{Auth::user()->last_name}}" placeholder="Apellido" data-val="true" data-val-required="email is required">
            </div>
           </div>
 
           <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Dirección de envio</label>
            <div class="col-md-12">
-            <input id="direccionnue" name="direccionnue" type="text" class="form-control" value="" placeholder="Dirección" data-bind="value: Address" data-val="true" data-val-required="email is required">
+            <input id="direccionnue" name="direccionnue" type="text" class="form-control" value="{{Auth::user()->address}}" placeholder="Dirección" data-val="true" data-val-required="email is required">
            </div>
           </div>
 
            <div class="form-group col-md-6">
             <label class="col-md-12" for="example-text-input">Teléfono</label>
            <div class="col-md-12">
-            <input id="telefononue" name="telefononue" type="text" class="form-control" value="" placeholder="Teléfono" data-bind="value: Telefono" data-val="true" data-val-required="email is required">
+            <input id="telefononue" name="telefononue" type="text" class="form-control" value="{{Auth::user()->celular}}" placeholder="Teléfono"  data-val="true" data-val-required="email is required">
            </div>
           </div>
              
@@ -920,7 +952,14 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
            <label class="col-md-12" for="example-text-input">Inmueble</label>
            <div class="col-md-12">
             <select id="inmueblenue" name="inmueblenue" class="form-control" size="1" required>
-             <option selected disabled>Seleccionar tipo de inmueble</option>
+             <option selected>Seleccionar tipo de inmueble</option>
+             @if(Auth::user()->inmueble == 1)
+             <option value="1" selected>Apartamento</option>
+             @elseif(Auth::user()->inmueble == 2)
+             <option value="2" selected="">Casa</option>
+             @elseif(Auth::user()->inmueble == 3)
+             <option value="3" selected="">Oficina</option>
+             @endif
              <option value="1">Apartamento</option>
              <option value="2">Casa</option>
              <option value="3">Oficina</option>
@@ -931,21 +970,21 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
           <div class="form-group col-md-6">
            <label class="col-md-12" for="example-text-input">Información inmueble</label>
            <div class="col-md-12">
-            <input id="informacionnue" name="informacionnue" type="text" class="form-control" value="" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
+            <input id="informacionnue" name="informacionnue" type="text" class="form-control" value="{{Auth::user()->numero}}" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
            </div>
           </div>
              
           <div class="form-group col-md-6">
            <label class="col-md-12" for="example-text-input">Ciudad de envio</label>
            <div class="col-md-12">
-            <input style="background:none" id="p_billing_country" name="p_billing_country" type="text" class="form-control" value="{{$nombremunicipio}}" placeholder="Código Postal" readonly>
+            <input style="background:none" id="p_billing_country" name="p_billing_country" type="text" class="form-control" value="{{$nombremunicipio}}" placeholder="Código Postal" disabled>
            </div>
           </div>
 
           <div class="form-group col-md-6">
            <label class="col-md-12" for="example-text-input">Email</label>
            <div class="col-md-12">
-            <input style="background:none" id="emailnue" name="emailnue" type="text" class="form-control" data-bind="value: Email" data-val="true" data-val-required="email is required" value="" placeholder="Email">
+            <input style="background:none" id="emailnue" name="emailnue" type="text" class="form-control" data-val="true" data-val-required="email is required" value="{{Auth::user()->email}}" placeholder="Email">
            </div>
           </div>
              
@@ -978,7 +1017,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
               @foreach($cart as $item)
                <tr>
                 <td style="width: 7%;">
-                 <img class="img-responsive" src="{{$item->image}}">
+                 <img class="img-responsive" src="/{{$item->image}}">
                 </td>
                 <td>
                  <strong style="text-transform: uppercase;">{{$item->name}}</strong><br>
@@ -1041,7 +1080,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             @else
             <input name="p_amount" id="p_amount" type="hidden" value="{{$total+$preciomunicipio}}"/>
             @endif
-            <input name="p_tax" id="p_tax" type="text" value="0"/>
+            <input name="p_tax" id="p_tax" type="hidden" value="0"/>
             @if($preciomunicipio == 0)
             <input id="p_extra2" name="p_extra2" type="hidden" class="form-control" value="{{$datos->p_municipio}}">
             @else
@@ -1049,14 +1088,15 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
             @endif
          
             <input name="p_test_request" type="hidden" value="TRUE"/>
-            <input name="p_url_response" type="hidden" value="http://pruebas.siteavanza.com/cart/responseda"/>
-            <input name="p_url_confirmation" type="hidden" value="http://pruebas.siteavanza.com/cart/responseserver"/>
+            <input name="p_url_response" type="hidden" value="{{Request::root()}}/cart/responseda"/>
+            <input name="p_url_confirmation" type="hidden" value="{{request()->getSchemeAndHttpHost()}}/cart/responseserver"/>
 
            
             <input name="p_confirm_method" type="hidden" value="POST">
             <input name="p_signature" type="hidden" id="signature" value="<?php echo $p_signature;?>"/>
             <input name="p_billing_email" type="hidden" id="p_billing_email" value="{{Auth::user()->email}}"/>
             <button data-type="submit" id="button_1" style="padding: 0; background: none; border: none; cursor: pointer;" class="epayco-button-render pull-right"><img src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/epayco/boton_de_cobro_epayco.png"></button>
+            <br><br>
        
           </div>
 
@@ -1073,8 +1113,8 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
 
           <div class="msf-navigation">
            <div class="row">
-            <div class="col-md-6 trans">
-              <div class="col-xs-3 col-sm-3 col-md-3 col-lg-1 botn">
+            <div class="col-md-12 trans">
+              <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 botn">
                <button type="button" data-type="back" class="btn btn-default msf-nav-button">
                 <i class="glyphicon glyphicon-menu-left"></i><i class="glyphicon glyphicon-menu-left"></i> Regresar
                </button>
@@ -1085,7 +1125,7 @@ $p_signature = md5($p_cust_id_cliente.'^'.$p_key.'^'.$p_id_invoice.'^'.$p_amount
                 Siguiente <i class="glyphicon glyphicon-menu-right"></i><i class="glyphicon glyphicon-menu-right"></i>
                </button>
               </div>
-           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-1 hidden-lg">
+           <div class="col-xs-3 col-sm-3 col-md-3 col-lg-1 hidden-lg hidden-md">
              <button type="submit" data-type="submit" class="msf-nav-button"></button>
             </div>
             </div>
@@ -1390,11 +1430,4 @@ $.ajax({
   }});
 });
 </script>
-
-  </body>
-</html>
-
-
-
-
 @stop

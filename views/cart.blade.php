@@ -1,7 +1,39 @@
 @extends ('LayoutsSD.Layout')
  
- @section('ContenidoSite-01')
+ @section('cabecera')
+ 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Site Digital">
+    <meta http-equiv="Cache-control" content="public">
+    <title></title>
 
+
+    @foreach($seo as $seo)
+    <link rel="canonical" href="{{$seo->canonical}}{{Request::getRequestUri()}}"/>
+    <meta property="og:locale" content="{{$seo->idioma}}">
+    <meta property="og:type" content="{{$seo->og_type}}">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="{{$seo->og_url}}">
+    <meta property="og:site_name" content="{{$seo->og_name}}">
+    <meta property="og:image" content="{{$seo->canonical}}/{{$seo->og_image}}">
+    <meta name="twitter:card" content="{{$seo->twitter_card}}"/>
+    <meta name="twitter:site" content="{{$seo->twitter_site}}" />
+    <meta name="twitter:creator" content="{{$seo->twitter_creator}}" />
+    <meta name="twitter:title" content="{{$seo->twitter_title}}" />
+    <meta name="twitter:description" content="{{$seo->twitter_description}}" />
+    <meta name="twitter:image" content="{{$seo->twitter_image}}" />
+    <link rel="shortcut icon" href="{{$seo->ico}}" type="image/icon">
+    <link rel="apple-touch-icon" href="{{$seo->icoapple}}" />
+    @endforeach
+ 
+  @stop
+ @section('ContenidoSite-01')
+<br>
    @if(count($cart))
     <section class="site-content site-section">
      <div class="container">
@@ -16,12 +48,12 @@
           <th class="text-center text-uppercase">Eliminar Producto</th>
          </tr>
         </thead>
-        
+       
         <tbody>
          @foreach($cart as $item)
           <tr>
            <td style="width: 7%;">
-            <img class="img-responsive" src="{{$item->image}}">
+            <img class="img-responsive" src="/{{$item->image}}">
            </td>
            <td>
             <strong style="text-transform: uppercase;">{{$item->name}}</strong><br>
@@ -42,7 +74,7 @@
           @else
            <td class="text-right">$ {{ number_format($item->precioinivafin,0,",",".")}}</td>
           @endif
-          
+         
           @if($item->precioivafin == $item->precioinivafin)
            <td class="text-right">$ {{ number_format ($item->precioivafin * $item->quantity,0,",",".") }}</td>
           @else
@@ -71,7 +103,7 @@
         </tbody>
        </table>
       </div>
-      
+     
       <div class="row">
        <div class="col-xs-7 col-md-3">
         <a href="{{ route('cart-trash')}}"><button type="button" class="btn btn-danger pull-left botcart"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Vaciar carrito</button></a>
@@ -85,6 +117,7 @@
       </div>
      </div>
     </section>
+    <br>
             <!-- END Shopping Cart -->
     @else
      No hay Prodcutos

@@ -362,77 +362,55 @@ public function show()
        return view('carrito::admin.crear-autor')->with('status', 'ok_create');
     }
 
-    
-    public function detalle($id){
+
+
+     public function detalle($id){
     if(!$this->tenantName){
     $productos = OrderItem::join('products','products.id','=','order_items.product_id')
     ->join('orders','orders.id','=','order_items.order_id')
     ->where('order_id', '=', $id)->get();
-    }else{
-    $productos = \DigitalsiteSaaS\Carrito\Tenant\OrderItem::join('products','products.id','=','order_items.product_id')
-    ->join('orders','orders.id','=','order_items.order_id')
-    ->where('order_id', '=', $id)->get();   
-    }
-
-    if(!$this->tenantName){
     $users = Order::where('id',  $id)->get();      
     foreach ($users as $userma){
-    if($userma->ciudad == 0){
-    $informacion = Order::where('orders.id', '=', $id)->get();
+    $usuarios = Usuario::join('order_items', 'order_items.user_id', '=', 'users.id')
+        ->join('municipios', 'municipios.id', '=', 'users.region')
+        ->join('departamentos', 'departamentos.id', '=', 'users.ciudad')
+        ->where('order_items.user_id', '=', $userma->user_id)->get();
     }
-    else{
-    $informacion = Order::join('municipios', 'municipios.id', '=', 'orders.ciudad')
-    ->join('departamentos', 'departamentos.id', '=', 'orders.departamento')
+        
+    $informacion = Order::leftJoin('municipios', 'municipios.id', '=', 'orders.ciudad')
+    ->leftJoin('departamentos', 'departamentos.id', '=', 'orders.departamento')
     ->where('orders.id', '=', $id)->get();
-     }
-    }
-    }else{
-    $users = \DigitalsiteSaaS\Carrito\Tenant\Order::where('id',  $id)->get();      
-    foreach ($users as $userma){
-    if($userma->ciudad == 0){
-    $informacion = \DigitalsiteSaaS\Carrito\Tenant\Order::where('orders.id', '=', $id)->get();
-    }
-    else{
-    $informacion = \DigitalsiteSaaS\Carrito\Tenant\Order::join('municipios', 'municipios.id', '=', 'orders.ciudad')
-    ->join('departamentos', 'departamentos.id', '=', 'orders.departamento')
-    ->where('orders.id', '=', $id)->get();
-     }
-    }
-    }
-    if(!$this->tenantName){  
+
+    $totales = Order::where('id', '=', $id)->get();
     $informacionorder = Order::where('id', '=', $id)->get();
     $datos = Order::where('id', '=', $id)->get();
-    $totales = Order::where('id', '=', $id)->get();
+
     }else{
+
+    $productos = \DigitalsiteSaaS\Carrito\Tenant\OrderItem::join('products','products.id','=','order_items.product_id')
+    ->join('orders','orders.id','=','order_items.order_id')
+    ->where('order_id', '=', $id)->get();
+    $users = \DigitalsiteSaaS\Carrito\Tenant\Order::where('id',  $id)->get();      
+    foreach ($users as $userma){
+    $usuarios = \DigitalsiteSaaS\Carrito\Tenant\Usuario::join('order_items', 'order_items.user_id', '=', 'users.id')
+        ->join('municipios', 'municipios.id', '=', 'users.region')
+        ->join('departamentos', 'departamentos.id', '=', 'users.ciudad')
+        ->where('order_items.user_id', '=', $userma->user_id)->get();
+    } 
+    $informacion = \DigitalsiteSaaS\Carrito\Tenant\Order::leftJoin('municipios', 'municipios.id', '=', 'orders.ciudad')
+    ->leftJoin('departamentos', 'departamentos.id', '=', 'orders.departamento')
+    ->where('orders.id', '=', $id)->get();
+    $totales = \DigitalsiteSaaS\Carrito\Tenant\Order::where('id', '=', $id)->get();
     $informacionorder = \DigitalsiteSaaS\Carrito\Tenant\Order::where('id', '=', $id)->get();
     $datos = \DigitalsiteSaaS\Carrito\Tenant\Order::where('id', '=', $id)->get();
-    $totales = \DigitalsiteSaaS\Carrito\Tenant\Order::where('id', '=', $id)->get();   
     }
 
-        //$envios = DB::table('orders')
-        //->join('municipios', 'municipios.municipio', '=', 'orders.ciudad')
-        //->where('orders.id', '=' , $id)->get();
-    if(!$this->tenantName){  
-        $users = Order::where('id',  $id)->get();      
-        foreach ($users as $user){
-        $usuarios = Usuario::join('order_items', 'order_items.user_id', '=', 'users.id')
-        ->join('municipios', 'municipios.id', '=', 'users.region')
-        ->join('departamentos', 'departamentos.id', '=', 'users.ciudad')
-        ->where('order_items.user_id', '=', $user->user_id)->get();
-        }
-    }else{
-        $users = \DigitalsiteSaaS\Carrito\Tenant\Order::where('id',  $id)->get();      
-        foreach ($users as $user){
-        $usuarios = \DigitalsiteSaaS\Usuario\Tenant\Usuario::join('order_items', 'order_items.user_id', '=', 'users.id')
-        ->join('municipios', 'municipios.id', '=', 'users.region')
-        ->join('departamentos', 'departamentos.id', '=', 'users.ciudad')
-        ->where('order_items.user_id', '=', $user->user_id)->get();
-        }
-    }
 
        return view('carrito::admin.detalle', compact('productos', 'usuarios', 'informacion', 'totales', 'informacionorder', 'datos'));
     }
 
+    
+    
     public function crearconfiguracion()
     {
     return redirect('gestion/carrito/configuracion');
