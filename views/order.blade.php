@@ -72,10 +72,8 @@ color:#fff;
 .botoner{padding-bottom: 15px;}
 .selector{background: #eee; border: 1px solid #f1f1f1; color: #000; font-size: 12px; margin-top: 12px}
 .botnext{margin: 20px}
-
 .btnpago{border: 2px solid #5cb85c; border-radius: 8px; color:#5cb85c; text-transform: uppercase; font-weight: 700 }
 .botn{margin: 15px}
-
 </style>
 
 
@@ -1165,7 +1163,6 @@ if($preciomunicipio == 0)
   $amount = $total+$precioenvio;
 else
 $amount = $total+$preciomunicipio;
-
 $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$currency);
 ?>
 
@@ -1216,11 +1213,11 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
 
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
     <div class="container-fluid shop">
-    <h2 class="secondary-title"><i class="fa fa-truck bg-primary"></i>  Calcular Costo Envío</h2>
-    <form action="/web/session" method="post">
-
+    <h2 class="secondary-title"><i class="fa fa-truck bg-primary"></i>  Calcular Costo Envíos</h2>
+    <form action="/web/session" method="post" name="formulario">
+<!--
       <div class="col-md-12">
-       <select id="pais" name="pais" class="form-control selector input-lg" size="1">
+       <select id="pais" name="pais" class="form-control selector input-lg" size="1" required>
         <option value="" disabled selected>Seleccione país</option>
          @foreach($categories as $category)
         <option value="{{$category->id}}">{{$category->pais}}</option>
@@ -1228,16 +1225,27 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
        </select>
       </div>
 
+
       <div class="col-md-12">
-       <select name="ciudad" id="ciudad" class="form-control selector input-lg" size="1">
+       <select name="ciudad" id="ciudad" class="form-control selector input-lg" size="1" required="">
         <option value="" disabled selected>Seleccione Departramneto</option>
          <option value="1"></option>
+        </select>
+      </div>
+-->
+
+<div class="col-md-12">
+       <select name="ciudad" id="ciudad" class="form-control selector input-lg" size="1" required="">
+        <option value="" disabled selected>Seleccione Departramneto</option>
+       @foreach($departamento as $departamento)
+         <option value="{{$departamento->id}}">{{$departamento->departamento}}</option>
+         @endforeach
         </select>
       </div>
 
       <div class="col-md-12">
        <div class="form-group">
-        <select name="municipio" id="municipio" class="form-control selector input-lg" size="1">
+        <select name="municipio" id="municipio" class="form-control selector input-lg" size="1" required="">
          <option value="" disabled selected>Seleccione Ciudad o Municipio</option>
          <option value="1"></option>
         </select>
@@ -1332,7 +1340,6 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
     <script type="text/javascript">
         function ViewModel() {
             var self = this;
-
             self.Name = ko.observable('');
             self.Lastname = ko.observable('');
             self.Email = ko.observable('');
@@ -1343,28 +1350,18 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
             self.Descripcion = ko.observable('');
             self.Inmueble = ko.observable('');
             self.Telefono = ko.observable('');
-
-
             self.AdditionalDetails = ko.observable('');
             self.availableTypes = ko.observableArray(['New', 'Open', 'Closed']);
             self.chosenType = ko.observable('');
-
             self.availableCountries = ko.observableArray(['France', 'Germany', 'Spain', 'United States', 'Mexico']),
             self.chosenCountries = ko.observableArray([]) // Initially, only Germany is selected
-
-
         }
-
         var viewModel = new ViewModel();
-
         ko.applyBindings(viewModel);
-
         $(document).on("msf:viewChanged", function(event, data){
             var progress = Math.round((data.completedSteps / data.totalSteps)*100);
-
             $(".progress-bar").css("width", progress + "%").attr('aria-valuenow', progress);   ;
         });
-
         $(".msf:first").multiStepForm({
             activeIndex: 0,
             validate: {},
@@ -1378,14 +1375,11 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
      
       $('#pais').on('change',function(e){
         console.log(e);
-
         var cat_id = e.target.value;
-
         $.get('/memo/ajax-subcatweb?cat_id=' + cat_id, function(data){
             $('#ciudad').empty();
             $.each(data, function(index, subcatObj){
               $('#ciudad').append('<option value="" style="display:none">Seleccione Ciudad</option>','<option value="'+subcatObj.id+'">'+subcatObj.departamento+'</option>' );
-
             });
         });
       });
@@ -1396,14 +1390,11 @@ $signature = md5($api_key.'~'.$merchantId.'~'.$referenceCode.'~'.$amount.'~'.$cu
      
       $('#ciudad').on('change',function(e){
         console.log(e);
-
         var cat_id = e.target.value;
-
         $.get('/mema/ajax-subcatweb?cat_id=' + cat_id, function(data){
             $('#municipio').empty();
             $.each(data, function(index, subcatObj){
               $('#municipio').append('<option value="" style="display:none">Seleccione Municipio</option>','<option value="'+subcatObj.id+'">'+subcatObj.municipio+'</option>');
-
             });
         });
       });
@@ -1425,9 +1416,37 @@ $.ajax({
     web:window.location.href,informacionnue:$('#informacionnue').val(),
     web:window.location.href,emailnue:$('#emailnue').val(),
     web:window.location.href,p_billing_country:$('#p_billing_country').val(),
-
-
   }});
 });
 </script>
+
+<script language="JavaScript">
+//controlar el envío del formulario
+  window.addEventListener("load",function(){
+    formulario = document.formulario;
+    municipio = document.formulario.municipio;
+    campoError = document.getElementById("error");
+    
+    municipio.addEventListener("input",function(){
+      campoError.innerHTML= "";
+    });
+    municipio.addEventListener("change",envioAutomatico);
+  });
+
+  function enviarFormulario(e){
+    e = e || window.event;  //compatibilidad explorer
+    if(municipio.value==""){ 
+      e.preventDefault(); // parar la ejecución por defecto del evento.
+      campoError.innerHTML ="rellene este campo";
+    }else{
+      console.log("se ha procedio al envío del formulario");
+    };
+  };
+
+  function envioAutomatico(){
+    formulario.addEventListener("submit",enviarFormulario);
+    formulario.submit();
+  }
+</script>"
+
 @stop

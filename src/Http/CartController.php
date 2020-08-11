@@ -273,6 +273,7 @@ return Redirect('/cart/show');
 
 public function orderDetail(){
 if(!$this->tenantName){
+$departamento = Departamento::all();
 $seo = Seo::where('id','=',1)->get();
 $price = Order::max('id');
 $suma = $price + 1;
@@ -296,6 +297,7 @@ $orderold  = Order::where('user_id', '=', Auth::user()->id)->get();
 $categories = Pais::all();
 $ordenes = Order::where('user_id', '=' ,Auth::user()->id)->where('estado', '=', 'PENDING')->get();
 }else{
+$departamento = \DigitalsiteSaaS\Pagina\Tenant\Departamento::all();
 $seo = \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get();
 $price = \DigitalsiteSaaS\Carrito\Tenant\Order::max('id');
 $suma = $price + 1;
@@ -319,7 +321,7 @@ $orderold  = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=', Auth::
 $categories = \DigitalsiteSaaS\Carrito\Tenant\Pais::all();
 $ordenes = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=' ,Auth::user()->id)->where('estado', '=', 'PENDING')->get();
 }
-return view('carrito::order', compact('cart', 'total', 'subtotal', 'plantilla', 'menu','configuracion','price','suma', 'orderold', 'iva', 'descuento', 'costoenvio', 'categories', 'precioenvio', 'preciomunicipio', 'datos', 'plantillaes', 'nombremunicipio', 'ordenes', 'seo'));
+return view('carrito::order', compact('cart', 'total', 'subtotal', 'plantilla', 'menu','configuracion','price','suma', 'orderold', 'iva', 'descuento', 'costoenvio', 'categories', 'precioenvio', 'preciomunicipio', 'datos', 'plantillaes', 'nombremunicipio', 'ordenes', 'seo','departamento'));
 
 }
 
