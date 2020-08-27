@@ -297,7 +297,7 @@ $orderold  = Order::where('user_id', '=', Auth::user()->id)->get();
 $categories = Pais::all();
 $ordenes = Order::where('user_id', '=' ,Auth::user()->id)->where('estado', '=', 'PENDING')->get();
 }else{
-$departamento = \DigitalsiteSaaS\Pagina\Tenant\Departamento::all();
+$departamento = \DigitalsiteSaaS\Carrito\Tenant\Departamento::all();
 $seo = \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get();
 $price = \DigitalsiteSaaS\Carrito\Tenant\Order::max('id');
 $suma = $price + 1;
