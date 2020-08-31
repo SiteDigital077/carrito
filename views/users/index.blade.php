@@ -29,6 +29,9 @@
        <a href="/gestion/carrito/crearconfiguracion"><i class="fa fa-clipboard"></i>Configurar</a>
       </li>
       <li>
+       <a href="/gestion/carrito/verparametro"><i class="fa fa-clipboard"></i>Parametro</a>
+      </li>
+      <li>
        <a href="/gestion/carrito/terminos"><i class="fa fa-clipboard"></i>Terminos y condiciones</a>
       </li>
      </ul>

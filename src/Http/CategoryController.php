@@ -9,6 +9,7 @@ use DigitalsiteSaaS\Carrito\Category;
 use DigitalsiteSaaS\Carrito\Categoria;
 use DigitalsiteSaaS\Carrito\Order;
 use DigitalsiteSaaS\Carrito\Autor;
+use DigitalsiteSaaS\Carrito\Parametro;
 use DigitalsiteSaaS\Carrito\Product;
 use DigitalsiteSaaS\Carrito\OrderItem;
 use DigitalsiteSaaS\Carrito\Configuracion;
@@ -118,6 +119,14 @@ public function show()
     }
 
 
+      public function verparametros(){
+      if(!$this->tenantName){
+       $parametros = Parametro::all();
+       }else{
+       $parametros = \DigitalsiteSaaS\Carrito\Tenant\Parametro::all();
+       } 
+       return View('carrito::admin.verparametros')->with('parametros', $parametros);
+    }
 
 
 
@@ -163,6 +172,18 @@ public function show()
     $categoria->categoriapro_id = Input::get('categoriapro');
     $categoria->save();
         return redirect('/gestion/carrito/subcategorias/'.$categoria->categoriapro_id)->with('status', 'ok_create');
+    }
+
+
+     public function parametros(){
+    if(!$this->tenantName){
+    $categoria = new Parametro;
+    }else{
+    $categoria = new \DigitalsiteSaaS\Carrito\Tenant\Parametro;   
+    }
+    $categoria->parametro = Input::get('parametro');
+    $categoria->save();
+        return redirect('/gestion/carrito/verparametros')->with('status', 'ok_create');
     }
 
     public function versubcategorias($id){
@@ -236,6 +257,18 @@ public function show()
     return Redirect('/gestion/carrito/autores')->with('status', 'ok_update');;
     }
 
+    public function actualizarparametro($id){
+    $input = Input::all();
+    if(!$this->tenantName){
+    $autor = Parametro::find($id);
+    }else{
+    $autor = \DigitalsiteSaaS\Carrito\Tenant\Parametro::find($id);   
+    }
+    $autor->parametro = Input::get('parametro');
+    $autor->save();
+    return Redirect('/gestion/carrito/verparametro')->with('status', 'ok_update');;
+    }
+
 
     public function editarcategoriawebproducto($id){
     $input = Input::all();
@@ -285,6 +318,16 @@ public function show()
       return Redirect('/gestion/carrito/autores')->with('status', 'ok_delete');;
     }
 
+     public function parametroeliminar($id){
+      if(!$this->tenantName){
+      $autor = Parametro::find($id);
+      }else{
+      $autor = \DigitalsiteSaaS\Carrito\Tenant\Parametro::find($id); 
+      }
+      $autor->delete();
+      return Redirect('/gestion/carrito/verparametro')->with('status', 'ok_delete');;
+    }
+
 
     public function editarcategoria($id){
     if(!$this->tenantName){
@@ -314,6 +357,15 @@ public function show()
     $autores = \DigitalsiteSaaS\Carrito\Tenant\Autor::where('id', '=', $id)->get();
     }
     return view('carrito::admin.editarautor', compact('autores'));
+    }
+
+    public function parametroeditar($id){
+    if(!$this->tenantName){   
+    $parametros = Parametro::where('id', '=', $id)->get();
+    }else{
+    $parametros = \DigitalsiteSaaS\Carrito\Tenant\Parametro::where('id', '=', $id)->get();
+    }
+    return view('carrito::admin.editarparametro', compact('parametros'));
     }
 
     public function actualizar($id){

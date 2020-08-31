@@ -164,13 +164,9 @@
                                              </div>
                                         </div>
 
-                                  
-                                         
-                                  <!-- 
-
 
                                       <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-text-input">Grado</label>
+                                            <label class="col-md-3 control-label" for="example-text-input">Parametro</label>
                                             <div class="col-md-9">
                                                 <select name="parametro" class="form-control">
                                                    <option value="{{$productos->parametro_id}}" selected="selected">{{$productos->parametro}}</option>
@@ -180,11 +176,8 @@
                                                 </select>
                                             </div>
                                         </div>
-                                      -->
+                                  
                                     
-
-
-
                                           <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-text-input">Autor</label>
                                             <div class="col-md-9">

@@ -111,6 +111,8 @@ Route::group(['middleware' => ['auths','administrador']], function (){
 
 Route::get('gestion/carrito/autores', 'DigitalsiteSaaS\Carrito\Http\CategoryController@webautores');
 
+Route::get('gestion/carrito/verparametro', 'DigitalsiteSaaS\Carrito\Http\CategoryController@verparametros');
+
 Route::get('gestion/carrito/subcategorias/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@versubcategorias');
 
 
@@ -118,6 +120,11 @@ Route::get('gestion/carrito/subcategorias/{id}', 'DigitalsiteSaaS\Carrito\Http\C
 Route::get('/gestion/carrito/crear-subcategoria/{id}', function(){
  
     return View::make('carrito::admin.crear-subcategoria');
+});
+
+Route::get('/gestion/carrito/parametro', function(){
+ 
+    return View::make('carrito::admin.parametro');
 });
 
 
@@ -132,12 +139,14 @@ Route::get('gestion/carrito/categorias', 'DigitalsiteSaaS\Carrito\Http\CategoryC
 Route::get('gestion/carrito/createca', 'DigitalsiteSaaS\Carrito\Http\CategoryController@createca');
 Route::get('gestion/carrito/terminos', 'DigitalsiteSaaS\Carrito\Http\CategoryController@terminos');
 Route::post('gestion/carrito/createcategoria', 'DigitalsiteSaaS\Carrito\Http\CategoryController@createcategoria');
+Route::post('gestion/carrito/parametros', 'DigitalsiteSaaS\Carrito\Http\CategoryController@parametros');
 Route::post('gestion/carrito/createcategoriaproductos', 'DigitalsiteSaaS\Carrito\Http\CategoryController@createcategoriaproductos');
 Route::post('gestion/carrito/creacionautor', 'DigitalsiteSaaS\Carrito\Http\CategoryController@creacionautor');
 Route::get('gestion/carrito/editarcategoria/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@editarcategoria');
 Route::get('gestion/carrito/editarcategoriaproducto/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@editarcategoriaproducto');
 Route::resource('gestion/carrito/actualizar', 'DigitalsiteSaaS\Carrito\Http\CategoryController@actualizar');
 Route::post('gestion/carrito/actualizarautor/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@actualizarautor');
+Route::post('gestion/carrito/actualizarparametro/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@actualizarparametro');
 Route::get('gestion/carrito/eliminar/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@eliminar');
 Route::get('gestion/carrito/eliminarproducto/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@eliminarproducto');
 Route::get('gestion/carrito/epayco', 'DigitalsiteSaaS\Carrito\Http\CategoryController@epayco');
@@ -150,8 +159,12 @@ Route::get('gestion/carrito/crearconfiguraciontienda', 'DigitalsiteSaaS\Carrito\
 Route::post('gestion/carrito/crearconfiguracionepayco', 'DigitalsiteSaaS\Carrito\Http\CategoryController@crearconfiguracionepayco');
 Route::post('gestion/carrito/crearconfiguracionplace', 'DigitalsiteSaaS\Carrito\Http\CategoryController@crearconfiguracionplace');
 Route::get('gestion/autor/editar/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@autoreditar');
+Route::get('gestion/parametro/editar/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@parametroeditar');
+
 
 Route::get('gestion/autor/eliminar/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@autoreliminar');
+
+Route::get('gestion/parametro/eliminar/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@parametroeliminar');
 
 Route::resource('gestion/productos', 'DigitalsiteSaaS\Carrito\Http\ProductoController');
 Route::get('gestion/productos/digitales/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@digitales');

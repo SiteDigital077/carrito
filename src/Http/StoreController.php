@@ -79,7 +79,7 @@ if($cart == null){}
     {
         if(!$this->tenantName){
         $plantilla = \DigitalsiteSaaS\Pagina\Template::all();
-        $menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
+        $menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'asc')->get();
         $total = $this->total();
         $subtotal = $this->subtotal();
         $cart = session()->get('cart');
@@ -93,7 +93,7 @@ if($cart == null){}
         $products = Product::inRandomOrder()->take(4)->get();
         }else{
         $plantilla = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
-        $menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
+        $menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'asc')->get();
         $total = $this->total();
         $subtotal = $this->subtotal();
         $seo =  \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get(); 

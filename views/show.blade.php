@@ -83,7 +83,7 @@
  
   @stop
     @section('ContenidoSite-01')
->
+
 
 <div class="container" style="padding: 10px 0px 30px 0px">
 <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
@@ -126,7 +126,7 @@
 @if($product->position == 0)
 <a href="{{ route('cart-add', $product->slug)}}" class="btn btn-primary btn-lg">Agregar al carrito</a>
 @else
-<a class="btn btn-danger" disabled>No disponible</a>
+<a class="btn btn-danger btn-lg" disabled>No disponible</a>
 @endif
 <br><br>
 <p>
@@ -142,9 +142,25 @@ Categoria:
 @endif
 @endforeach
 </p>
+<br>
+@if($product->pinterest == '')
+@else
+<a href="{{$product->pinterest}}" target="_blank" style="background: #bb081d; padding:12px 15px;border-radius: 5px; color: #fff"><i class="fab fa-pinterest-p"></i></a>
+@endif
+@if($product->facebook == '')
+@else
+<a href="{{$product->facebook}}" target="_blank" style="background: #4267b2; padding:12px 16px;border-radius: 5px; color: #fff"><i class="fab fa-facebook-f"></i></a>
+@endif
+@if($product->instagram == '')
+@else
+<a href="{{$product->instagram}}" target="_blank" style="background: #9d36c1; padding:12px 16px;border-radius: 5px; color: #fff"><i class="fab fa-instagram"></i></a>
+@endif
+@if($product->youtube == '')
+@else
+<a href="{{$product->youtube}}" target="_blank" style="background: #ff0000; padding:12px;border-radius: 5px; color: #fff"><i class="fab fa-youtube"></i></a>
+@endif
 </div>
 </div>
-
 
 <style type="text/css">
   .product-grid{
@@ -256,10 +272,26 @@ Categoria:
     .product-grid{ margin: 0 0 30px; }
 }
 </style>
-
-    <div class="container">
+<div class="container">
+<div class="row">
+ 
        @foreach($products as $product)
-
+      @if($product->position == '1')
+        <div class="col-md-3 col-sm-6">
+            <div class="product-grid">
+                <div class="product-image">
+                 
+                        <img class="pic-1 img-responsive" src="/{{$product->image}}">
+                        <span style="margin-top:-190px; position: absolute; margin-left:0px; text-align: center; color: #000; font-weight:bold; background: white; padding: 20px 100px">AGOTADO</span>
+                   
+                </div>
+                <div class="product-content">
+                    <h3 class="title text-primary"><a class="text-primary" href="#"><span class="text-primary">{{$product->name}}</span></a></h3>
+                    <div class="price">${{number_format($product->precioinivafin,0,",",".")}}</div>
+                </div>
+            </div>
+        </div>
+        @else
         <div class="col-md-3 col-sm-6">
             <div class="product-grid">
                 <div class="product-image">
@@ -277,10 +309,12 @@ Categoria:
                 </div>
             </div>
         </div>
-     
+        @endif
             @endforeach
+              </div>
+</div>
 
-        </div>
+       
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.5.1/croppie.js"></script>
 <script type="text/javascript">
@@ -536,6 +570,3 @@ $("#pic").zoomIt({
 </script>
 
 @stop
-
-
-

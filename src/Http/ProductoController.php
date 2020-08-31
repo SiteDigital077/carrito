@@ -132,6 +132,10 @@ class ProductoController extends Controller{
     $categoria->position = Input::get('posicion');
     $categoria->stock = Input::get('stock');
     $categoria->responsive = Input::get('responsive');
+    $categoria->facebook = Input::get('facebook');
+    $categoria->pinterest = Input::get('pinterest');
+    $categoria->youtube = Input::get('youtube');
+    $categoria->instagram = Input::get('instagram');
     $categoria->animacion = Input::get('animacion');
     $categoria->ano = Input::get('ano');
     $categoria->referencia = Input::get('referencia');
@@ -168,6 +172,10 @@ class ProductoController extends Controller{
     $categoria->position = Input::get('posicion');
     $categoria->stock = Input::get('stock');
     $categoria->responsive = Input::get('responsive');
+    $categoria->facebook = Input::get('facebook');
+    $categoria->pinterest = Input::get('pinterest');
+    $categoria->youtube = Input::get('youtube');
+    $categoria->instagram = Input::get('instagram');
     $categoria->animacion = Input::get('animacion');
 
     $categoria->ano = Input::get('ano');

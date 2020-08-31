@@ -108,7 +108,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-text-input">Cantidad Stock</label>
                                             <div class="col-md-9">
-                                                {{Form::text('stock', '', array('class' => 'form-control','placeholder'=>'Ingrese PCantidad Stock'))}}
+                                                {{Form::text('stock', '', array('class' => 'form-control','placeholder'=>'Ingrese Cantidad Stock'))}}
                                             </div>
                                         </div>
 
@@ -162,22 +162,19 @@
                                         {{Form::hidden('categoriapro', $categoria->categoriapro_id, array('class' => 'form-control','placeholder'=>'Ingrese Iva'))}}
                                         @endforeach
 
-                                        
-                                       
-                                        <!-- 
 
                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-text-input">Grado</label>
+                                            <label class="col-md-3 control-label" for="example-text-input">Parametro</label>
                                             <div class="col-md-9">
                                                 <select name="parametro" class="form-control" required>
-                                                   <option value="" selected="selected" disabled>Seleccione grado</option>
+                                                   <option value="" selected="selected" disabled>Seleccione parametro</option>
                                                   @foreach($parametros as $parametros)
                                                  <option value="{{$parametros->id}}">{{$parametros->parametro}}</option>
                                                   @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                        -->
+                                
 
                                           <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-text-input">Autor</label>
