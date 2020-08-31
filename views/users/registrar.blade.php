@@ -50,39 +50,9 @@
                      
 
                             <div class="container-fluid">
-                                 
-                            <div class="container-fluid">                                            
-                            <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Tipo Documento</label>
-                                            <div class="col-md-12">
-                                               <select id="example-select" name="tdocumento" class="form-control" size="1">
-                                                    <option value="" selected>Seleccione tipo documento</option>
-                                                    <option value="1">Cédula ciudadania</option>
-                                                    <option value="2">Cédula extranjeria</option>
-                                                    <option value="3">RUT</option>
-                                                    <option value="4">Tarjeta identidad</option>
-                                                    <option value="5">Pasaporte</option>
-                                                    <option value="6">NIT</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                             <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Documento</label>
-                                            <div class="col-md-12">
-                                                <input type="text"  name="documento" class="form-control" placeholder="Ingrese documento">
-                                            </div>
-                                        </div>
-
-                             </div>          
-
+                            
                              <div class="container-fluid">
-                            <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Compañía</label>
-                                            <div class="col-md-12">
-                                                <input type="text" name="compania" class="form-control" placeholder="Ingrese Compañía">
-                                            </div>
-                                        </div>
+                        
 
 
                             <div class="form-group col-md-6">
@@ -91,15 +61,17 @@
                                                 <input type="text" name="name" class="form-control" placeholder="Ingrese nombre">
                                             </div>
                                         </div>
-                            </div>
 
-                            <div class="container-fluid">
                              <div class="form-group col-md-6">
                                             <label class="col-md-12" for="example-text-input">Apellido</label>
                                             <div class="col-md-12">
                                                 <input type="text" name="last_name" class="form-control" placeholder="Ingrese apellido">
                                             </div>
                                         </div>
+                            </div>
+
+                            <div class="container-fluid">
+                             
 
                               <div class="form-group col-md-6">
                                             <label class="col-md-12" for="example-text-input">Email</label>
@@ -107,88 +79,27 @@
                                                 <input type="email" name="email" class="form-control" placeholder="Ingrese email">
                                             </div>
                                         </div>
-
-                               </div>        
-
-
-                               <div class="container-fluid">
-                              <div class="form-group col-md-6">
+                                  <div class="form-group col-md-6">
                                             <label class="col-md-12" for="example-text-input">Teléfono</label>
                                             <div class="col-md-12">
                                                 <input type="phone" name="phone" class="form-control" placeholder="Ingrese teléfono">
                                             </div>
                                         </div>
 
-                              <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Celular</label>
-                                            <div class="col-md-12">
-                                                <input type="phone"  name="celular" class="form-control" placeholder="Ingrese celular">
-                                            </div>
-                                        </div>          
-                              </div>
+                               </div> 
 
-                              <div class="container-fluid">
-                              <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Fax</label>
-                                            <div class="col-md-12">
-                                                <input type="phone" name="fax" class="form-control" placeholder="Ingrese fax">
-                                            </div>
-                                        </div>
-
-                              <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Dirección</label>
-                                            <div class="col-md-12">
-                                                <input type="text"  name="address" class="form-control" placeholder="Ingrese dirección">
-                                            </div>
-                                        </div>
-
-                             </div>
                               <div class="container-fluid">
 
                                  <div class="form-group col-md-6">
-                                             <label class="col-md-12" for="example-text-input">Inmueble</label>
-                                            <div class="col-md-12">
-                                               <select name="inmueble" class="form-control" size="1">
-                                                    <option selected disabled>Seleccionar tipo de inmueble</option>
-                                                    <option value="1">Apartamento</option>
-                                                    <option value="2">Casa</option>
-                                                    <option value="3">Oficina</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                              <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Número inmueble</label>
-                                            <div class="col-md-12">
-                                                <input type="text" name="numero" class="form-control" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
-                                            </div>
-                                        </div>
-                              </div>
-
-                             <div class="container-fluid">
-                              <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Pais</label>
-                                            <div class="col-md-12">
-                                               <select id="pais" name="pais" class="form-control" size="1">
-                                              <option value="" disabled selected>Seleccione región</option>
-                                             @foreach($categories as $category)
-                                              <option value="{{$category->id}}">{{$category->pais}}</option>
-                                             @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                     
-                                        <div class="form-group col-md-6">
                                             <label class="col-md-12" for="example-text-input">Ciudad</label>
                                             <div class="col-md-12">
                                                <select name="ciudad" id="ciudad" class="form-control" size="1">
-                                                    <option></option>
+                                                @foreach($ciudades as $ciduades)
+                                                    <option value="{{$ciduades->id}}">{{$ciduades->departamento}}</option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                </div>  
-
-                                <div class="container-fluid">
 
                                         <div class="form-group col-md-6">
                                             <label class="col-md-12" for="example-text-input">Municipio</label>
@@ -198,18 +109,8 @@
                                                 </select>
                                             </div>
                                         </div>
-
-                                 
-                             
-
-                              <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Código zip</label>
-                                            <div class="col-md-12">
-                                                <input type="text"  name="codigo" class="form-control" placeholder="Ingrese codigo zip">
-                                            </div>
-                                        </div>
                                          
-                                      </div>
+                                      </div>      
 
                                    <div class="container-fluid">  
                                      <div class="form-group col-md-6">
@@ -281,25 +182,20 @@
 </div>
 
 
-<script type="text/javascript">
-     
-      $('#pais').on('change',function(e){
-        console.log(e);
-
-        var cat_id = e.target.value;
-
-        $.get('/memo/ajax-subcatweb?cat_id=' + cat_id, function(data){
-            $('#ciudad').empty();
-            $.each(data, function(index, subcatObj){
-              $('#ciudad').append('<option value="" style="display:none">Seleccione Ciudad</option>','<option value="'+subcatObj.id+'">'+subcatObj.departamento+'</option>' );
-
-            });
-        });
-      });
-   </script>  
 
 
-   <script type="text/javascript">
+
+
+
+
+
+ <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+ {{ Html::script('Usuario/js/registro.js') }}
+  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }}
+
+ <script type="text/javascript">
      
       $('#ciudad').on('change',function(e){
         console.log(e);
@@ -315,20 +211,6 @@
         });
       });
    </script>  
-
-
-
-
-
-
-
- <!-- Include all compiled plugins (below), or include individual files as needed -->
-
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
- {{ Html::script('Usuario/js/registro.js') }}
-  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }}
-
-
 
 
 @stop

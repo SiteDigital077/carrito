@@ -13,6 +13,7 @@ use Hyn\Tenancy\Models\Hostname;
 use Hyn\Tenancy\Models\Website;
 use Hyn\Tenancy\Repositories\HostnameRepository;
 use Hyn\Tenancy\Repositories\WebsiteRepository;
+use DigitalsiteSaaS\Pagina\Seo;
 
 
 
@@ -87,21 +88,25 @@ if($cart == null){}
         $autoresweb = DB::table('autor')->get();
     	$product = Product::where('slug', $slug)->first();
         $categoriapro = DB::table('categoriapro')->get();
-         $categoriessd = DB::table('categoriessd')->get();
+        $categoriessd = DB::table('categoriessd')->get();
+        $seo = Seo::where('id','=',1)->get();
+        $products = Product::inRandomOrder()->take(4)->get();
         }else{
         $plantilla = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
         $menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
         $total = $this->total();
         $subtotal = $this->subtotal();
+        $seo =  \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get(); 
         $cart = session()->get('cart');
         $url = DB::table('configuracion')->where('id', '=', 1)->get();
         $autores = \DigitalsiteSaaS\Carrito\Tenant\Autor::all();
         $autoresweb = Autor::all();
         $product = \DigitalsiteSaaS\Carrito\Tenant\Product::where('slug', $slug)->first();
         $categoriapro = DB::table('categoriapro')->get();
-         $categoriessd = DB::table('categoriessd')->get();  
+        $products = \DigitalsiteSaaS\Pagina\Tenant\Product::inRandomOrder()->take(4)->get();
+        $categoriessd = DB::table('categoriessd')->get();  
         }
-    	return view('carrito::show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd'));
+    	return view('carrito::show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products'));
     }
 
 

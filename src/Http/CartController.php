@@ -1754,6 +1754,7 @@ $total = $this->total();
 $subtotal = $this->subtotal();
 $menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
 $categories = Pais::all();
+$ciudades = Departamento::all();
 $colors = DB::table('colors')->get();
 }else{
   $seo = \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get();
@@ -1764,10 +1765,11 @@ $cart = session()->get('cart');
 $total = $this->total();
 $subtotal = $this->subtotal();
 $menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
+$ciudades = \DigitalsiteSaaS\Carrito\Tenant\Departamento::all();
 $categories = \DigitalsiteSaaS\Carrito\Tenant\Pais::all();
 $colors = DB::table('colors')->get();
 }
-return view('carrito::users.registrar')->with('plantilla', $plantilla)->with('plantillaes', $plantillaes)->with('menu', $menu)->with('cart', $cart)->with('total', $total)->with('subtotal', $subtotal)->with('categories', $categories)->with('terminos', $terminos)->with('colors', $colors)->with('seo', $seo);
+return view('carrito::users.registrar')->with('plantilla', $plantilla)->with('plantillaes', $plantillaes)->with('menu', $menu)->with('cart', $cart)->with('total', $total)->with('subtotal', $subtotal)->with('categories', $categories)->with('terminos', $terminos)->with('colors', $colors)->with('seo', $seo)->with('ciudades', $ciudades);
 
    
 

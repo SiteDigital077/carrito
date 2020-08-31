@@ -225,6 +225,34 @@
                                             </div>
                                         </div>
 
+                                          <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Facebook</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('facebook', $productos->facebook, array('class' => 'form-control','placeholder'=>'Ingrese Facebook'))}}
+                                            </div>
+                                        </div>
+
+                                         <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Youtube</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('youtube', $productos->youtube, array('class' => 'form-control','placeholder'=>'Ingrese Youtube'))}}
+                                            </div>
+                                        </div>
+
+                                         <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Pinterest</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('pinterest', $productos->pinterest, array('class' => 'form-control','placeholder'=>'Ingrese Pinterest'))}}
+                                            </div>
+                                        </div>
+
+                                         <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Instagram</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('instagram', $productos->instagram, array('class' => 'form-control','placeholder'=>'Ingrese instagram'))}}
+                                            </div>
+                                        </div>
+
                                 
                                          
                                            <input type="hidden" name="peca" value="{{Request::segment(4)}}"></input>

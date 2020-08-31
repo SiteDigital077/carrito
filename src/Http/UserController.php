@@ -175,18 +175,16 @@ public function crear() {
     $user->password = Hash::make($password);
     $user->remember_token = Hash::make($remember);
     $user->save();
-
+/*
      $datas = DB::table('datos')->where('id','1')->get();
         foreach ($datas as $userma){
             Mail::to(Input::get('email'))
                 ->bcc($userma->correo)
                 ->send(new Registroecommerce($user));
+*/
+    return Redirect('cart/detail')->with('status', 'ok_create');
+  }  
 
-    return Redirect('cart/detail')->with('status', 'ok_create');}  
-
-
-
-    }  
 
 
     public function editar($id){

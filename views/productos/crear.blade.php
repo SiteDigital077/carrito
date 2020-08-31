@@ -156,6 +156,8 @@
                                              </div>
                                         </div>
 
+                
+
                                         @foreach($categoria as $categoria)
                                         {{Form::hidden('categoriapro', $categoria->categoriapro_id, array('class' => 'form-control','placeholder'=>'Ingrese Iva'))}}
                                         @endforeach
@@ -216,6 +218,34 @@
                                             <label class="col-md-3 control-label" for="example-password-input">Responsive</label>
                                             <div class="col-md-9">
                                                  {{Form::text('responsive', 'col-xs-12 col-sm-12 col-md-12 col-lg-12', array('class' => 'form-control','placeholder'=>'Ingrese responsive'))}}
+                                            </div>
+                                        </div>
+
+                                          <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Facebook</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('facebook', '', array('class' => 'form-control','placeholder'=>'Ingrese Facebook'))}}
+                                            </div>
+                                        </div>
+
+                                         <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Youtube</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('youtube', '', array('class' => 'form-control','placeholder'=>'Ingrese Youtube'))}}
+                                            </div>
+                                        </div>
+
+                                         <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Pinterest</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('pinterest', '', array('class' => 'form-control','placeholder'=>'Ingrese Pinterest'))}}
+                                            </div>
+                                        </div>
+
+                                         <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Instagram</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('instagram', '', array('class' => 'form-control','placeholder'=>'Ingrese instagram'))}}
                                             </div>
                                         </div>
 
