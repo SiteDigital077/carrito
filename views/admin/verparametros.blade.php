@@ -61,7 +61,7 @@
 
 
 <div class="container">
-<a href="/gestion/carrito/verparametro" class="btn btn-primary pull-right">Crear Parametro</a>
+<a href="/gestion/carrito/parametro" class="btn btn-primary pull-right">Crear Parametro</a>
 <br>
 <br>
 <br>

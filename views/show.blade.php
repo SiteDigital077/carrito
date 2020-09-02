@@ -143,12 +143,28 @@ Categoria:
 @endforeach
 </p>
 <br>
+
+</div>
+
+
+ <div class="social-container">
+ <div class="links">
+ <a href="#" data-type="twitter" data-url="{{Request::fullUrl()}}" data-description="Exoticflowers, {!!$product->name!!}" data-via="exoticflowers" class="prettySocial fab fa-twitter" style="background: #00a2f3; padding:12px 14px;border-radius: 5px; color: #fff"></a>
+ 
+ <a href="#" data-type="facebook" data-url="{{Request::fullUrl()}}" data-title="prettySociales - botones para compartir personalizados" data-description="Crear botones personalizados para compartir en redes sociales" data-media="https://266k5u37o382101kj1e1cy2g-wpengine.netdna-ssl.com/wp-content/uploads/2018/05/corteza-de-coco-510x510.jpg?v=1572975958" class="prettySocial fab fa-facebook-f" style="background: #4267b2; padding:12px 16px;border-radius: 5px; color: #fff"></a>
+ 
+ <a href="#" data-type="pinterest" data-url="{{Request::fullUrl()}}" data-description="Crear botones personalizados para compartir en redes sociales" data-media="http://sonnyt.com/assets/imgs/prettySocial.png" class="prettySocial fab fa-pinterest-p" style="background: #bb081d; padding:12px 16px;border-radius: 5px; color: #fff"></a>
+ 
+
+ </div>
+
 @if($product->pinterest == '')
 @else
 <a href="{{$product->pinterest}}" target="_blank" style="background: #bb081d; padding:12px 15px;border-radius: 5px; color: #fff"><i class="fab fa-pinterest-p"></i></a>
 @endif
 @if($product->facebook == '')
 @else
+
 <a href="{{$product->facebook}}" target="_blank" style="background: #4267b2; padding:12px 16px;border-radius: 5px; color: #fff"><i class="fab fa-facebook-f"></i></a>
 @endif
 @if($product->instagram == '')
@@ -314,8 +330,14 @@ Categoria:
               </div>
 </div>
 
-       
+ 
+<script type="text/javascript" src="https://sonnyt.com/prettySocial/jquery.prettySocial.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+  $('.prettySocial').prettySocial();
+})    
 
+</script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.5.1/croppie.js"></script>
 <script type="text/javascript">
   //zoomIn.js
@@ -570,3 +592,4 @@ $("#pic").zoomIt({
 </script>
 
 @stop
+

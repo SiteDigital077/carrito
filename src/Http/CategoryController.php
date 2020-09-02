@@ -183,7 +183,7 @@ public function show()
     }
     $categoria->parametro = Input::get('parametro');
     $categoria->save();
-        return redirect('/gestion/carrito/verparametros')->with('status', 'ok_create');
+        return redirect('/gestion/carrito/verparametro')->with('status', 'ok_create');
     }
 
     public function versubcategorias($id){
