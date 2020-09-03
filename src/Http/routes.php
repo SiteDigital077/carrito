@@ -198,16 +198,8 @@ Route::get('memo/ajax-subcatweb', 'DigitalsiteSaaS\Carrito\Http\CartController@w
 Route::get('mema/ajax-subcatweb', 'DigitalsiteSaaS\Carrito\Http\CartController@webmunicipios');
 
 
+Route::get('memaproducts/ajax-subcatweb', 'DigitalsiteSaaS\Carrito\Http\CartController@filtrowe');
 
-
-
-
-Route::get('/memaproducts/ajax-subcatweb',function(){
-
-        $cat_id = Input::get('cat_id');
-        $subcategories = DigitalsiteSaaS\Carrito\Category::where('categoriapro_id', '=', $cat_id)->get();
-        return Response::json($subcategories);
-});
 
 
 

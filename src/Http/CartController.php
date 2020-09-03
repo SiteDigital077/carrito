@@ -1822,6 +1822,20 @@ if(!$this->tenantName){
         return Response::json($subcategories);
 }
 
+public function filtrowe()
+{
+$cat_id = Input::get('cat_id');
+if(!$this->tenantName){
+       $subcategories = \DigitalsiteSaaS\Carrito\Category::where('categoriapro_id', '=', $cat_id)->get();
+    }else{
+    $subcategories = \DigitalsiteSaaS\Carrito\Tenant\Category::where('categoriapro_id', '=', $cat_id)->get();
+    }
+        return Response::json($subcategories);
+}
+
+
+
+
 
 public function actionIndex()
     {
