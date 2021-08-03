@@ -3,10 +3,7 @@
 
    @section('cabecera')
     @parent
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>  
-    <script src="/vendors/ckeditor/ckeditor.js"></script>  
-    <link rel="stylesheet" href="/validaciones/dist/css/bootstrapValidator.css"/>
-    <script type="text/javascript" src="/validaciones/dist/js/bootstrapValidator.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     @stop
 
 
@@ -98,7 +95,9 @@
                                             </div>
                                         </div>
 
-                                         <div class="form-group">
+                                        
+
+                                        <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-text-input">Contenido</label>
                                             <div class="col-md-9">
                                                 {{Form::textarea('contenido', '', array('class' => 'ckeditor','id' => 'editor','placeholder'=>'Ingrese contenido'))}}
@@ -166,7 +165,7 @@
                                        <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-text-input">Parametro</label>
                                             <div class="col-md-9">
-                                                <select name="parametro" class="form-control" required>
+                                                <select name="parametro" class="form-control">
                                                    <option value="" selected="selected" disabled>Seleccione parametro</option>
                                                   @foreach($parametros as $parametros)
                                                  <option value="{{$parametros->id}}">{{$parametros->parametro}}</option>
@@ -288,6 +287,5 @@
 <script>
   CKEDITOR.replace( 'editor', {filebrowserImageBrowseUrl: '/file-manager/ckeditor'});
 </script>
-  
 
   @stop
