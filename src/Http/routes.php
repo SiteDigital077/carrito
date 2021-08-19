@@ -24,12 +24,23 @@ return DigitalsiteSaaS\Carrito\Product::where('slug', $slug)->first();
 
 
 Route::get('cart/detail', [
-
-'middleware' => 'comprador',
 'middleware' => 'auth',
+'middleware' => 'comprador',
 'as' => 'tienda-detail',
 'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@orderDetail'
 ]);
+
+Route::any('/session/datos', [
+'middleware' => 'auth',
+'middleware' => 'comprador',
+'as' => 'sesion-datos',
+'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@datosusuario'
+]);
+
+
+
+Route::any('/session/datosdfed', 'DigitalsiteSaaS\Carrito\Http\CartController@datosusuario');
+
 
 
 Route::get('{$id}', [
@@ -92,13 +103,12 @@ Route::get('cart/responseda', [
 ]);
 
 
-Route::get('cart/responseda', array('uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@response', 'middleware' => 'web'));
 
 Route::get('cart/responseserver', array('uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@responseserver', 'middleware' => 'web'));
 
 
 Route::post('cart/responseda/', [
-'middleware' => 'web',
+
 'as' => 'cart/responsess',
 'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@response'
 
@@ -279,3 +289,5 @@ Route::post('carrito/municipios/importExcel', 'DigitalsiteSaaS\Carrito\Http\Cart
 
 
 Route::get('gestion/usuarios/registrar', 'DigitalsiteSaaS\Carrito\Http\CartController@registrar');
+
+

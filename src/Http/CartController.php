@@ -252,7 +252,7 @@ return $preciomunicipio;
 }
 
 
-public function update($quantity){
+public function update(Product $product, $quantity){
 if(!$this->tenantName){
 $hola =  Product::where('slug', Request::segment(3))->get();
 }else{
@@ -286,9 +286,10 @@ $total = $this->total();
 $subtotal = $this->subtotal();
 $iva = $this->iva();
 $precioenvio = $this->precioenvio();
-$datos = \DigitalsiteSaaS\Carrito\User::join('departamentos', 'departamentos.id', '=', 'users.ciudad')
+$datos = User::join('departamentos', 'departamentos.id', '=', 'users.ciudad')
              ->leftjoin('municipios', 'municipios.id', '=', 'users.region')
              ->where('users.id', '=' , Auth::user()->id)->get();
+
 $costoenvio = $this->costoenvio();
 $preciomunicipio = $this->preciomunicipio();
 $nombremunicipio = $this->nombremunicipio();
@@ -428,16 +429,15 @@ dd($cart);
 
 public function response() {
 $request = request()->ref_payco;
- $client = new Client(['http_errors' => false]);
- $responsedg = $client->get('https://secure.epayco.co/validation/v1/reference/'.$request, [
- 'headers' => [
- ],
- ]);
- $xmlsg = json_decode($responsedg->getBody()->getContents(), true);
-
- $estado = $xmlsg['data']['x_respuesta'];
-
+$client = new Client(['http_errors' => false]);
+$responsedg = $client->post('https://secure.epayco.co/validation/v1/reference/'.$request, [
+'headers' => [
+],
+]);
+$xmlsg = json_decode($responsedg->getBody()->getContents(), true);
+$estado = $xmlsg['data']['x_respuesta'];
 $id_factura = $xmlsg['data']['x_id_factura'];
+$identificador = $xmlsg['data']['x_extra1'];
 $codigo = $xmlsg['data']['x_cod_response'];
 $estado = $xmlsg['data']['x_response'];
 $fecha =  $xmlsg['data']['x_fecha_transaccion'];
@@ -445,25 +445,22 @@ $codigo_apr = $xmlsg['data']['x_approval_code'];
 $medio =  $xmlsg['data']['x_franchise'];
 
 if(!$this->tenantName){
-Order::where('id', $id_factura)
-          ->update(['codigo' => $codigo,
-      'estado' => $estado,
-      'fecha' =>  $fecha,
-      'codigo_apr' => $codigo_apr,
-      'medio' => $medio]);
-        }else{
-
-        \DigitalsiteSaaS\Carrito\Tenant\Order::where('id', $id_factura)
-          ->update(['codigo' => $codigo,
-      'estado' => $estado,
-      'fecha' =>  $fecha,
-      'codigo_apr' => $codigo_apr,
-      'medio' => $medio]);
-        }
-dd('se actualizo');
-     return Redirect ('/');
- 
-       
+Order::where('identificador', $identificador)
+->update(['codigo' => $codigo,
+          'estado' => $estado,
+          'fecha' =>  $fecha,
+          'codigo_apr' => $codigo_apr,
+          'medio' => $medio]);        
+          }else{
+\DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador', $identificador)
+->update(['codigo' => $codigo,
+          'estado' => $estado,
+          'fecha' =>  $fecha,
+          'codigo_apr' => $codigo_apr,
+          'medio' => $medio]);
+          }
+          dd('se actualizo');
+          return Redirect ('/');
 }
        
 
@@ -490,43 +487,36 @@ Order::where('id', $id_factura)
      return Redirect ('/');
 }
 
- public function mensajes(){
+  public function mensajes(){
  $fecha = date("Y-m-d h:i:s A");
- $envio = Input::get('p_extra2');
  $cart = Session::get('cart');
- $nombrealt = Input::get('nombrenue');
- $apellidoalt = Input::get('apellidonue');
- $direccionalt = Input::get('direccionnue');
- $telefonoalt = Input::get('telefononue');
- $inmueblealt = Input::get('inmueblenue');
- $informacionalt = Input::get('informacionnue');
- $emailalt = Input::get('emailnue');
- $ciudadalt = Input::get('p_billing_country');
- $preciomunicipio = $this->preciomunicipio();
-$precioenvio = $this->precioenvio();
+ $validacion = Order::where('identificador','=',session::get('identificador'))->count();
+
+
 foreach($cart as $producto) {
 }
 
-if(session()->get('miSesionTextouno') == 0)
+if($validacion == '1') {
 if(!$this->tenantName){
-$order = Order::create([
+$contenido = Order::where('identificador',session::get('identificador'))
+->update([
 'descripcion' => $producto->description,
 'cantidad' => $producto->quantity,
 'subtotal' => $producto->preciodescfin,
 'fecha' => $fecha,
 'shipping' => $producto->precioinivafin,
 'iva_ord' => $producto->precioiva,
-'cos_envio' => $precioenvio,
+'cos_envio' => '50000',
 'codigo' => '000000',
 'estado' => 'Pendiente',
-'nombre' => Auth::user()->name,
-'apellido' => Auth::user()->last_name,
-'direccion' => Auth::user()->address,
-'ciudad' => Auth::user()->ciudad,
-'inmueble' => Auth::user()->inmueble,
-'informacion' => Auth::user()->numero,
-'telefono' => Auth::user()->celular,
-'email' => Auth::user()->email,
+'nombre' => session::get('nombres'),
+'direccion' => session::get('direccion'),
+'email' => session::get('email'),
+'documento' => session::get('documento'),
+'telefono' => session::get('telefono'),
+'inmueble' => session::get('inmueble'),
+'informacion' => session::get('informacion'),
+'identificador' => session::get('identificador'),
 'departamento' => Auth::user()->ciudad,
 'codigo_apr' => '000000',
 'medio' => 'N/A',
@@ -534,140 +524,65 @@ $order = Order::create([
 'user_id'  => Auth::user()->id
 ]);
 }else{
-$order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
+$contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',session::get('identificador'))
+->update([
 'descripcion' => $producto->description,
 'cantidad' => $producto->quantity,
 'subtotal' => $producto->preciodescfin,
 'fecha' => $fecha,
 'shipping' => $producto->precioinivafin,
 'iva_ord' => $producto->precioiva,
-'cos_envio' => $precioenvio,
+'cos_envio' => '50000',
 'codigo' => '000000',
 'estado' => 'Pendiente',
-'nombre' => Auth::user()->name,
-'apellido' => Auth::user()->last_name,
-'direccion' => Auth::user()->address,
-'ciudad' => Auth::user()->ciudad,
-'inmueble' => Auth::user()->inmueble,
-'informacion' => Auth::user()->numero,
-'telefono' => Auth::user()->celular,
+'nombre' => session::get('nombres'),
+'direccion' => session::get('direccion'),
+'email' => session::get('email'),
+'documento' => session::get('documento'),
+'telefono' => session::get('telefono'),
+'inmueble' => session::get('inmueble'),
+'informacion' => session::get('informacion'),
+'identificador' => session::get('identificador'),
 'departamento' => Auth::user()->ciudad,
-'email' => Auth::user()->email,
 'codigo_apr' => '000000',
 'medio' => 'N/A',
 'preciodescuento' => $producto->preciodesc,
 'user_id'  => Auth::user()->id
 ]);
 }
-
-elseif($preciomunicipio == 0)
-if(!$this->tenantName){
-$order = Order::create([
-'descripcion' => $producto->description,
-'cantidad' => $producto->quantity,
-'subtotal' => $producto->preciodescfin,
-'fecha' => $fecha,
-'shipping' => $producto->precioinivafin,
-'iva_ord' => $producto->precioiva,
-'cos_envio' => $preciomunicipio,
-'codigo' => '000000',
-'estado' => 'Pendiente',
-'nombre' => $nombrealt,
-'apellido' => $apellidoalt,
-'direccion' => $direccionalt,
-'telefono' => $telefonoalt,
-'inmueble' => $inmueblealt,
-'informacion' => $informacionalt,
-'departamento' => $this->nombredepartamentoid(),
-'ciudad' => $this->nombremunicipioid(),
-'email' => $emailalt,
-'codigo_apr' => '000000',
-'medio' => 'N/A',
-'preciodescuento' => $producto->preciodesc,
-'user_id'  => Auth::user()->id
-]);
-}else{
-$order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
-'descripcion' => $producto->description,
-'cantidad' => $producto->quantity,
-'subtotal' => $producto->preciodescfin,
-'fecha' => $fecha,
-'shipping' => $producto->precioinivafin,
-'iva_ord' => $producto->precioiva,
-'cos_envio' => $preciomunicipio,
-'codigo' => '000000B',
-'estado' => 'Pendiente',
-'nombre' => $nombrealt,
-'apellido' => $apellidoalt,
-'direccion' => $direccionalt,
-'telefono' => $telefonoalt,
-'inmueble' => $inmueblealt,
-'informacion' => $informacionalt,
-'departamento' => $this->nombredepartamentoid(),
-'ciudad' => $this->nombremunicipioid(),
-'email' => $emailalt,
-'codigo_apr' => '000000',
-'medio' => 'N/A',
-'preciodescuento' => $producto->preciodesc,
-'user_id'  => Auth::user()->id
-]);
-}
-
-else
-if(!$this->tenantName){
-$order = Order::create([
-'descripcion' => $producto->description,
-'cantidad' => $producto->quantity,
-'subtotal' => $producto->preciodescfin,
-'fecha' => $fecha,
-'shipping' => $producto->precioinivafin,
-'iva_ord' => $producto->precioiva,
-'cos_envio' => $preciomunicipio,
-'codigo' => '000000',
-'estado' => 'Pendiente',
-'nombre' => $nombrealt,
-'apellido' => $apellidoalt,
-'direccion' => $direccionalt,
-'telefono' => $telefonoalt,
-'inmueble' => $inmueblealt,
-'informacion' => $informacionalt,
-'email' => $emailalt,
-'codigo_apr' => '000000',
-'departamento' => $this->nombredepartamentoid(),
-'ciudad' => $this->nombremunicipioid(),
-'medio' => 'N/A',
-'preciodescuento' => $producto->preciodesc,
-'user_id'  => Auth::user()->id
-]);
-}else{
-$order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
-'descripcion' => $producto->description,
-'cantidad' => $producto->quantity,
-'subtotal' => $producto->preciodescfin,
-'fecha' => $fecha,
-'shipping' => $producto->precioinivafin,
-'iva_ord' => $producto->precioiva,
-'cos_envio' => $preciomunicipio,
-'codigo' => '000000',
-'estado' => 'Pendiente',
-'nombre' => $nombrealt,
-'apellido' => $apellidoalt,
-'direccion' => $direccionalt,
-'telefono' => $telefonoalt,
-'inmueble' => $inmueblealt,
-'informacion' => $informacionalt,
-'email' => $emailalt,
-'codigo_apr' => '000000',
-'departamento' => $this->nombredepartamentoid(),
-'ciudad' => $this->nombremunicipioid(),
-'medio' => 'N/A',
-'preciodescuento' => $producto->preciodesc,
-'user_id'  => Auth::user()->id
-]);
-}
-foreach($cart as $producto){
-$this->saveOrderItem($producto, $order->id);
-}
+  }else{
+  if(!$this->tenantName){
+  $contenido = new Order;
+  }else{
+  $contenido = new \DigitalsiteSaaS\Carrito\Tenant\Order;
+  }
+  $contenido->descripcion = $producto->description;
+  $contenido->cantidad = $producto->quantity;
+  $contenido->subtotal = $producto->preciodescfin;
+  $contenido->fecha = $fecha;
+  $contenido->shipping = $producto->precioinivafin;
+  $contenido->iva_ord = $producto->precioiva;
+  $contenido->cos_envio = '50000';
+  $contenido->codigo = '0000';
+  $contenido->estado = 'Pendiente';
+  $contenido->nombre = session::get('nombres');
+  $contenido->direccion = session::get('direccion');
+  $contenido->email = session::get('email');
+  $contenido->documento = session::get('documento');
+  $contenido->telefono = session::get('telefono');
+  $contenido->inmueble = session::get('inmueble');
+  $contenido->informacion = session::get('informacion');
+  $contenido->identificador = session::get('identificador');
+  $contenido->departamento = Auth::user()->ciudad;
+  $contenido->codigo_apr = '000000';
+  $contenido->medio = 'N/A';
+  $contenido->preciodescuento = $producto->preciodesc;
+  $contenido->user_id = Auth::user()->id;
+  $contenido->save();
+  }
+  foreach($cart as $producto){
+   $this->saveOrderItem($producto, $contenido->id);  
+  }
 
 }
 
@@ -1815,7 +1730,7 @@ public function webmunicipios()
 {
 $cat_id = Input::get('cat_id');
 if(!$this->tenantName){
-        $subcategories = \DigitalsiteSaaS\Carrito\Municipio::where('departamento_id', '=', $cat_id)->get();
+        $subcategories = Municipio::where('departamento_id', '=', $cat_id)->get();
     }else{
     $subcategories = \DigitalsiteSaaS\Carrito\Tenant\Municipio::where('departamento_id', '=', $cat_id)->get();
     }
@@ -1921,6 +1836,21 @@ public function importExportmun()
 return view('importExport');
 }
 
+
+public function datosusuario(){
+ if($_POST){
+  Session::put('nombres', Input::get('nombres'));
+  Session::put('documento', Input::get('documento'));
+  Session::put('direccion', Input::get('direccion'));
+  Session::put('telefono', Input::get('telefono'));
+  Session::put('email', Input::get('email'));
+  Session::put('direnvio', Input::get('direnvio'));
+  Session::put('inmueble', Input::get('inmueble'));
+  Session::put('informacion', Input::get('informacion'));
+  Session::put('identificador', Input::get('identificador'));
+  }   
+  return Redirect('/cart/detail');
+  }
 
 public function downloadExcelmun($type)
 {
