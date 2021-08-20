@@ -42,14 +42,13 @@ color:#fff;
 
 <!-- Precio Envio -->
 <div class="container shop">
+
  <h2 class="secondary-title"><i class="fa fa-shopping-basket bg-primary"></i>  Confirmación de Envío</h2>
   <div class="row padcart">
     <div class="col-md-12">
      <h3 class="text-center"> El costo actual para el envio a la ciudad de <strong class="text-primary">
-      @foreach($datos as $datos)
-       {{$datos->municipio}}
-      @endforeach
-      </strong> es de <strong class="text-primary">$ {{number_format(Session::get('miSesionTextouno',0,",","."))}}
+      {{session::get('nombremunicipio')}}
+      </strong> es de <strong class="text-primary">$ {{number_format(Session::get('preciomunicipio',0,",","."))}}
       </strong> si desea generar un nuevo destino de envio consulte a continuación su costo.
      </h3> 
 
@@ -72,6 +71,7 @@ color:#fff;
         </select>
        </div>
       </div>
+
       <!--
       <div class="col-md-12 mb-3">
        <button class="btn btn-primary pull-right botcart" type="submit">Calcular Costo</button>
@@ -187,7 +187,8 @@ color:#fff;
         @endif
         
        <div class="col-md-12 mb-3">
-       <button class="btn btn-primary pull-right botcart" id="epayco-button" type="submit">Siguiente</button>
+           <button class="btn btn-primary pull-right botcart" onclick="this.disabled=true;this.value='Enviando.. .';this.form.submit();" id="epayco-buttons" type="submit">Siguiente</button>
+
         <a href="/web/limpieza" class="btn btn-default pull-right botcart">Limpiar</a><br><br>
       </div>
      </form>
@@ -208,7 +209,7 @@ color:#fff;
   $p_cust_id_cliente = $configuracion->id_cliente;
   $p_key = $configuracion->p_key;
   $p_id_invoice = $valora;
-  $totalenvio = $total+Session::get('miSesionTextouno');
+  $totalenvio = $total+Session::get('preciomunicipio');
   $identificador = Session::get('identificador');
   if($preciomunicipio > 0)
    $p_amount = $total+$preciomunicipio; 
@@ -230,7 +231,7 @@ color:#fff;
        @foreach($cart as $item)
        <tr>
         <td style="width: 7%;">
-         <img class="img-responsive" src="/{{$item->image}}">
+         <img class="img-responsive" src="{{$item->image}}">
         </td>
         <td>{{$item->name}}</td>
          @if($item->precioivafin == $item->precioinivafin)
@@ -259,12 +260,12 @@ color:#fff;
       </tr>
       <tr>
        <th class="text-right">Costo Envio</th>
-       <td class="text-right">$ {{number_format(Session::get('miSesionTextouno',0,"."."."))}}</td>
+       <td class="text-right">$ {{number_format(Session::get('preciomunicipio',0,",","."))}}</td>
       </tr>
       <tr>
        <th class="text-right">Total</th>
        <td class="text-right">
-        $ {{ number_format($total+Session::get('miSesionTextouno'),0,",",".")}}
+        $ {{ number_format($total+Session::get('preciomunicipio'),0,",",".")}}
        </td>
       </tr>
      </tbody>
@@ -326,7 +327,7 @@ color:#fff;
        @foreach($cart as $item)
        <tr>
         <td style="width: 7%;">
-         <img class="img-responsive" src="/{{$item->image}}">
+         <img class="img-responsive" src="{{$item->image}}">
         </td>
         <td>{{$item->name}}</td>
          @if($item->precioivafin == $item->precioinivafin)
@@ -355,7 +356,7 @@ color:#fff;
       </tr>
       <tr>
        <th class="text-right">Costo Envio</th>
-       <td class="text-right">$ {{number_format(Session::get('miSesionTextouno',0,"."."."))}}</td>
+       <td class="text-right">$ {{number_format(Session::get('preciomunicipio',0,",","."))}}</td>
       </tr>
       <tr>
        <th class="text-right">Total</th>
@@ -405,7 +406,7 @@ jq(document).ready(function(){
  $.get('/mema/ajax-subcatweb?cat_id=' + cat_id, function(data){
  $('#municipio').empty();
  $.each(data, function(index, subcatObj){
- $('#municipio').append('<option value="" style="display:none">Seleccione Municipio</option>','<option value="'+subcatObj.p_municipio+'">'+subcatObj.municipio+'</option>');
+ $('#municipio').append('<option value="" style="display:none">Seleccione Municipio</option>','<option value="'+subcatObj.id+'">'+subcatObj.municipio+'</option>');
    });
   });
  });

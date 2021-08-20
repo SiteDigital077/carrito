@@ -430,11 +430,12 @@ dd($cart);
 public function response() {
 $request = request()->ref_payco;
 $client = new Client(['http_errors' => false]);
-$responsedg = $client->post('https://secure.epayco.co/validation/v1/reference/'.$request, [
+$responsedg = $client->get('https://secure.epayco.co/validation/v1/reference/'.$request, [
 'headers' => [
 ],
 ]);
 $xmlsg = json_decode($responsedg->getBody()->getContents(), true);
+dd($xmlsg);
 $estado = $xmlsg['data']['x_respuesta'];
 $id_factura = $xmlsg['data']['x_id_factura'];
 $identificador = $xmlsg['data']['x_extra1'];
@@ -459,6 +460,8 @@ Order::where('identificador', $identificador)
           'codigo_apr' => $codigo_apr,
           'medio' => $medio]);
           }
+
+   session()->forget('cart');
           dd('se actualizo');
           return Redirect ('/');
 }
@@ -490,8 +493,11 @@ Order::where('id', $id_factura)
   public function mensajes(){
  $fecha = date("Y-m-d h:i:s A");
  $cart = Session::get('cart');
+ if(!$this->tenantName){
  $validacion = Order::where('identificador','=',session::get('identificador'))->count();
-
+ }else{
+ $validacion = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador','=',session::get('identificador'))->count();
+ }
 
 foreach($cart as $producto) {
 }
@@ -517,7 +523,8 @@ $contenido = Order::where('identificador',session::get('identificador'))
 'inmueble' => session::get('inmueble'),
 'informacion' => session::get('informacion'),
 'identificador' => session::get('identificador'),
-'departamento' => Auth::user()->ciudad,
+'ciudad' => session::get('nombredepartamento'),
+'departamento' => session::get('nombremunicipio'),
 'codigo_apr' => '000000',
 'medio' => 'N/A',
 'preciodescuento' => $producto->preciodesc,
@@ -543,7 +550,8 @@ $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',sessio
 'inmueble' => session::get('inmueble'),
 'informacion' => session::get('informacion'),
 'identificador' => session::get('identificador'),
-'departamento' => Auth::user()->ciudad,
+'ciudad' => session::get('nombredepartamento'),
+'departamento' => session::get('nombremunicipio'),
 'codigo_apr' => '000000',
 'medio' => 'N/A',
 'preciodescuento' => $producto->preciodesc,
@@ -573,16 +581,18 @@ $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',sessio
   $contenido->inmueble = session::get('inmueble');
   $contenido->informacion = session::get('informacion');
   $contenido->identificador = session::get('identificador');
-  $contenido->departamento = Auth::user()->ciudad;
+  $contenido->ciudad =session::get('nombredepartamento');
+  $contenido->departamento =session::get('nombremunicipio');
   $contenido->codigo_apr = '000000';
   $contenido->medio = 'N/A';
   $contenido->preciodescuento = $producto->preciodesc;
   $contenido->user_id = Auth::user()->id;
   $contenido->save();
-  }
   foreach($cart as $producto){
    $this->saveOrderItem($producto, $contenido->id);  
   }
+  }
+  
 
 }
 

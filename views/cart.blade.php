@@ -53,7 +53,7 @@
          @foreach($cart as $item)
           <tr>
            <td style="width: 7%;">
-            <img class="img-responsive" src="/{{$item->image}}">
+            <img class="img-responsive" src="{{$item->image}}">
            </td>
            <td>
             <strong style="text-transform: uppercase;">{{$item->name}}</strong><br>
