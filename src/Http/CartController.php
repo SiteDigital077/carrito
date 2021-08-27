@@ -77,7 +77,7 @@ $descuento = $this->descuento();
 $plantillaes = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
 $categoriapro = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
 }
-return view('carrito::cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo'));
+return view('Templates.rayo.carrito.cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo'));
 }
 
 
@@ -318,7 +318,7 @@ $orderold  = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=', Auth::
 $categories = \DigitalsiteSaaS\Carrito\Tenant\Pais::all();
 $ordenes = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=' ,Auth::user()->id)->where('estado', '=', 'PENDING')->get();
 }
-return view('carrito::order', compact('cart', 'total', 'subtotal', 'plantilla', 'menu','configuracion','price','suma', 'orderold', 'iva', 'descuento', 'costoenvio', 'categories', 'precioenvio', 'preciomunicipio', 'datos', 'plantillaes', 'nombremunicipio', 'ordenes', 'seo','departamento'));
+return view('Templates.rayo.carrito.order', compact('cart', 'total', 'subtotal', 'plantilla', 'menu','configuracion','price','suma', 'orderold', 'iva', 'descuento', 'costoenvio', 'categories', 'precioenvio', 'preciomunicipio', 'datos', 'plantillaes', 'nombremunicipio', 'ordenes', 'seo','departamento'));
 
 }
 
