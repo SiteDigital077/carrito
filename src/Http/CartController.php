@@ -864,8 +864,6 @@ $nombremunicipio = $this->nombremunicipio();
 $descuento = $this->descuento();
 
 
-
-
 $cart = session()->get('cart');
 
 foreach ($cart as $producto) {
@@ -913,10 +911,7 @@ if(!$this->tenantName){
   foreach($cart as $producto){
   $this->saveOrderItemplace($producto, $contenido->id);  
   }
-  }
   
-
-}
 
 
 
