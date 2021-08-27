@@ -52,10 +52,10 @@ $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
 
 public function show()
 {
-    if(!$this->tenantName){
-      $seo = Seo::where('id','=',1)->get(); 
+if(!$this->tenantName){
+$seo = Seo::where('id','=',1)->get(); 
 $plantilla = \DigitalsiteSaaS\Pagina\Template::all();
-    $menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
+$menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
 $cart = session()->get('cart');
 $url = Configuracion::where('id', '=', 1)->get();
 $iva = $this->iva();
@@ -65,9 +65,9 @@ $descuento = $this->descuento();
 $plantillaes = Template::all();
 $categoriapro = Category::all();
 }else{
-  $seo = \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get(); 
+$seo = \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get(); 
 $plantilla = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
-    $menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
+$menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
 $cart = session()->get('cart');
 $url = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id', '=', 1)->get();
 $iva = $this->iva();
@@ -258,7 +258,7 @@ $hola =  Product::where('slug', Request::segment(3))->get();
 }else{
 $hola = \DigitalsiteSaaS\Carrito\Tenant\Product::where('slug', Request::segment(3))->get();
 }
-    $product = json_decode($hola[0]);
+$product = json_decode($hola[0]);
 $cart = session()->get('cart');
 $cart[$product->slug]->quantity = $quantity;
 session()->put('cart', $cart);
@@ -266,12 +266,8 @@ return Redirect('/cart/show');
 }
 
 
-
-
-
-
-
 public function orderDetail(){
+ 
 if(!$this->tenantName){
 $departamento = Departamento::all();
 $seo = Seo::where('id','=',1)->get();
@@ -327,12 +323,10 @@ return view('carrito::order', compact('cart', 'total', 'subtotal', 'plantilla', 
 }
 
 
-public function trash()
-
-{
-
+public function trash(){
 session()->forget('cart');
-    return Redirect('/cart/show');
+return Redirect('/');
+
 }
 
 
@@ -435,7 +429,7 @@ $responsedg = $client->get('https://secure.epayco.co/validation/v1/reference/'.$
 ],
 ]);
 $xmlsg = json_decode($responsedg->getBody()->getContents(), true);
-dd($xmlsg);
+
 $estado = $xmlsg['data']['x_respuesta'];
 $id_factura = $xmlsg['data']['x_id_factura'];
 $identificador = $xmlsg['data']['x_extra1'];
@@ -490,7 +484,8 @@ Order::where('id', $id_factura)
      return Redirect ('/');
 }
 
-  public function mensajes(){
+ public function mensajes(){
+ Session::put('identificador', Input::get('identificador'));
  $fecha = date("Y-m-d h:i:s A");
  $cart = Session::get('cart');
  if(!$this->tenantName){
@@ -502,17 +497,18 @@ Order::where('id', $id_factura)
 foreach($cart as $producto) {
 }
 
-if($validacion == '1') {
+if($validacion == 1) {
+
 if(!$this->tenantName){
 $contenido = Order::where('identificador',session::get('identificador'))
 ->update([
 'descripcion' => $producto->description,
 'cantidad' => $producto->quantity,
-'subtotal' => $producto->preciodescfin,
+'subtotal' =>  $this->subtotal(),
 'fecha' => $fecha,
-'shipping' => $producto->precioinivafin,
-'iva_ord' => $producto->precioiva,
-'cos_envio' => '50000',
+'shipping' => $this->total(),
+'iva_ord' => $this->iva(),
+'cos_envio' => session::get('preciomunicipio'),
 'codigo' => '000000',
 'estado' => 'Pendiente',
 'nombre' => session::get('nombres'),
@@ -522,7 +518,7 @@ $contenido = Order::where('identificador',session::get('identificador'))
 'telefono' => session::get('telefono'),
 'inmueble' => session::get('inmueble'),
 'informacion' => session::get('informacion'),
-'identificador' => session::get('identificador'),
+'identificador' => Input::get('identificador'),
 'ciudad' => session::get('nombredepartamento'),
 'departamento' => session::get('nombremunicipio'),
 'codigo_apr' => '000000',
@@ -535,11 +531,11 @@ $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',sessio
 ->update([
 'descripcion' => $producto->description,
 'cantidad' => $producto->quantity,
-'subtotal' => $producto->preciodescfin,
+'subtotal' =>  $this->subtotal(),
 'fecha' => $fecha,
-'shipping' => $producto->precioinivafin,
-'iva_ord' => $producto->precioiva,
-'cos_envio' => '50000',
+'shipping' => $this->total(),
+'iva_ord' => $this->iva(),
+'cos_envio' => session::get('preciomunicipio'),
 'codigo' => '000000',
 'estado' => 'Pendiente',
 'nombre' => session::get('nombres'),
@@ -549,7 +545,7 @@ $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',sessio
 'telefono' => session::get('telefono'),
 'inmueble' => session::get('inmueble'),
 'informacion' => session::get('informacion'),
-'identificador' => session::get('identificador'),
+'identificador' => Input::get('identificador'),
 'ciudad' => session::get('nombredepartamento'),
 'departamento' => session::get('nombremunicipio'),
 'codigo_apr' => '000000',
@@ -559,6 +555,7 @@ $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',sessio
 ]);
 }
   }else{
+
   if(!$this->tenantName){
   $contenido = new Order;
   }else{
@@ -566,11 +563,11 @@ $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',sessio
   }
   $contenido->descripcion = $producto->description;
   $contenido->cantidad = $producto->quantity;
-  $contenido->subtotal = $producto->preciodescfin;
+  $contenido->subtotal = $this->subtotal();
   $contenido->fecha = $fecha;
-  $contenido->shipping = $producto->precioinivafin;
-  $contenido->iva_ord = $producto->precioiva;
-  $contenido->cos_envio = '50000';
+  $contenido->shipping = $this->total();
+  $contenido->iva_ord = $this->iva();
+  $contenido->cos_envio = session::get('preciomunicipio');
   $contenido->codigo = '0000';
   $contenido->estado = 'Pendiente';
   $contenido->nombre = session::get('nombres');
@@ -580,7 +577,7 @@ $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',sessio
   $contenido->telefono = session::get('telefono');
   $contenido->inmueble = session::get('inmueble');
   $contenido->informacion = session::get('informacion');
-  $contenido->identificador = session::get('identificador');
+  $contenido->identificador = Input::get('identificador');
   $contenido->ciudad =session::get('nombredepartamento');
   $contenido->departamento =session::get('nombremunicipio');
   $contenido->codigo_apr = '000000';
@@ -701,26 +698,10 @@ OrderItem::create([
 
 
 protected function generaplace(Request $request){
-
-if(!$this->tenantName){
- $documentotipo = User::where('id', '=', Auth::user()->id)->get();
-}else{
-$documentotipo = \DigitalsiteSaaS\Carrito\Tenant\User::where('id', '=', Auth::user()->id)->get();
-}
-        foreach ($documentotipo as $documentotipo){
-          if($documentotipo->tipo_documento == 1)
-            $tipodoc = 'CC';
-          elseif($documentotipo->tipo_documento == 2)
-            $tipodoc = 'CE';
-          elseif($documentotipo->tipo_documento == 4)
-            $tipodoc = 'TI';
-          elseif($documentotipo->tipo_documento == 6)
-            $tipodoc = 'NIT';
-        }        
-                                       
      
 $amount = Input::get('p_amount');
 $reference = Input::get('p_id_invoice');
+
 if(!$this->tenantName){
 $servicio = Configuracion::where('id', '=', 1)->get();
 }else{
@@ -732,10 +713,8 @@ $secretKey = $servicio->trankey;
 $login = $servicio->login;
 $moneda = $servicio->monedaplace;
 $descriptionsite = $servicio->description;
-$redirect = $servicio->redirect.'/placetopay/pagowebrequest/'.$reference;
+$redirect = $servicio->redirect.'placetopay/pagowebrequest/'.$reference;
 }
-
-
 
 $seed = date('c');
 
@@ -747,15 +726,10 @@ if (function_exists('random_bytes')) {
     $nonce = mt_rand();
 }
 
- 
-
-
 $nonceBase64 = base64_encode($nonce);
 
 $tranKey = base64_encode(sha1($nonce . $seed . $secretKey, true));
  
-
-
 $Authentication = array(
     "login" =>  $login,
     "tranKey" =>  SHA1(date('c').$secretKey, false),
@@ -771,14 +745,15 @@ $Authentication = array(
     ],
 
    'buyer' => [
-       'name' => Auth::user()->name,
-       'surname' => Auth::user()->last_name,
-       'documentType' => $tipodoc,
-       'document' => Auth::user()->documento,
-       'email' => Auth::user()->email,
+       'name' =>  session::get('nombres'),
+       'surname' =>  session::get('nombres'),
+       'documentType' => 'CC',
+       'document' =>  session::get('documento'),
+       'email' =>  session::get('email'),
+       'mobile' => '32085257364', // p_extra1
        'address' => [
            'city' => 'Bogotá',
-           'street' => Auth::user()->address,
+           'street' =>  session::get('direccion'),
        ]
    ],
    'payment' => [
@@ -809,15 +784,11 @@ $url = $redireccionplace->url_produccion;
 }
 
 
-
-
 //Se inicia. el objeto CUrl
 $ch = curl_init($url);
 
 //creamos el json a partir del arreglo
 $jsonDataEncoded = json_encode($request);
-
-
 //Indicamos que nuestra petición sera Post
 curl_setopt($ch, CURLOPT_POST, 1);
 
@@ -833,7 +804,6 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Us
 
 //Ejecutamos la petición
 $result = curl_exec($ch);
-
 
 //return redirect('https://test.placetopay.com/redirection')
   //        ->header('customvalue1', $request);
@@ -857,10 +827,10 @@ $requestid = $decode['requestId'];
 
 if(!$this->tenantName){
 Transaccion::insert(
-    array('direccion' => $p_extra1,'ciudad' => $p_billing_country,'nombre' => $p_billing_name,'apellido' => $p_billing_lastname,'telefono' => $p_billing_phone, 'documento' => $p_extra3,'referencia' => $reference, 'request_id' => $requestid, 'process_url' => $urlprocess, 'user_id' => Auth::user()->id));
+    array('direccion' => session::get('direccion'),'ciudad' => $p_billing_country,'nombre' => session::get('nombres'),'apellido' => $p_billing_lastname,'telefono' => session::get('telefono'), 'documento' => session::get('documento'),'referencia' => $reference, 'request_id' => $requestid, 'process_url' => $urlprocess, 'user_id' => Auth::user()->id));
 }else{
 \DigitalsiteSaaS\Carrito\Tenant\Transaccion::insert(
-    array('direccion' => $p_extra1,'ciudad' => $p_billing_country,'nombre' => $p_billing_name,'apellido' => $p_billing_lastname,'telefono' => $p_billing_phone, 'documento' => $p_extra3,'referencia' => $reference, 'request_id' => $requestid, 'process_url' => $urlprocess, 'user_id' => Auth::user()->id));
+     array('direccion' => session::get('direccion'),'ciudad' => $p_billing_country,'nombre' => session::get('nombres'),'apellido' => $p_billing_lastname,'telefono' => session::get('telefono'), 'documento' => session::get('documento'),'referencia' => $reference, 'request_id' => $requestid, 'process_url' => $urlprocess, 'user_id' => Auth::user()->id));
 }
 
 //
@@ -883,7 +853,7 @@ foreach ($servicio as $servicio){
 $descriptionsite = $servicio->description;
 }
 
-  $total = $this->total();
+$total = $this->total();
 $subtotalweb = $this->subtotal();
 $iva = $this->iva();
 $descuento = $this->descuento();
@@ -899,7 +869,7 @@ $descuento = $this->descuento();
 $cart = session()->get('cart');
 
 foreach ($cart as $producto) {
-$subtotalweb += $producto->quantity * $producto->price;
+$subtotalweb += $producto->quantity * $producto->precio;
 }
 
 $nombrealt = Input::get('nombrenue');
@@ -911,190 +881,45 @@ $informacionalt = Input::get('informacionnue');
 $emailalt = Input::get('emailnue');
 $ciudadalt = Input::get('p_billing_country');
 
-if(session()->get('miSesionTextouno') == 0)
-
 if(!$this->tenantName){
-$order = Order::create([
-'descripcion' => $descriptionsite,
-'cantidad' => $producto->quantity,
-'subtotal' => $subtotalweb,
-'fecha' => date("Y-m-d h:i:s A"),
-'shipping' => $total+$precioenvio,
-'iva_ord' => $iva,
-'preciodescuento' => $descuento,
-'cos_envio' => $precioenvio,
-'codigo' => '000000',
-'mensaje' => 'Esperando la notificacion de placetoplay',
-'estado' => 'PENDING',
-'nombre' => Auth::user()->name,
-'apellido' => Auth::user()->last_name,
-'direccion' => Auth::user()->address,
-'telefono' => Auth::user()->celular,
-'inmueble' => Auth::user()->inmueble,
-'informacion' => Auth::user()->numero,
-'email' => Auth::user()->email,
-'ciudad' => Auth::user()->region,
-'departamento' => $this->nombredepartamentoid(),
-'documento' => NULL,
-'codigo_apr' => $requestid,
-'medio' => 'PD',
-        'tipo' => 'S/N',
-'user_id'  => Auth::user()->id
-]);
-}else{
-$order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
-'descripcion' => $descriptionsite,
-'cantidad' => $producto->quantity,
-'subtotal' => $subtotalweb,
-'fecha' => date("Y-m-d h:i:s A"),
-'shipping' => $total+$precioenvio,
-'iva_ord' => $iva,
-'preciodescuento' => $descuento,
-'cos_envio' => $precioenvio,
-'codigo' => '000000',
-'mensaje' => 'Esperando la notificacion de placetoplay',
-'estado' => 'PENDING',
-'nombre' => Auth::user()->name,
-'apellido' => Auth::user()->last_name,
-'direccion' => Auth::user()->address,
-'telefono' => Auth::user()->celular,
-'inmueble' => Auth::user()->inmueble,
-'informacion' => Auth::user()->numero,
-'email' => Auth::user()->email,
-'ciudad' => Auth::user()->region,
-'departamento' => $this->nombredepartamentoid(),
-'documento' => NULL,
-'codigo_apr' => $requestid,
-'medio' => 'PD',
-        'tipo' => 'S/N',
-'user_id'  => Auth::user()->id
-]);
-}
-
-elseif($preciomunicipio == 0)
-if(!$this->tenantName){
-$order = Order::create([
-'descripcion' => $descriptionsite,
-'cantidad' => $producto->quantity,
-'subtotal' => $subtotalweb,
-'fecha' => date("Y-m-d h:i:s A"),
-'shipping' => $total+$precioenvio,
-'iva_ord' => $iva,
-'preciodescuento' => $descuento,
-'cos_envio' => $precioenvio,
-'codigo' => '000000',
-'mensaje' => 'Esperando la notificacion de placetoplay',
-'estado' => 'PENDING',
-'nombre' => $nombrealt,
-'apellido' => $apellidoalt,
-'direccion' => $direccionalt,
-'telefono' => $telefonoalt,
-'inmueble' => $inmueblealt,
-'informacion' => $informacionalt,
-'email' => $emailalt,
-'ciudad' => $this->nombremunicipioid(),
-'departamento' => $this->nombredepartamentoid(),
-'documento' => NULL,
-'codigo_apr' => $requestid,
-'medio' => 'PD',
-        'tipo' => 'S/N',
-'user_id'  => Auth::user()->id
-]);
-}else{
-$order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
-'descripcion' => $descriptionsite,
-'cantidad' => $producto->quantity,
-'subtotal' => $subtotalweb,
-'fecha' => date("Y-m-d h:i:s A"),
-'shipping' => $total+$precioenvio,
-'iva_ord' => $iva,
-'preciodescuento' => $descuento,
-'cos_envio' => $precioenvio,
-'codigo' => '000000',
-'mensaje' => 'Esperando la notificacion de placetoplay',
-'estado' => 'PENDING',
-'nombre' => $nombrealt,
-'apellido' => $apellidoalt,
-'direccion' => $direccionalt,
-'telefono' => $telefonoalt,
-'inmueble' => $inmueblealt,
-'informacion' => $informacionalt,
-'email' => $emailalt,
-'ciudad' => $this->nombremunicipioid(),
-'departamento' => $this->nombredepartamentoid(),
-'documento' => NULL,
-'codigo_apr' => $requestid,
-'medio' => 'PD',
-        'tipo' => 'S/N',
-'user_id'  => Auth::user()->id
-]);
-}
-
-else
-  if(!$this->tenantName){
-       $order = Order::create([
-'descripcion' => $descriptionsite,
-'cantidad' => $producto->quantity,
-'subtotal' => $subtotalweb,
-'fecha' => date("Y-m-d h:i:s A"),
-'shipping' => $total+$precioenvio,
-'iva_ord' => $iva,
-'preciodescuento' => $descuento,
-'cos_envio' => $preciomunicipio,
-'codigo' => '000000',
-'mensaje' => 'Esperando la notificacion de placetoplay',
-'estado' => 'PENDING',
-'nombre' => $nombrealt,
-'apellido' => $apellidoalt,
-'direccion' => $direccionalt,
-'telefono' => $telefonoalt,
-'inmueble' => $inmueblealt,
-'informacion' => $informacionalt,
-'email' => $emailalt,
-'ciudad' => $this->nombremunicipioid(),
-'departamento' => $this->nombredepartamentoid(),
-'documento' => $p_extra3,
-'codigo_apr' => $requestid,
-'medio' => 'PD',
-'tipo' => 'S/N',
-'user_id'  => Auth::user()->id
-]);
-}else{
-$order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
-'descripcion' => $descriptionsite,
-'cantidad' => $producto->quantity,
-'subtotal' => $subtotalweb,
-'fecha' => date("Y-m-d h:i:s A"),
-'shipping' => $total+$precioenvio,
-'iva_ord' => $iva,
-'preciodescuento' => $descuento,
-'cos_envio' => $preciomunicipio,
-'codigo' => '000000',
-'mensaje' => 'Esperando la notificacion de placetoplay',
-'estado' => 'PENDING',
-'nombre' => $nombrealt,
-'apellido' => $apellidoalt,
-'direccion' => $direccionalt,
-'telefono' => $telefonoalt,
-'inmueble' => $inmueblealt,
-'informacion' => $informacionalt,
-'email' => $emailalt,
-'ciudad' => $this->nombremunicipioid(),
-'departamento' => $this->nombredepartamentoid(),
-'documento' => $p_extra3,
-'codigo_apr' => $requestid,
-'medio' => 'PD',
-'tipo' => 'S/N',
-'user_id'  => Auth::user()->id
-]);
+  $contenido = new Order;
+  }else{
+  $contenido = new \DigitalsiteSaaS\Carrito\Tenant\Order;
+  }
+  $contenido->descripcion = $producto->description;
+  $contenido->cantidad = $producto->quantity;
+  $contenido->subtotal = $this->subtotal();
+  $contenido->fecha = $fecha;
+  $contenido->shipping = $this->total();
+  $contenido->iva_ord = $this->iva();
+  $contenido->cos_envio = session::get('preciomunicipio');
+  $contenido->codigo = '0000';
+  $contenido->estado = 'Pendiente';
+  $contenido->nombre = session::get('nombres');
+  $contenido->direccion = session::get('direccion');
+  $contenido->email = session::get('email');
+  $contenido->documento = session::get('documento');
+  $contenido->telefono = session::get('telefono');
+  $contenido->inmueble = session::get('inmueble');
+  $contenido->informacion = session::get('informacion');
+  $contenido->identificador = Input::get('identificador');
+  $contenido->ciudad =session::get('nombredepartamento');
+  $contenido->departamento =session::get('nombremunicipio');
+  $contenido->codigo_apr = '000000';
+  $contenido->medio = 'N/A';
+  $contenido->preciodescuento = $producto->preciodesc;
+  $contenido->user_id = Auth::user()->id;
+  $contenido->save();
+  foreach($cart as $producto){
+  $this->saveOrderItemplace($producto, $contenido->id);  
+  }
+  }
+  
 
 }
 
 
 
-foreach($cart as $producto){
-$this->saveOrderItemplace($producto, $order->id);
-}
 
 
      session()->forget('cart');

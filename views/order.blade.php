@@ -34,14 +34,35 @@ color:#fff;
 .botnext{margin: 20px}
 .btnpago{border: 2px solid #5cb85c; border-radius: 8px; color:#5cb85c; text-transform: uppercase; font-weight: 700 }
 .botn{margin: 15px}
+
 </style>
 
 @if(Session::get('cart') == null)
 @else
 
 
+
 <!-- Precio Envio -->
 <div class="container shop">
+
+
+
+  <div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Collapsible Group Item #1 {{session::get('apertura')}}
+        </button>
+      </h5>
+    </div>
+    @if(session::get('apertura') == '')
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+    @else
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+    @endif
+    <div class="card-body">
+
 
  <h2 class="secondary-title"><i class="fa fa-shopping-basket bg-primary"></i>  Confirmación de Envío</h2>
   <div class="row padcart">
@@ -54,6 +75,8 @@ color:#fff;
 
      <form action="/web/session" method="post" name="formulario">
      @csrf 
+
+     @if(session::get('nombredepartamento') == '')
       <div class="col-md-12">
        <select name="ciudad" id="ciudad" class="form-control selector input-lg" size="1">
         <option value=""  selected>Seleccione Departramneto</option>
@@ -62,7 +85,18 @@ color:#fff;
          @endforeach
        </select>
       </div>
-
+      @else
+      <div class="col-md-12">
+       <select name="ciudad" id="ciudad" class="form-control selector input-lg" size="1">
+         <option value="">{{session::get('nombredepartamento')}}</option>
+         @foreach($departamento as $departamento)
+          <option value="{{$departamento->id}}">{{$departamento->departamento}}</option>
+         @endforeach
+       </select>
+      </div>
+      @endif
+      <input type="hidden" name="apertura" id="input" class="form-control" value="1" required="required" pattern="" title="">
+      @if(session::get('nombremunicipio') == '')
       <div class="col-md-12">
        <div class="form-group">
         <select onchange="this.form.submit()" name="municipio" id="municipio" class="form-control selector input-lg" size="1">
@@ -71,6 +105,16 @@ color:#fff;
         </select>
        </div>
       </div>
+      @else
+      <div class="col-md-12">
+       <div class="form-group">
+        <select onchange="this.form.submit()" name="municipio" id="municipio" class="form-control selector input-lg" size="1">
+         <option value=""  selected>{{session::get('nombremunicipio')}}</option>
+          <option value="1"></option>
+        </select>
+       </div>
+      </div>
+      @endif
 
       <!--
       <div class="col-md-12 mb-3">
@@ -83,69 +127,82 @@ color:#fff;
              
  </div> 
 </div>
-
-<div class="container">
- <div class="row">
-  
-  <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12 shop">
-   <h2 class="secondary-title"><i class="fa fa-shopping-basket bg-primary"></i>  Confirmación de Envío</h2>
-   
-
- 
         
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Collapsible Group Item #2
+        </button>
+      </h5>
+    </div>
+    @if(session::get('apertura') == '1')
+    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+      @else
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      @endif
+      <div class="card-body">
+        
+      <div class="col-xs-6 col-sm-6 col-md-12 col-lg-12 shop">
+       <h2 class="secondary-title"><i class="fa fa-shopping-basket bg-primary"></i>  Confirmación de Envío</h2>
+   
+ 
        <form action="/session/datos" method="post" name="formulario">
         <!--<h4 class="ml-3">Datos Facturación</h4>-->  
 
         <div class="container">
-         <div class="row">      
+         <div class="row"> 
+
         <div class="form-group col-lg-6">
          <label class="col-md-12" for="example-text-input">Nombres</label>
           <div class="col-md-12">
-           <input id="nombres" name="nombres" type="text" class="form-control" value="{{session::get('nombres')}}" placeholder="Nombre" required="required">
+           <input id="nombres" name="nombres" type="text" class="form-control" value="{{session::get('nombres')}}" placeholder="Ingrese Nombre" required="required">
           </div>
         </div>
 
         <div class="form-group col-lg-6">
          <label class="col-md-12" for="example-text-input">Documento</label>
           <div class="col-md-12">
-           <input id="documento" name="documento" type="text" class="form-control" value="{{session::get('documento')}}" placeholder="Apellido">
+           <input id="documento" name="documento" type="text" class="form-control" value="{{session::get('documento')}}" placeholder="Ingrese Documento" required="required">
           </div>
         </div>
 
         <div class="form-group col-md-6">
          <label class="col-md-12" for="example-text-input">Dirección</label>
           <div class="col-md-12">
-           <input id="direccion" name="direccion" type="text" class="form-control" value="{{session::get('direccion')}}" placeholder="Dirección">
+           <input id="direccion" name="direccion" type="text" class="form-control" value="{{session::get('direccion')}}" placeholder="Ingrese Dirección de Facturación" required="required">
           </div>
         </div>
 
         <div class="form-group col-md-6">
          <label class="col-md-12" for="example-text-input">Teléfono</label>
           <div class="col-md-12">
-           <input id="telefono" name="telefono" type="text" class="form-control" value="{{session::get('telefono')}}" placeholder="Teléfono">
+           <input id="telefono" name="telefono" type="text" class="form-control" value="{{session::get('telefono')}}" placeholder="Ingrese Teléfono" required="required">
           </div>
         </div>
 
         <div class="form-group col-md-6">
          <label class="col-md-12" for="example-text-input">Email</label>
           <div class="col-md-12">
-           <input id="email" name="email" type="text" class="form-control" value="{{session::get('email')}}" value="" placeholder="Email">
+           <input id="email" name="email" type="text" class="form-control" value="{{session::get('email')}}" value="" placeholder="Ingrese Email" required="required">
           </div>
         </div>
              
         <div class="form-group col-md-6">
          <label class="col-md-12" for="example-text-input">Confirmar Email</label>
           <div class="col-md-12">
-           <input id="emailnue" name="emailnue" type="text" class="form-control" value="{{Auth::user()->email}}" value="" placeholder="Email">
+           <input id="emailnue" name="emailnue" type="text" class="form-control" value="{{Auth::user()->email}}" value="" placeholder="Confirme el Email">
           </div>
         </div>
         
-        <!--<h4 class="ml-3">Datos Envio</h4>--> 
-
+  
           <div class="form-group col-md-6">
          <label class="col-md-12" for="example-text-input">Dirección Envío</label>
           <div class="col-md-12">
-           <input id="direnvio" name="direnvio" type="text" class="form-control" value="{{session::get('direnvio')}}" value="" placeholder="Email">
+           <input id="direnvio" name="direnvio" type="text" class="form-control" value="{{session::get('direnvio')}}" value="" placeholder="Ingrese Dirección de Envío" >
           </div>
         </div>
 
@@ -153,54 +210,59 @@ color:#fff;
          <label class="col-md-12" for="example-text-input">Inmueble</label>
           <div class="col-md-12">
            <select id="inmueble" name="inmueble" class="form-control" size="1">
-            <option selected>Seleccionar tipo de inmueble</option>
+            <option selected>Seleccionar Tipo de Inmueble</option>
            
             <option value="1" selected>Apartamento</option>
-            <option value="2" selected="">Casa</option>
-            <option value="3" selected="">Oficina</option>
+            <option value="2">Casa</option>
+            <option value="3">Oficina</option>
          
            </select>
           </div>
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12">
          <label class="col-md-12" for="example-text-input">Información inmueble</label>
           <div class="col-md-12">
-           <input id="informacion" name="informacion" type="text" class="form-control" value="{{session::get('informacion')}}" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
+           <input id="informacion" name="informacion" type="text" class="form-control" value="{{session::get('informacion')}}" placeholder="Ingrese Datos Inmueble, número Oficina, Apartamento o Casa, Torreo o Blouqe">
           </div>
         </div>
-
+        <div class="form-group col-md-12">
         @if(session::get('identificador') == '')
-        <div class="form-group col-md-6">
-         <label class="col-md-12" for="example-text-input">Identificador</label>
-          <div class="col-md-12">
-           <input id="identificador" name="identificador" type="text" class="form-control" value="{{rand(154887854655,484846545450656556)}}" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
-          </div>
-        </div>
-        @else
-        <div class="form-group col-md-6">
-         <label class="col-md-12" for="example-text-input">Identificador</label>
-          <div class="col-md-12">
-           <input id="identificador" name="identificador" type="text" class="form-control" value="{{session::get('identificador')}}" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
-          </div>
-        </div>
-        @endif
-        
-       <div class="col-md-12 mb-3">
-           <button class="btn btn-primary pull-right botcart" onclick="this.disabled=true;this.value='Enviando.. .';this.form.submit();" id="epayco-buttons" type="submit">Siguiente</button>
 
-        <a href="/web/limpieza" class="btn btn-default pull-right botcart">Limpiar</a><br><br>
+
+           <input id="identificador" name="identificador" type="hidden" class="form-control" value="{{rand(154887854655,484846545450656556)}}" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
+
+        @else
+                   <input id="identificador" name="identificador" type="hidden" class="form-control" value="{{session::get('identificador')}}" placeholder="Ingrese datos inmueble número oficina, apartamento o casa, torreo o blouqe">
+          
+        @endif
+        </div>
+       <div class="col-md-12 mb-3">
+           <button type="submit" class="btn btn-primary pull-right botcart" id="epayco-buttons">Siguiente</button>
+        <a href="/web/limpieza" class="btn btn-default pull-right botcart">Limpiar</a>
       </div>
+    </div></div>
      </form>
                                  
 </div>
-</div>
 
-    
+
+
+
+      </div>
+    </div>
   </div>
-
-
-@if($configuracion->tienda == 'Epayco')
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Collapsible Group Item #3
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        @if($configuracion->tienda == 'Epayco')
 @if(Session::get('miSesionTextouno') == '')
 @else
 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-12 shop">
@@ -236,7 +298,7 @@ color:#fff;
         <td>{{$item->name}}</td>
          @if($item->precioivafin == $item->precioinivafin)
           <td class="text-right">$ {{ number_format($item->precioivafin,0,",",".")}}</td>
-           @else{{$item->name}}
+           @else
           <td class="text-right">$ {{ number_format($item->precioinivafin,0,",",".")}}</td>
          @endif
        </tr>
@@ -284,7 +346,7 @@ color:#fff;
        data-epayco-extra1="<?php echo $identificador?>"
        data-epayco-country="co"
        data-epayco-test="true"
-       data-epayco-external="true"
+       data-epayco-external="false"
        data-epayco-response="{{Request::root()}}/cart/responseda"
        data-epayco-confirmation="{{request()->getSchemeAndHttpHost()}}/cart/responseserver">
       </script>
@@ -393,6 +455,16 @@ color:#fff;
  </div>
 </div>
 @endif
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -413,7 +485,7 @@ jq(document).ready(function(){
  });
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<button type="submit" class="btn btn-primary" id="epayco-buttons">Submit {{rand(1548,50656556)}}</button>
+<!--<button type="submit" class="btn btn-primary" id="epayco-buttons">Submit {{rand(1548,50656556)}}</button>-->
    <script type="text/javascript">
   $("#epayco-buttons").click(function(e) {
 var u='/mensajes/mensajes';
@@ -440,5 +512,7 @@ $.ajax({
    var html=window.opener.getElementById("response").innerHTML,
   html="el envió del formulario finalizo con exito!"
 </script>
+
+
 
 @stop

@@ -174,7 +174,7 @@
        <td class="text-center"><strong>IDT.{{$productos->id}}</strong></td>
        <td>{{$productos->name}} </td>
        <td class="text-center text-primary"><b>{{$productos->referencia}}</b></td>
-       <td class="text-center"><strong>{{$productos->quantity}}</strong></td>
+       <td class="text-center"><strong>{{$productos->cantidad}}</strong></td>
        <td class="text-center"><strong>$ {{number_format($productos->precio,0,",",".")}}</strong></td>
        <td class="text-center"><strong>{{$productos->descuento}} %</strong></td>
        <td class="text-center"><strong>{{$productos->iva}} %</strong></td>
@@ -201,11 +201,7 @@
       <tr class="active">
        <td colspan="7" class="text-right text-uppercase"><strong>Valor Total:</strong></td>
        <td class="text-right"><strong>
-        @if($totales->preciodescuento == 0 OR $totales->preciodescuento == null)
-        ${{number_format($totales->shipping,0,",",".")}}
-        @else
-        ${{number_format($totales->shipping,0,",",".")}}
-        @endif
+        ${{number_format($totales->shipping+$totales->cos_envio,0,",",".")}}
       </strong></td>
       </tr>
 
@@ -216,79 +212,55 @@
  </div>
 </div>
 
-@foreach($usuarios as $usuarios)
-@endforeach
+
 
             <!-- Addresses -->
                         <div class="container">
                           <div class="row">
                             
                           
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <!-- Billing Address Block -->
                                 <div class="block">
                                     <!-- Billing Address Title -->
                                     <div class="block-title">
-                                        <h2><i class="fa fa-user"></i> <strong>Datos</strong> Cliente</h2>
+                                        <h2><i class="fa fa-user"></i> <strong>Datos</strong> Envío</h2>
                                     </div>
                                     <!-- END Billing Address Title -->
 
                                     <!-- Billing Address Content -->
-                                    <h4><strong>{{$usuarios->name}} {{$usuarios->last_name}}</strong></h4>
+                                 
+                                    <h4><strong>{{$productos->nombre}}</strong></h4>
                                     <address>
-                                        {{$usuarios->documento}}<br>
-                                        {{$usuarios->departamento}} - {{$usuarios->municipio}}<br>
-                                        {{$usuarios->address}},
-                                        @if($usuarios->inmueble == 1)
+                                        <b>{{$productos->ciudad}}</b><br>
+                                        {{$productos->departamento}}<br>
+                                        <br>
+                                        {{$productos->direccion}},
+                                        <br>
+                                        @if($productos->inmueble == 1)
                                         <strong>Casa</strong>
-                                        @elseif($usuarios->inmueble == 2)
+                                        @elseif($productos->inmueble == 2)
                                         <strong>Apartamento</strong>
-                                        @elseif($usuarios->inmueble == 3)
+                                        @elseif($productos->inmueble == 3)
                                         <strong>Oficina</strong>
                                         @endif
-                                        <strong>{{$usuarios->numero}}</strong><br><br>
-                                        <i class="fa fa-phone"></i> {{$usuarios->celular}}<br>
-                                        <i class="fa fa-envelope-o"></i> <a href="javascript:void(0)">{{$usuarios->email}}</a>
+                                        <br>
+                                        <br>                                
+                                        <i class="fa fa-phone"></i> {{$productos->telefono}}<br>
+                                        <i class="fa fa-envelope-o"></i> <a href="javascript:void(0)">{{$productos->email}}</a>
                                     </address>
                                     <!-- END Billing Address Content -->
+                       
+
                                 </div>
                                 <!-- END Billing Address Block -->
                             </div>
-                            <div class="col-sm-6">
-                                <!-- Shipping Address Block -->
-                                <div class="block">
-                                    <!-- Shipping Address Title -->
-                                    <div class="block-title">
-                                        <h2><i class="gi gi-send"></i> <strong>Datos</strong> Envío</h2>
-                                    </div>
-                                    @foreach($informacion as $informacion)
-                                      <h4><strong>{{$informacion->nombre}} {{$informacion->apellido}}</strong></h4>
-                                    <address>
-                                        {{$informacion->documento}}<br>
-                                        {{$informacion->departamento}} - {{$informacion->municipio}}<br>
-                                        {{$informacion->direccion}},
-                                        @if($informacion->inmueble == 1)
-                                        <strong>Casa</strong>
-                                        @elseif($informacion->inmueble == 2)
-                                        <strong>Apartamento</strong>
-                                        @elseif($informacion->inmueble == 3)
-                                        <strong>Oficina</strong>
-                                        @endif
-                                        <strong>{{$informacion->informacion}}</strong><br><br>
-                                        <i class="fa fa-phone"></i> {{$informacion->telefono}}<br>
-                                        <i class="fa fa-envelope-o"></i> <a href="javascript:void(0)">{{$informacion->email}}</a>
-                                    </address>
-                                    @endforeach
-                                    <!-- END Billing Address Content -->
-                                </div>
-                              </div>
-                                <!-- END Billing Address Block -->
+                   
                             </div>
                                 <!-- END Shipping Address Block -->
                             </div>
                          
                         <!-- END Addresses -->
-
 
 
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>

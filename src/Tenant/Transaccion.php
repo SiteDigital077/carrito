@@ -11,6 +11,6 @@ class Transaccion extends Model{
 use UsesTenantConnection;
 
 protected $table = 'transaccion';
-public $timestamps = false;
+public $timestamps = true;
 
 }
