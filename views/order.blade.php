@@ -268,6 +268,10 @@ color:#fff;
 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-12 shop">
  <?php
   $valora = $suma + 0;
+  if($configuracion->direccion == 1)
+  $direccion = false;
+  else
+  $direccion = true; 
   $p_cust_id_cliente = $configuracion->id_cliente;
   $p_key = $configuracion->p_key;
   $p_id_invoice = $valora;
@@ -346,7 +350,7 @@ color:#fff;
        data-epayco-extra1="<?php echo $identificador?>"
        data-epayco-country="co"
        data-epayco-test="true"
-       data-epayco-external="false"
+       data-epayco-external="<?php echo $direccion?>"
        data-epayco-response="{{Request::root()}}/cart/responseda"
        data-epayco-confirmation="{{request()->getSchemeAndHttpHost()}}/cart/responseserver">
       </script>

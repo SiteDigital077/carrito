@@ -145,7 +145,24 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Descripcón de la compra</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('descripcion', $categories->description, array('class' => 'form-control','placeholder'=>'Ingrese Descripción'))}}
+                                            </div>
+                                        </div>
+
                                          <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-select">Dirección de Pago</label>
+                                            <div class="col-md-9">
+                                              {{ Form::select('direccion', [$categories->direccion => $categories->direccion,
+                                              '1' => 'Interna',
+                                              '2' => 'Externa',     
+                                              ], null, array('class' => 'form-control')) }}
+                                             </div>
+                                        </div>
+
+                                        <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-select">Tipo moneda</label>
                                             <div class="col-md-9">
                                               {{ Form::select('moneda', [$categories->moneda => $categories->moneda,
@@ -157,12 +174,7 @@
 
                           
 
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-text-input">Número Fatura</label>
-                                            <div class="col-md-9">
-                                                {{Form::text('factura', $categories->invoice, array('class' => 'form-control','placeholder'=>'Ingrese número factura'))}}
-                                            </div>
-                                        </div>
+                                  
 
                                          <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-text-input">Redirección</label>

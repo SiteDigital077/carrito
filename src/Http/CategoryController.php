@@ -492,6 +492,8 @@ public function show()
     $categoria->moneda = Input::get('moneda');
     $categoria->invoice = Input::get('factura');
     $categoria->url = Input::get('redireccion');
+    $categoria->direccion = Input::get('direccion');
+    $categoria->description = Input::get('descripcion');
 
     $categoria->save();
     return redirect('gestion/carrito/configuracion')->with('status', 'ok_update');

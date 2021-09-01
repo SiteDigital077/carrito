@@ -253,6 +253,7 @@ return $preciomunicipio;
 
 
 public function update(Product $product, $quantity){
+  
 if(!$this->tenantName){
 $hola =  Product::where('slug', Request::segment(3))->get();
 }else{
@@ -264,6 +265,10 @@ $cart[$product->slug]->quantity = $quantity;
 session()->put('cart', $cart);
 return Redirect('/cart/show');
 }
+
+
+
+
 
 
 public function orderDetail(){
@@ -324,9 +329,15 @@ return view('Templates.rayo.carrito.order', compact('cart', 'total', 'subtotal',
 
 
 public function trash(){
+if(!$this->tenantName){ 
+$url = Configuracion::where('id', '=', 1)->get();
+}else{
+$url = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id', '=', 1)->get(); 
+}
 session()->forget('cart');
-return Redirect('/');
-
+foreach ($url as $url) {
+return Redirect($url->url);
+}
 }
 
 
@@ -570,15 +581,15 @@ $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',sessio
   $contenido->cos_envio = session::get('preciomunicipio');
   $contenido->codigo = '0000';
   $contenido->estado = 'Pendiente';
-  $contenido->nombre = session::get('nombres');
-  $contenido->direccion = session::get('direccion');
-  $contenido->email = session::get('email');
-  $contenido->documento = session::get('documento');
-  $contenido->telefono = session::get('telefono');
-  $contenido->inmueble = session::get('inmueble');
-  $contenido->informacion = session::get('informacion');
+  $contenido->nombre = Input::get('nombres');
+  $contenido->direccion = Input::get('direccion');
+  $contenido->email = Input::get('email');
+  $contenido->documento = Input::get('documento');
+  $contenido->telefono = Input::get('telefono');
+  $contenido->inmueble = Input::get('inmueble');
+  $contenido->informacion = Input::get('informacion');
   $contenido->identificador = Input::get('identificador');
-  $contenido->ciudad =session::get('nombredepartamento');
+  $contenido->ciudad = session::get('nombredepartamento');
   $contenido->departamento =session::get('nombremunicipio');
   $contenido->codigo_apr = '000000';
   $contenido->medio = 'N/A';

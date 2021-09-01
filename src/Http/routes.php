@@ -30,12 +30,6 @@ Route::get('cart/detail', [
 'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@orderDetail'
 ]);
 
-Route::any('/session/datos', [
-'middleware' => 'auth',
-'middleware' => 'comprador',
-'as' => 'sesion-datos',
-'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@datosusuario'
-]);
 
 
 
@@ -97,7 +91,7 @@ Route::get('cart/trash', [
 ]);
 
 
-Route::get('cart/responseda', [
+Route::get('cart/responsedaff', [
 'middleware' => 'web',
 'as' => 'cart-response',
 ]);
@@ -108,12 +102,14 @@ Route::get('cart/responseserver', array('uses' => 'DigitalsiteSaaS\Carrito\Http\
 
 
 Route::post('cart/responseda/', [
-
 'as' => 'cart/responsess',
 'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@response'
-
 ]);
 
+Route::get('cart/responseda/', [
+'as' => 'cart/responsess',
+'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@response'
+]);
 
 Route::group(['middleware' => ['auths','administrador']], function (){
 
