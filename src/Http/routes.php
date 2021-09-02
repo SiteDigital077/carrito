@@ -73,7 +73,7 @@ Route::get('cart/addprice/{priceman}', [
 'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@addprice'
 ]);
 
-Route::get('cart/update/{product}/{quantity?}', [
+Route::get('cart/update/{producto}/{cantidad?}', [
 'middleware' => 'web',
 'as' => 'cart-update',
 'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@update'

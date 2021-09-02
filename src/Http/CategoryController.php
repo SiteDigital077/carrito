@@ -421,14 +421,7 @@ public function show()
     $productos = OrderItem::join('products','products.id','=','order_items.product_id')
     ->join('orders','orders.id','=','order_items.order_id')
     ->where('order_id', '=', $id)->get();
-    $users = Order::where('id',  $id)->get();      
-    foreach ($users as $userma){
-    $usuarios = Usuario::join('order_items', 'order_items.user_id', '=', 'users.id')
-        ->join('municipios', 'municipios.id', '=', 'users.region')
-        ->join('departamentos', 'departamentos.id', '=', 'users.ciudad')
-        ->where('order_items.user_id', '=', $userma->user_id)->get();
-    }
-        
+    $users = Order::where('id',  $id)->get();          
     $informacion = Order::leftJoin('municipios', 'municipios.id', '=', 'orders.ciudad')
     ->leftJoin('departamentos', 'departamentos.id', '=', 'orders.departamento')
     ->where('orders.id', '=', $id)->get();
@@ -443,12 +436,7 @@ public function show()
     ->join('orders','orders.id','=','order_items.order_id')
     ->where('order_id', '=', $id)->get();
     $users = \DigitalsiteSaaS\Carrito\Tenant\Order::where('id',  $id)->get();      
-    foreach ($users as $userma){
-    $usuarios = \DigitalsiteSaaS\Carrito\Tenant\Usuario::join('order_items', 'order_items.user_id', '=', 'users.id')
-        ->join('municipios', 'municipios.id', '=', 'users.region')
-        ->join('departamentos', 'departamentos.id', '=', 'users.ciudad')
-        ->where('order_items.user_id', '=', $userma->user_id)->get();
-    } 
+    
     $informacion = \DigitalsiteSaaS\Carrito\Tenant\Order::leftJoin('municipios', 'municipios.id', '=', 'orders.ciudad')
     ->leftJoin('departamentos', 'departamentos.id', '=', 'orders.departamento')
     ->where('orders.id', '=', $id)->get();

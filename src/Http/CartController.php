@@ -252,8 +252,7 @@ return $preciomunicipio;
 }
 
 
-public function update(Product $product, $quantity){
-  
+public function update($producto, $cantidad){
 if(!$this->tenantName){
 $hola =  Product::where('slug', Request::segment(3))->get();
 }else{
@@ -261,8 +260,9 @@ $hola = \DigitalsiteSaaS\Carrito\Tenant\Product::where('slug', Request::segment(
 }
 $product = json_decode($hola[0]);
 $cart = session()->get('cart');
-$cart[$product->slug]->quantity = $quantity;
+$cart[$product->slug]->quantity = $cantidad;
 session()->put('cart', $cart);
+session()->get('cart');
 return Redirect('/cart/show');
 }
 
@@ -352,7 +352,13 @@ $cart = session()->get('cart');
 unset($cart[$product->slug]);
 session()->put('cart', $cart);
 
-return Redirect('/cart/show');
+$url = Configuracion::where('id', '=', 1)->get();
+}else{
+$url = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id', '=', 1)->get(); 
+}
+foreach ($url as $url) {
+return Redirect($url->url);
+}
 
 }
 
