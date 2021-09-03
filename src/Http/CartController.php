@@ -351,7 +351,7 @@ $product = json_decode($hola[0]);
 $cart = session()->get('cart');
 unset($cart[$product->slug]);
 session()->put('cart', $cart);
-
+if(!$this->tenantName){ 
 $url = Configuracion::where('id', '=', 1)->get();
 }else{
 $url = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id', '=', 1)->get(); 
