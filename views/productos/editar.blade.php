@@ -4,10 +4,9 @@
 
    @section('cabecera')
     @parent
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>  
-    <script src="/vendors/ckeditor/ckeditor.js"></script>
-    <link rel="stylesheet" href="/validaciones/dist/css/bootstrapValidator.css"/>
-    <script type="text/javascript" src="/validaciones/dist/js/bootstrapValidator.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>  
+ 
+
     @stop
 
 
@@ -266,7 +265,6 @@
 </div>
 
 
-<script src="/validaciones/carrito/crear-producto.js" type="text/javascript"></script>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
@@ -287,7 +285,8 @@
 <script>
   CKEDITOR.replace( 'editor', {filebrowserImageBrowseUrl: '/file-manager/ckeditor'});
 </script>
-  
+
+
 
   
 
