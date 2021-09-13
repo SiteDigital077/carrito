@@ -31,6 +31,13 @@ Route::get('cart/detail', [
 ]);
 
 
+Route::get('cart/detailsin', [
+'middleware' => 'web',
+'as' => 'tienda-detailsin',
+'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@orderDetail'
+]);
+
+
 
 
 Route::any('/session/datosdfed', 'DigitalsiteSaaS\Carrito\Http\CartController@datosusuario');
@@ -147,6 +154,7 @@ Route::get('gestion/carrito/terminos', 'DigitalsiteSaaS\Carrito\Http\CategoryCon
 Route::post('gestion/carrito/createcategoria', 'DigitalsiteSaaS\Carrito\Http\CategoryController@createcategoria');
 Route::post('gestion/carrito/parametros', 'DigitalsiteSaaS\Carrito\Http\CategoryController@parametros');
 Route::post('gestion/carrito/createcategoriaproductos', 'DigitalsiteSaaS\Carrito\Http\CategoryController@createcategoriaproductos');
+
 Route::post('gestion/carrito/creacionautor', 'DigitalsiteSaaS\Carrito\Http\CategoryController@creacionautor');
 Route::get('gestion/carrito/editarcategoria/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@editarcategoria');
 Route::get('gestion/carrito/editarcategoriaproducto/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@editarcategoriaproducto');
@@ -166,8 +174,9 @@ Route::post('gestion/carrito/crearconfiguracionepayco', 'DigitalsiteSaaS\Carrito
 Route::post('gestion/carrito/crearconfiguracionplace', 'DigitalsiteSaaS\Carrito\Http\CategoryController@crearconfiguracionplace');
 Route::get('gestion/autor/editar/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@autoreditar');
 Route::get('gestion/parametro/editar/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@parametroeditar');
-
-
+Route::get('gestion/carrito/crear-cupon', 'DigitalsiteSaaS\Carrito\Http\CategoryController@cupons');
+Route::get('gestion/carrito/cupon', 'DigitalsiteSaaS\Carrito\Http\CategoryController@cupon');
+Route::post('gestion/carrito/createcupon', 'DigitalsiteSaaS\Carrito\Http\CategoryController@createcupon');
 Route::get('gestion/autor/eliminar/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@autoreliminar');
 
 Route::get('gestion/parametro/eliminar/{id}', 'DigitalsiteSaaS\Carrito\Http\CategoryController@parametroeliminar');
@@ -246,9 +255,13 @@ Route::get('gestion/detalle/usuario', 'DigitalsiteSaaS\Carrito\Http\CartControll
 
 Route::get('gestion/datosesion', 'DigitalsiteSaaS\Carrito\Http\CartController@datosesion');
 
- Route::get('mensajes/mensajes', 'DigitalsiteSaaS\Carrito\Http\CartController@mensajes');
 
 });
+
+
+
+ Route::get('mensajes/mensajes', 'DigitalsiteSaaS\Carrito\Http\CartController@mensajes')->middleware('web');
+
 
 
 

@@ -15,6 +15,7 @@ use DigitalsiteSaaS\Carrito\OrderItem;
 use DigitalsiteSaaS\Carrito\Municipio;
 use DigitalsiteSaaS\Carrito\Category;
 use DigitalsiteSaaS\Carrito\Transaccion;
+use DigitalsiteSaaS\Carrito\Cupon;
 use DigitalsiteSaaS\Carrito\Departamento;
 use DigitalsiteSaaS\Pagina\Template;
 use DigitalsiteSaaS\Pagina\Seo;
@@ -127,28 +128,8 @@ return $subtotal;
 }
 
 
-public function precioenvio()
-{
-if(!$this->tenantName){
-$cart =  \DigitalsiteSaaS\Carrito\User::join('departamentos', 'departamentos.id', '=', 'users.ciudad')
-             ->leftjoin('municipios', 'municipios.id', '=', 'users.region')
-             ->where('users.id', '=' , Auth::user()->id)->get();
-    }else{
-    $cart =  \DigitalsiteSaaS\Carrito\Tenant\User::join('departamentos', 'departamentos.id', '=', 'users.ciudad')
-             ->leftjoin('municipios', 'municipios.id', '=', 'users.region')
-             ->where('users.id', '=' , Auth::user()->id)->get();
-    }
+public function precioenvio(){
 $precioenvio = 0;
-
-foreach($cart as $item){
-if($item->region == 'undefined'){
-$precioenvio += $item->p_departamento;
-}
-else{
-$precioenvio += $item->p_municipio;
-}
-}
-
 return $precioenvio;
 }
 
@@ -287,17 +268,17 @@ $total = $this->total();
 $subtotal = $this->subtotal();
 $iva = $this->iva();
 $precioenvio = $this->precioenvio();
-$datos = User::join('departamentos', 'departamentos.id', '=', 'users.ciudad')
+/*$datos = User::join('departamentos', 'departamentos.id', '=', 'users.ciudad')
              ->leftjoin('municipios', 'municipios.id', '=', 'users.region')
              ->where('users.id', '=' , Auth::user()->id)->get();
-
+*/
 $costoenvio = $this->costoenvio();
 $preciomunicipio = $this->preciomunicipio();
 $nombremunicipio = $this->nombremunicipio();
 $descuento = $this->descuento();
-$orderold  = Order::where('user_id', '=', Auth::user()->id)->get();
+/*$orderold  = Order::where('user_id', '=', Auth::user()->id)->get();*/
 $categories = Pais::all();
-$ordenes = Order::where('user_id', '=' ,Auth::user()->id)->where('estado', '=', 'PENDING')->get();
+/*$ordenes = Order::where('user_id', '=' ,Auth::user()->id)->where('estado', '=', 'PENDING')->get();*/
 }else{
 $departamento = \DigitalsiteSaaS\Carrito\Tenant\Departamento::all();
 $seo = \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get();
@@ -312,9 +293,10 @@ $total = $this->total();
 $subtotal = $this->subtotal();
 $iva = $this->iva();
 $precioenvio = $this->precioenvio();
-$datos = \DigitalsiteSaaS\Carrito\Tenant\User::join('departamentos', 'departamentos.id', '=', 'users.ciudad')
+/*$datos = \DigitalsiteSaaS\Carrito\Tenant\User::join('departamentos', 'departamentos.id', '=', 'users.ciudad')
              ->leftjoin('municipios', 'municipios.id', '=', 'users.region')
              ->where('users.id', '=' , Auth::user()->id)->get();
+*/
 $costoenvio = $this->costoenvio();
 $preciomunicipio = $this->preciomunicipio();
 $nombremunicipio = $this->nombremunicipio();
@@ -323,7 +305,7 @@ $orderold  = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=', Auth::
 $categories = \DigitalsiteSaaS\Carrito\Tenant\Pais::all();
 $ordenes = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=' ,Auth::user()->id)->where('estado', '=', 'PENDING')->get();
 }
-return view('Templates.rayo.carrito.order', compact('cart', 'total', 'subtotal', 'plantilla', 'menu','configuracion','price','suma', 'orderold', 'iva', 'descuento', 'costoenvio', 'categories', 'precioenvio', 'preciomunicipio', 'datos', 'plantillaes', 'nombremunicipio', 'ordenes', 'seo','departamento'));
+return view('Templates.rayo.carrito.order', compact('cart', 'total', 'subtotal', 'plantilla', 'menu','configuracion','price','suma', 'iva', 'descuento', 'costoenvio', 'categories', 'precioenvio', 'preciomunicipio', 'plantillaes', 'nombremunicipio', 'seo','departamento'));
 
 }
 
@@ -502,13 +484,22 @@ Order::where('id', $id_factura)
 }
 
  public function mensajes(){
+
  Session::put('identificador', Input::get('identificador'));
  $fecha = date("Y-m-d h:i:s A");
  $cart = Session::get('cart');
  if(!$this->tenantName){
  $validacion = Order::where('identificador','=',session::get('identificador'))->count();
+ $contenido = Cupon::where('codigo','=', session::get('codigo'))
+ ->update([
+ 'estado' => 0,
+ ]);
  }else{
  $validacion = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador','=',session::get('identificador'))->count();
+  $contenido = \DigitalsiteSaaS\Carrito\Tenant\Cupon::where('codigo','=', session::get('codigo'))
+ ->update([
+ 'estado' => 0,
+ ]);
  }
 
 foreach($cart as $producto) {
@@ -535,13 +526,15 @@ $contenido = Order::where('identificador',session::get('identificador'))
 'telefono' => session::get('telefono'),
 'inmueble' => session::get('inmueble'),
 'informacion' => session::get('informacion'),
+'tipo' => session::get('porcentaje'),
+'empresa' => $this->subtotal()*session::get('porcentaje')/100,
 'identificador' => Input::get('identificador'),
 'ciudad' => session::get('nombredepartamento'),
 'departamento' => session::get('nombremunicipio'),
 'codigo_apr' => '000000',
 'medio' => 'N/A',
 'preciodescuento' => $producto->preciodesc,
-'user_id'  => Auth::user()->id
+'user_id'  => '1'
 ]);
 }else{
 $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',session::get('identificador'))
@@ -562,6 +555,8 @@ $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',sessio
 'telefono' => session::get('telefono'),
 'inmueble' => session::get('inmueble'),
 'informacion' => session::get('informacion'),
+'empresa' => $this->subtotal()*session::get('porcentaje')/100,
+'tipo' => session::get('porcentaje'),
 'identificador' => Input::get('identificador'),
 'ciudad' => session::get('nombredepartamento'),
 'departamento' => session::get('nombremunicipio'),
@@ -578,6 +573,7 @@ $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',sessio
   }else{
   $contenido = new \DigitalsiteSaaS\Carrito\Tenant\Order;
   }
+
   $contenido->descripcion = $producto->description;
   $contenido->cantidad = $producto->quantity;
   $contenido->subtotal = $this->subtotal();
@@ -596,15 +592,34 @@ $contenido = \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador',sessio
   $contenido->informacion = Input::get('informacion');
   $contenido->identificador = Input::get('identificador');
   $contenido->ciudad = session::get('nombredepartamento');
-  $contenido->departamento =session::get('nombremunicipio');
+  $contenido->departamento = session::get('nombremunicipio');
+  $contenido->tipo = session::get('porcentaje');
+  $contenido->empresa = $this->subtotal()*session::get('porcentaje')/100;
   $contenido->codigo_apr = '000000';
   $contenido->medio = 'N/A';
   $contenido->preciodescuento = $producto->preciodesc;
-  $contenido->user_id = Auth::user()->id;
+  $contenido->user_id = '1';
   $contenido->save();
+ 
+  session()->forget('nombredepartamento');
+session()->forget('nombremunicipio');
+session()->forget('nombres');
+session()->forget('documento');
+session()->forget('direccion');
+session()->forget('telefono');
+session()->forget('email');
+session()->forget('direnvio');
+session()->forget('inmueble');
+session()->forget('informacion');
+session()->forget('identificador');
+session()->forget('cart');
+session()->forget('codigo');
+session()->forget('porcentaje');
+
   foreach($cart as $producto){
    $this->saveOrderItem($producto, $contenido->id);  
   }
+
   }
   
 
@@ -656,7 +671,7 @@ $order = Order::create([
 'codigo_apr' => $codigo_apr,
 'medio' => $medio,
 'preciodescuento' => $descuento*$producto->quantity,
-'user_id'  => Auth::user()->id
+'user_id'  => '1'
 ]);
 }else{
 $order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
@@ -678,7 +693,7 @@ $order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
 'codigo_apr' => $codigo_apr,
 'medio' => $medio,
 'preciodescuento' => $descuento*$producto->quantity,
-'user_id'  => Auth::user()->id
+'user_id'  => '1'
 ]);
 }
 
@@ -696,7 +711,7 @@ OrderItem::create([
 'quantity' => $producto->quantity,
 'product_id' => $producto->id,
 'order_id' => $order_id,
-'user_id' => Auth::user()->id
+'user_id' => '1'
 ]);
 }else{
 \DigitalsiteSaaS\Carrito\Tenant\OrderItem::create([
@@ -704,9 +719,10 @@ OrderItem::create([
 'quantity' => $producto->quantity,
 'product_id' => $producto->id,
 'order_id' => $order_id,
-'user_id' => Auth::user()->id
+'user_id' => '1'
 ]);
 }
+
 }
 
 
@@ -1505,11 +1521,11 @@ $codigo =  '1111';
     }
 
 
-        public function registrar(){
-        if(!$this->tenantName){
-          $seo = Seo::where('id','=',1)->get();
-    $plantilla = \DigitalsiteSaaS\Pagina\Template::all();
-    $plantillaes = \DigitalsiteSaaS\Pagina\Template::all();
+      public function registrar(){
+      if(!$this->tenantName){
+      $seo = Seo::where('id','=',1)->get();
+      $plantilla = \DigitalsiteSaaS\Pagina\Template::all();
+      $plantillaes = \DigitalsiteSaaS\Pagina\Template::all();
     $terminos = \DigitalsiteSaaS\Pagina\Template::all();
 $cart = session()->get('cart');
 $total = $this->total();

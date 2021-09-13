@@ -10,6 +10,7 @@ use DigitalsiteSaaS\Carrito\Categoria;
 use DigitalsiteSaaS\Carrito\Order;
 use DigitalsiteSaaS\Carrito\Autor;
 use DigitalsiteSaaS\Carrito\Parametro;
+use DigitalsiteSaaS\Carrito\Cupon;
 use DigitalsiteSaaS\Carrito\Product;
 use DigitalsiteSaaS\Carrito\OrderItem;
 use DigitalsiteSaaS\Carrito\Configuracion;
@@ -54,6 +55,11 @@ class CategoryController extends Controller{
 
     public function index(){
     return view('carrito::admin.home');
+    }
+
+  
+    public function cupons(){
+    return view('carrito::admin.cupon');
     }
 
   
@@ -172,6 +178,30 @@ public function show()
     $categoria->categoriapro_id = Input::get('categoriapro');
     $categoria->save();
         return redirect('/gestion/carrito/subcategorias/'.$categoria->categoriapro_id)->with('status', 'ok_create');
+    }
+
+
+     public function createcupon(){
+    if(!$this->tenantName){
+    $cupon = new Cupon;
+    }else{
+    $cupon = new \DigitalsiteSaaS\Carrito\Tenant\Cupon;   
+    }
+    $cupon->porcentaje = Input::get('porcentaje');
+    $cupon->codigo = Input::get('codigo');
+    $cupon->save();
+        return redirect('/gestion/carrito/cupon/')->with('status', 'ok_create');
+    }
+
+
+    public function cupon(){
+    if(!$this->tenantName){
+    $cupones = Cupon::all();
+    }else{
+    $cupones = \DigitalsiteSaaS\Carrito\Tenant\Cupon::all();
+    }
+     return view('carrito::admin.cupones', compact('cupones'));
+
     }
 
 

@@ -1,7 +1,20 @@
 @extends ('LayoutsSD.Layout')
 
 
-         <script type="text/javascript" src="/validaciones/vendor/jquery/jquery.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap/3.2.0/css/bootstrap.min.css"/>
+
+    <!-- Include FontAwesome CSS if you want to use feedback icons provided by FontAwesome -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+
+    <!-- BootstrapValidator CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css"/>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <!-- BootstrapValidator JS -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js"></script>
 
           @section('cabecera')
  
@@ -40,138 +53,102 @@
 
 <br>
 <div class="container">
-
-
-         <div class="col-md-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Acceso usuarios</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" id="defaultForm3" role="form" method="POST" action="{{ url('/gestion/usuarios/crear') }}">
+ <div class="col-md-12">
+  <div class="panel">
+   <div class="panel-heading bg-primary">Acceso usuarios</div>
+    <div class="panel-body">
+     
+     <form class="form-horizontal" id="registrationForm" role="form" method="POST" action="{{ url('/gestion/usuarios/crear') }}">
                      
+      <div class="container-fluid">
+       <div class="row">
+                    
+        <div class="form-group col-md-6">
+         <label class="col-md-12" for="example-text-input">Nombre</label>
+          <div class="col-md-12">
+           <input type="text" name="name" class="form-control" placeholder="Ingrese nombre">
+          </div>
+        </div>
 
-                            <div class="container-fluid">
-                            
-                             <div class="container-fluid">
-                        
+        <div class="form-group col-md-6">
+         <label class="col-md-12" for="example-text-input">Apellido</label>
+          <div class="col-md-12">
+           <input type="text" name="last_name" class="form-control" placeholder="Ingrese apellido">
+          </div>
+        </div>
+        
+        <div class="form-group col-md-6">
+         <label class="col-md-12" for="example-text-input">Email</label>
+          <div class="col-md-12">
+           <input type="email" name="email" class="form-control" placeholder="Ingrese email">
+          </div>
+        </div>
 
+        <div class="form-group col-md-6">
+         <label class="col-md-12" for="example-text-input">Teléfono</label>
+          <div class="col-md-12">
+           <input type="phone" name="phone" class="form-control" placeholder="Ingrese teléfono">
+          </div>
+        </div>
+                           
+          
+        <div class="form-group col-md-6">
+         <label class="col-md-12" for="example-text-input">Contraseña</label>
+          <div class="col-md-12">
+           <input type="password"  name="password" class="form-control" placeholder="Ingrese contraseña">
+          </div>
+        </div>
+        
+        <div class="form-group col-md-6">
+         <label class="col-md-12">Repetir Contraseña</label>
+          <div class="col-md-12">
+           <input type="password" name="confirmPassword" class="form-control" placeholder="Repita contraseña">
+          </div>
+        </div>
+        
+        <input type="hidden" id="example-text-input" name="level" class="form-control" value="2">
 
-                            <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Nombre</label>
-                                            <div class="col-md-12">
-                                                <input type="text" name="name" class="form-control" placeholder="Ingrese nombre">
-                                            </div>
-                                        </div>
+        <div class="form-group col-md-6">
+         <label class="checkbox-inline"></label>
+          <div class="col-md-12">
+            <input type="checkbox" id="cbox2" value="second_checkbox"> <label for="cbox2">Aceptar terminos y condiciones  <a data-toggle="modal" href='#modal-id'>Ver terminos</a></label> 
+          </div>
+        </div>
+        
+        <div class="modal fade" id="modal-id">
+         <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+           <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Terminos y condiciones</h4>
+           </div>
+           <div class="modal-body">
+            <div class="container-fluid">
+             @foreach($terminos as $terminos)
+              {!!$terminos->terminos!!}
+             @endforeach
+            </div>
+           </div>
+           <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+           </div>
+          </div>
+         </div>
+        </div>
 
-                             <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Apellido</label>
-                                            <div class="col-md-12">
-                                                <input type="text" name="last_name" class="form-control" placeholder="Ingrese apellido">
-                                            </div>
-                                        </div>
-                            </div>
+        <div class="form-group col-sm-12">
+         <div class="col-md-12">
+          <div class="container-fluid">
+           <button type="submit" class="site-button btn-lg pull-right">
+            <i class="fa fa-btn fa-sign-in"></i> Registrar Usuario
+           </button>
+          </div>
+         </div>
+        </div>
+        </div>
+        </div>
 
-                            <div class="container-fluid">
-                             
-
-                              <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Email</label>
-                                            <div class="col-md-12">
-                                                <input type="email" name="email" class="form-control" placeholder="Ingrese email">
-                                            </div>
-                                        </div>
-                                  <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Teléfono</label>
-                                            <div class="col-md-12">
-                                                <input type="phone" name="phone" class="form-control" placeholder="Ingrese teléfono">
-                                            </div>
-                                        </div>
-
-                               </div> 
-
-                              <div class="container-fluid">
-
-                                 <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Ciudad</label>
-                                            <div class="col-md-12">
-                                               <select name="ciudad" id="ciudad" class="form-control" size="1">
-                                                @foreach($ciudades as $ciduades)
-                                                    <option value="{{$ciduades->id}}">{{$ciduades->departamento}}</option>
-                                                @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Municipio</label>
-                                            <div class="col-md-12">
-                                               <select name="municipio" id="municipio" class="form-control" size="1">
-                                                    <option></option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                         
-                                      </div>      
-
-                                   <div class="container-fluid">  
-                                     <div class="form-group col-md-6">
-                                            <label class="col-md-12" for="example-text-input">Contraseña</label>
-                                            <div class="col-md-12">
-                                                <input type="password"  name="password" class="form-control" placeholder="Ingrese contraseña">
-                                            </div>
-                                        </div>
-                              <div class="form-group col-md-6">
-                                            <label class="col-md-12">Repetir Contraseña</label>
-                                            <div class="col-md-12">
-                                                <input type="password" name="confirmPassword" class="form-control" placeholder="Repita contraseña">
-                                            </div>
-                                        </div>
-                                      </div>
-                               <input type="hidden" id="example-text-input" name="level" class="form-control" value="2">
-
-                            </div>  
-
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                             <div class="container-fluid">
-                               <div class="form-group col-md-6">
-                                <label class="checkbox-inline">
-                                  <div class="col-md-12">
-                                     <input type="checkbox" id="terms" name="terms">Aceptar terminos y condiciones <a data-toggle="modal" href='#modal-id'>Ver terminos</a> </label>
-                                  </div>
-                               </div>
-                              <div class="modal fade" id="modal-id">
-                                <div class="modal-dialog modal-lg">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                      <h4 class="modal-title">Terminos y condiciones</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                      <div class="container-fluid">
-                                         @foreach($terminos as $terminos)
-                                         {!!$terminos->terminos!!}
-                                         @endforeach
-                                      </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                             </div>
-                            </div>
-
-                        <div class="form-group col-sm-12">
-                            <div class="col-md-12">
-                              <div class="container-fluid">
-                                <button type="submit" class="btn btn-primary btn-lg pull-right">
-                                    <i class="fa fa-btn fa-sign-in"></i> Registrar Usuario
-                                </button>
-                                </div>
-                               
-                            </div>
-                        </div>
-                    </form>
+      </form>
                 </div>
                  
 
@@ -185,32 +162,124 @@
 
 
 
+<script>
+$(document).ready(function() {
+    $('#registrationForm').bootstrapValidator({
+        // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            name: {
+                message: 'The username is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The username is required and cannot be empty'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 30,
+                        message: 'The username must be more than 6 and less than 30 characters long'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z0-9]+$/,
+                        message: 'The username can only consist of alphabetical and number'
+                    },
+                    different: {
+                        field: 'password',
+                        message: 'The username and password cannot be the same as each other'
+                    }
+                }
+            },
+             last_name: {
+                message: 'The username is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The username is required and cannot be empty'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 30,
+                        message: 'The username must be more than 6 and less than 30 characters long'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z0-9]+$/,
+                        message: 'The username can only consist of alphabetical and number'
+                    },
+                    different: {
+                        field: 'password',
+                        message: 'The username and password cannot be the same as each other'
+                    }
+                }
+            },
+            email: {
+                validators: {
+                    notEmpty: {
+                        message: 'Debe registrar un email'
+                    },
+                    emailAddress: {
+                        message: 'El email registrado no es valido'
+                    },
 
+                    remote: {
+                        type: 'GET',
+                        url: '/validacion/email',
+                        message: 'Este email ya se encuentra registrado',
+                        delay: 10
+                    }
+                }
+            },
 
-
-
- <!-- Include all compiled plugins (below), or include individual files as needed -->
-
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
- {{ Html::script('Usuario/js/registro.js') }}
-  {{ Html::script('//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js') }}
-
- <script type="text/javascript">
-     
-      $('#ciudad').on('change',function(e){
-        console.log(e);
-
-        var cat_id = e.target.value;
-
-        $.get('/mema/ajax-subcatweb?cat_id=' + cat_id, function(data){
-            $('#municipio').empty();
-            $.each(data, function(index, subcatObj){
-              $('#municipio').append('<option value="" style="display:none">Seleccione Municipio</option>','<option value="'+subcatObj.id+'">'+subcatObj.municipio+'</option>');
-
-            });
-        });
-      });
-   </script>  
-
+           password: {
+                validators: {
+                    notEmpty: {
+                        message: 'La contraseña es requerido'
+                    },
+                    stringLength: {
+                        min: 8,
+                        max: 330,
+                        message: 'La contraseña debe contener un minimo de 8 Caracteres'
+                    },
+                    identical: {
+                        field: 'confirmPassword',
+                        message: 'Las Contraseñas no Coinciden'
+                    }
+                }
+            },
+            confirmPassword: {
+                validators: {
+                    notEmpty: {
+                        message: 'La Confirmación de la contraseña es Requerida'
+                    },
+                    identical: {
+                        field: 'password',
+                        message: 'La contraseña no coincide'
+                    }
+                }
+            },
+            birthday: {
+                validators: {
+                    notEmpty: {
+                        message: 'The date of birth is required'
+                    },
+                    date: {
+                        format: 'YYYY/MM/DD',
+                        message: 'The date of birth is not valid'
+                    }
+                }
+            },
+            gender: {
+                validators: {
+                    notEmpty: {
+                        message: 'The gender is required'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
 
 @stop

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use DigitalsiteSaaS\Carrito\Product;
-use DigitalsiteSaaS\Carrito\User;
 use DigitalsiteSaaS\Carrito\Departamento;
 use DigitalsiteSaaS\Carrito\Pais;
 use DigitalsiteSaaS\Carrito\Municipio;
@@ -17,6 +16,7 @@ use DB;
 use Mail;
 use App\Mail\Registroecommerce;
 use App\Mail\Registro;
+use App\User;
 use Illuminate\Support\Facades\Hash;
 use DigitalsiteSaaS\Usuario\Usuario;
 use GuzzleHttp\Client;
@@ -150,9 +150,9 @@ public function crear() {
     $password = Input::get('password');
     $remember = Input::get('_token');
     if(!$this->tenantName){
-    $user = new Usuario;
+    $user = new User;
     }else{
-    $user = new \DigitalsiteSaaS\Usuario\Tenant\Usuario;  
+    $user = new \App\Tenant\User;  
     }
     $user->name = Input::get('name');
     $user->tipo_documento = Input::get('tdocumento');

@@ -182,17 +182,29 @@
       </tr>
      @endforeach
      @foreach($totales as $totales)
+     <?php
+     $totalweb = $totales->subtotal-$totales->empresa;
+     $ivaweb = $totalweb*$totales->iva_ord/$totales->subtotal;
+     ?>
       <tr>
         <td colspan="7" class="text-right text-uppercase"><strong>Descuento</strong></td>
        <td class="text-right"><strong>$ {{number_format($totales->preciodescuento*$totales->cantidad,0,",",".")}}</strong></td>
       </tr>
+      <tr>
+        <td colspan="7" class="text-right text-uppercase"><strong>Cupón</strong></td>
+       <td class="text-right"><strong>- {{$totales->tipo}} %</strong></td>
+      </tr>
        <tr>
        <td colspan="7" class="text-right text-uppercase"><strong>Sub Total:</strong></td>
-       <td class="text-right"><strong>$ {{number_format($totales->subtotal,0,",",".")}}</strong></td>
+       <td class="text-right"><strong>$ {{number_format($totales->subtotal-$totales->empresa,0,",",".")}}</strong></td>
       </tr>
       <tr>
        <td colspan="7" class="text-right text-uppercase"><strong>Iva:</strong></td>
+       @if($totales->tipo == '')
        <td class="text-right"><strong>$ {{number_format($totales->iva_ord,0,",",".")}}</strong></td>
+       @else
+       <td class="text-right"><strong>$ {{number_format($ivaweb,0,",",".")}}</strong></td>
+       @endif
       </tr>
       <tr>
        <td colspan="7" class="text-right text-uppercase"><strong>Costo Envio</strong></td>
@@ -201,7 +213,11 @@
       <tr class="active">
        <td colspan="7" class="text-right text-uppercase"><strong>Valor Total:</strong></td>
        <td class="text-right"><strong>
+        @if($totales->tipo == '')
         ${{number_format($totales->shipping+$totales->cos_envio,0,",",".")}}
+        @else
+         ${{number_format($totalweb+$ivaweb+$totales->cos_envio,0,",",".")}}
+        @endif
       </strong></td>
       </tr>
 
