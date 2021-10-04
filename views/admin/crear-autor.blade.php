@@ -101,11 +101,14 @@
                                             </div>
                                         </div>
 
-                                           <div class="form-group">
-                                            <label class="col-md-3 control-label" for="example-password-input">Imagen</label>
-                                            <div class="col-md-9">
-                                                <input type="text" name="FilePath" readonly="readonly" onclick="openKCFinder(this)" placeholder="Click para seleccionar imagen" class="form-control" />
-                                            </div>
+                                          <div class="form-group">
+                                         <label class="col-md-3 control-label" for="example-password-input">Imagen</label>
+                                          <div class="col-md-9">
+                                           <div class="input-group">
+                                            <input type="text" id="image_label" class="form-control" name="FilePath" placeholder="Seleccionar imagen" aria-label="Image" aria-describedby="button-image">
+                                            <span class="input-group-btn"><button class="btn btn-primary" type="button" id="button-image">Seleccionar imagen</button></span>
+                                           </div>
+                                          </div>
                                         </div>
 
                                         <div class="form-group">
@@ -194,6 +197,9 @@
 
 
 
+
+
+
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('button-image').addEventListener('click', (event) => {
@@ -213,7 +219,6 @@
 <script>
   CKEDITOR.replace( 'editor', {filebrowserImageBrowseUrl: '/file-manager/ckeditor'});
 </script>
-
 
   
 
