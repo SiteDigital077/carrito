@@ -501,7 +501,6 @@ Order::where('id', $id_factura)
  'estado' => 0,
  ]);
  }
-
 foreach($cart as $producto) {
 }
 
