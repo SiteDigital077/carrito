@@ -34,6 +34,9 @@
       <li>
        <a href="/gestion/carrito/terminos"><i class="fa fa-clipboard"></i>Terminos y condiciones</a>
       </li>
+      <li>
+       <a href="/gestion/carrito/cupon"><i class="fa fa-clipboard"></i>Cupones</a>
+      </li>
      </ul>
     </div>
 

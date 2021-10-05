@@ -66,6 +66,23 @@
                                             </div>
                                         </div>
 
+                                         <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-select">Visualización categorias</label>
+                                            <div class="col-md-9">
+                                                {{ Form::select('estado', [
+                                                 '1' => 'Activo',
+                                                 '0' => 'Inactivo'], null, array('class' => 'form-control')) }}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-select">Visualización categorias</label>
+                                            <div class="col-md-9">
+                                                <input type="date" id="start" name="fecha" class="form-control" value="{{date('Y-m-d')}}">
+                                            </div>
+                                        </div>
+
+
                                         <div class="form-group form-actions">
                                             <div class="col-md-9 col-md-offset-3">
                                                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Crear</button>

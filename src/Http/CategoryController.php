@@ -189,6 +189,8 @@ public function show()
     }
     $cupon->porcentaje = Input::get('porcentaje');
     $cupon->codigo = Input::get('codigo');
+    $cupon->estado = Input::get('estado');
+    $cupon->caducidad = Input::get('fecha');
     $cupon->save();
         return redirect('/gestion/carrito/cupon/')->with('status', 'ok_create');
     }

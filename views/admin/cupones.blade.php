@@ -93,8 +93,12 @@
                                         <tr>
                                             <td class="text-center">{{$cupones->codigo}}</td>
                                             <td class="text-center">{{$cupones->porcentaje}} %</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{$cupones->caducidad}} </td>
+                                            @if($cupones->estado == 1)
+                                            <td><span class="label label-success">Activo</span></td>
+                                            @else
+                                            <td><span class="label label-danger">Inactivo</span></td>
+                                            @endif
                                             <td>{{$cupones->created_at}}</td>
                                           
                                             <td class="text-center">
