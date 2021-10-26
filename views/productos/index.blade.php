@@ -114,6 +114,7 @@
                                             <td><span class="label label-danger">No disponible</span></td>
                                             @endif
                                             <td class="text-center">
+                                             <a href="<?=URL::to('gestion/productos/imagenes/');?>/{{ $producto->id }}"><span id="tup" data-toggle="tooltip" data-placement="bottom" title="Crear Imagen" class="btn btn-success"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
                                              <a href="<?=URL::to('gestion/productos/editarproducto/');?>/{{ $producto->id }}"><span  id="tip" data-toggle="tooltip" data-placement="top" title="Editar Contenido" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>
                                              <script language="JavaScript">
                                              function confirmar ( mensaje ) {

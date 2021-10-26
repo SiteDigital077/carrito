@@ -109,6 +109,7 @@ Route::get('cart/responseserver', array('uses' => 'DigitalsiteSaaS\Carrito\Http\
 
 
 Route::post('cart/responseda/', [
+  'middleware' => 'web',
 'as' => 'cart/responsess',
 'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@response'
 ]);
@@ -188,6 +189,7 @@ Route::resource('gestion/productos/crearproducto', 'DigitalsiteSaaS\Carrito\Http
 Route::get('gestion/productos/editarproducto/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@editarproducto');
 Route::post('gestion/productos/actualizar/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@actualizar');
 Route::get('gestion/productos/eliminar/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@eliminar');
+Route::get('gestion/productos/imagenes/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@imagenes');
 
 
 

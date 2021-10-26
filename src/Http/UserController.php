@@ -146,12 +146,19 @@ Session::put('miSesionTextoaaaa',$urlprocessa);
 
 
 public function crear() {
-
-    $password = Input::get('password');
+    $password = Input::get('passworda');
     $remember = Input::get('_token');
     if(!$this->tenantName){
+    $valida = User::where('email','=',Input::get('emaila'))->count();
+    if($valida > 0){
+      return Redirect('/ingresar')->with('status', 'ok_registro');
+    }
     $user = new User;
     }else{
+    $valida = \App\Tenant\User::where('email','=',Input::get('emaila'))->count();
+     if($valida > 0){
+      return Redirect('/ingresar')->with('status', 'ok_registro');
+    }
     $user = new \App\Tenant\User;  
     }
     $user->name = Input::get('name');
@@ -164,7 +171,7 @@ public function crear() {
     $user->ciudad = Input::get('ciudad');
     $user->region = Input::get('municipio');
     $user->last_name = Input::get('last_name');
-    $user->email = Input::get('email');
+    $user->email = Input::get('emaila');
     $user->address = Input::get('address');
     $user->inmueble = Input::get('inmueble');
     $user->numero = Input::get('numero');

@@ -84,6 +84,9 @@ if($cart == null){}
     {
         if(!$this->tenantName){
         $plantilla = Template::all();
+        foreach ($plantilla as $plantillas) {
+        $templateweb = $plantillas->template;
+        }
         $menu = Page::whereNull('page_id')->orderBy('posta', 'asc')->get();
         $total = $this->total();
         $subtotal = $this->subtotal();
@@ -98,6 +101,9 @@ if($cart == null){}
         $products = Product::inRandomOrder()->take(4)->get();
         }else{
         $plantilla = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
+        foreach ($plantilla as $plantillas) {
+        $templateweb = $plantillas->template;
+        }
         $menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'asc')->get();
         $total = $this->total();
         $subtotal = $this->subtotal();
@@ -111,7 +117,7 @@ if($cart == null){}
         $products = \DigitalsiteSaaS\Pagina\Tenant\Product::inRandomOrder()->take(4)->get();
         $categoriessd = \DigitalsiteSaaS\Carrito\Tenant\Category::all();;  
         }
-    	return view('carrito::show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products'));
+    	return view('Templates.'.$templateweb.'.carrito.show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products'));
     }
 
 

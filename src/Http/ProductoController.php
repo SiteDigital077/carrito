@@ -47,6 +47,25 @@ class ProductoController extends Controller{
 	return view('carrito::productos.index', compact('productos'));
 	}
 
+
+    public function imagenes($id){
+    if(!$this->tenantName){
+        $paginas = \DigitalsiteSaaS\Pagina\Page::all();
+        $autores = Autor::all();
+        $categoria = Category::where('id', '=', $id )->get();
+    
+        $parametros = Parametro::all();
+        }else{
+        $paginas = \DigitalsiteSaaS\Pagina\Tenant\Page::all();
+        $autores = \DigitalsiteSaaS\Carrito\Tenant\Autor::all();
+        $categoria = \DigitalsiteSaaS\Carrito\Tenant\Category::where('id', '=', $id )->get();
+        
+        $parametros = \DigitalsiteSaaS\Carrito\Tenant\Parametro::all();
+        }
+    
+    return view('carrito::productos.imagenes')->with('paginas', $paginas)->with('autores', $autores)->with('parametros', $parametros)->with('categoria', $categoria);
+    }
+
 	public function editarproducto($id){
     if(!$this->tenantName){   
     $autores = Autor::all();
@@ -127,6 +146,11 @@ class ProductoController extends Controller{
     $categoria->precioivafin = $categoria->precio+$categoria->precioiniva;
     $categoria->precioinivafin = $categoria->preciodescfin+$categoria->precioiva;
     $categoria->image = Input::get('FilePath');
+    $categoria->imagea = Input::get('FilePatha');
+    $categoria->imageb = Input::get('FilePathb');
+    $categoria->imagec = Input::get('FilePathc');
+    $categoria->imaged = Input::get('FilePathd');
+    $categoria->imagee = Input::get('FilePathe');
     $categoria->visible = Input::get('nivel');
     $categoria->category_id = Input::get('peca');
     $categoria->position = Input::get('posicion');
@@ -168,6 +192,11 @@ class ProductoController extends Controller{
     $categoria->precioivafin = $categoria->precio+$categoria->precioiniva;
     $categoria->precioinivafin = $categoria->preciodescfin+$categoria->precioiva;
     $categoria->image = Input::get('FilePath');
+    $categoria->imagea = Input::get('FilePatha');
+    $categoria->imageb = Input::get('FilePathb');
+    $categoria->imagec = Input::get('FilePathc');
+    $categoria->imaged = Input::get('FilePathd');
+    $categoria->imagee = Input::get('FilePathe');
     $categoria->visible = Input::get('nivel');
     $categoria->position = Input::get('posicion');
     $categoria->stock = Input::get('stock');
