@@ -108,6 +108,8 @@ Route::get('cart/responsedaff', [
 Route::get('cart/responseserver', array('uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@responseserver', 'middleware' => 'web'));
 
 
+Route::post('cart/confirmacion', array('uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@confirmacion', 'middleware' => 'web'));
+
 Route::post('cart/responseda/', [
   'middleware' => 'web',
 'as' => 'cart/responsess',
@@ -115,6 +117,7 @@ Route::post('cart/responseda/', [
 ]);
 
 Route::get('cart/responseda/', [
+'middleware' => 'web',
 'as' => 'cart/responsess',
 'uses' => 'DigitalsiteSaaS\Carrito\Http\CartController@response'
 ]);

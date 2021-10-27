@@ -458,14 +458,14 @@ $menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'de
 
 if(!$this->tenantName){
 Order::where('identificador', $identificador)
-->update(['codigo' => $codigo,
+->update(['codigo' => $referencia,
           'estado' => $estado,
           'fecha' =>  $fecha,
           'codigo_apr' => $codigo_apr,
           'medio' => $medio]);        
           }else{
 \DigitalsiteSaaS\Carrito\Tenant\Order::where('identificador', $identificador)
-->update(['codigo' => $codigo,
+->update(['codigo' => $referencia,
           'estado' => $estado,
           'fecha' =>  $fecha,
           'codigo_apr' => $codigo_apr,
@@ -1509,27 +1509,20 @@ OrderItem::create([
 
 
 
+public function confirmacion(Request $request) {
+$referencia = Request::input('x_ref_payco');
+$respuesta = Request::input('x_respuesta');
 
-
-
-
-
-public function responseserver(Request $request) {
-$description =  '150';
-$medidad =  'Aceptadapor';
-$codigo =  '1111';
-
-
-  if($description ='150')
-    {
-   
-    DB::table('orders')
-            ->where('id', $description)
-            ->update(array('estado' => $medidad,'codigo' => $codigo));
-
-    }
+{
+ if(!$this->tenantName){
+ Order::where('codigo', $referencia)
+ ->update(['estado' => $respuesta]);        
+          }else{
+\DigitalsiteSaaS\Carrito\Tenant\Order::where('codigo', $referencia)
+->update(['estado' => 'Acep']);
+          }
 }
-
+}
 
 
 
