@@ -1519,7 +1519,7 @@ $respuesta = Request::input('x_respuesta');
  ->update(['estado' => $respuesta]);        
           }else{
 \DigitalsiteSaaS\Carrito\Tenant\Order::where('codigo', $referencia)
-->update(['estado' => 'Acep']);
+->update(['estado' => $respuesta]);
           }
 }
 }
