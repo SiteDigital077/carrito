@@ -55,6 +55,7 @@ public function show()
 {
 if(!$this->tenantName){
 $departamento = Departamento::all();
+$whatsapp = Whatsapp::all();
 $seo = Seo::where('id','=',1)->get(); 
 $plantilla = \DigitalsiteSaaS\Pagina\Template::all();
 $menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
@@ -82,8 +83,9 @@ $subtotal = $this->subtotal();
 $descuento = $this->descuento();
 $plantillaes = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
 $categoriapro = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
+$whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
 }
-return view('Templates.'.$templateweb.'.carrito.cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo', 'departamento'));
+return view('Templates.'.$templateweb.'.carrito.cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo', 'departamento','whatsapp'));
 }
 
 
