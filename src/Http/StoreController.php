@@ -19,6 +19,7 @@ use Hyn\Tenancy\Repositories\WebsiteRepository;
 use DigitalsiteSaaS\Pagina\Seo;
 use DigitalsiteSaaS\Carrito\Configuracion;
 use DigitalsiteSaaS\Pagina\Template;
+use DigitalsiteSaaS\Pagina\Whatsapp;
 
 
 
@@ -99,6 +100,7 @@ if($cart == null){}
         $categoriessd = Category::all();
         $seo = Seo::where('id','=',1)->get();
         $products = Product::inRandomOrder()->take(4)->get();
+        $whatsapp = Whatsapp::all();
         }else{
         $plantilla = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
         foreach ($plantilla as $plantillas) {
@@ -115,7 +117,8 @@ if($cart == null){}
         $product = \DigitalsiteSaaS\Carrito\Tenant\Product::where('slug', $slug)->first();
         $categoriapro = \DigitalsiteSaaS\Carrito\Tenant\Categoria::all();
         $products = \DigitalsiteSaaS\Pagina\Tenant\Product::inRandomOrder()->take(4)->get();
-        $categoriessd = \DigitalsiteSaaS\Carrito\Tenant\Category::all();;  
+        $categoriessd = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
+        $whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
         }
     	return view('Templates.'.$templateweb.'.carrito.show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products'));
     }

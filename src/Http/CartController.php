@@ -19,6 +19,7 @@ use DigitalsiteSaaS\Carrito\Cupon;
 use DigitalsiteSaaS\Carrito\Departamento;
 use DigitalsiteSaaS\Pagina\Template;
 use DigitalsiteSaaS\Pagina\Seo;
+use DigitalsiteSaaS\Pagina\Whatsapp;
 use App\User;
 use DB;
 use Input;
