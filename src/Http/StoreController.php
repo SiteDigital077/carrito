@@ -120,7 +120,7 @@ if($cart == null){}
         $categoriessd = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
         $whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
         }
-    	return view('Templates.'.$templateweb.'.carrito.show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products'));
+    	return view('Templates.'.$templateweb.'.carrito.show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products','whatsapp'));
     }
 
 
