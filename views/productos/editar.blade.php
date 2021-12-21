@@ -189,12 +189,53 @@
                                             </div>
                                         </div>
             
+                                        
+                                       <div class="form-group">
+                                         <label class="col-md-3 control-label" for="example-password-input">Imagen</label>
+                                          <div class="col-md-9">
+                                           <div class="input-group">
+                                            <input type="text" id="image_label" class="form-control" name="FilePath" placeholder="Seleccionar imagen" aria-label="Image" aria-describedby="button-image">
+                                            <span class="input-group-btn"><button class="btn btn-primary" type="button" id="button-image">Seleccionar imagen</button></span>
+                                           </div>
+                                          </div>
+                                        </div>
+
                                         <div class="form-group">
                                          <label class="col-md-3 control-label" for="example-password-input">Imagen</label>
                                           <div class="col-md-9">
                                            <div class="input-group">
-                                            <input type="text" id="image_label" class="form-control" name="FilePath" placeholder="Seleccionar imagen" value="{{$productos->image}}" aria-label="Image" aria-describedby="button-image">
-                                            <span class="input-group-btn"><button class="btn btn-primary" type="button" id="button-image">Seleccionar imagen</button></span>
+                                            <input type="text" id="image_labela" class="form-control" name="FilePatha" placeholder="Seleccionar imagen" aria-label="Image" aria-describedby="button-image">
+                                            <span class="input-group-btn"><button class="btn btn-primary" type="button" id="button-imagea">Seleccionar imagen</button></span>
+                                           </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                         <label class="col-md-3 control-label" for="example-password-input">Imagen</label>
+                                          <div class="col-md-9">
+                                           <div class="input-group">
+                                            <input type="text" id="image_labelb" class="form-control" name="FilePathb" placeholder="Seleccionar imagen" aria-label="Image" aria-describedby="button-image">
+                                            <span class="input-group-btn"><button class="btn btn-primary" type="button" id="button-imageb">Seleccionar imagen</button></span>
+                                           </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                         <label class="col-md-3 control-label" for="example-password-input">Imagen</label>
+                                          <div class="col-md-9">
+                                           <div class="input-group">
+                                            <input type="text" id="image_labelc" class="form-control" name="FilePathc" placeholder="Seleccionar imagen" aria-label="Image" aria-describedby="button-image">
+                                            <span class="input-group-btn"><button class="btn btn-primary" type="button" id="button-imagec">Seleccionar imagen</button></span>
+                                           </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                         <label class="col-md-3 control-label" for="example-password-input">Imagen</label>
+                                          <div class="col-md-9">
+                                           <div class="input-group">
+                                            <input type="text" id="image_labeld" class="form-control" name="FilePathd" placeholder="Seleccionar imagen" aria-label="Image" aria-describedby="button-image">
+                                            <span class="input-group-btn"><button class="btn btn-primary" type="button" id="button-imaged">Seleccionar imagen</button></span>
                                            </div>
                                           </div>
                                         </div>
@@ -267,18 +308,59 @@
 
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
+
     document.getElementById('button-image').addEventListener('click', (event) => {
       event.preventDefault();
-      window.open('/file-manager/fm-button', 'fm', 'width=900,height=500');
+
+      inputId = 'image_label';
+
+      window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
     });
+
+    document.getElementById('button-imagea').addEventListener('click', (event) => {
+      event.preventDefault();
+
+      inputId = 'image_labela';
+
+      window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
+    });
+
+    // second button
+    document.getElementById('button-imageb').addEventListener('click', (event) => {
+      event.preventDefault();
+
+      inputId = 'image_labelb';
+
+      window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
+    });
+
+    document.getElementById('button-imagec').addEventListener('click', (event) => {
+      event.preventDefault();
+
+      inputId = 'image_labelc';
+
+      window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
+    });
+
+    document.getElementById('button-imaged').addEventListener('click', (event) => {
+      event.preventDefault();
+
+      inputId = 'image_labeld';
+
+      window.open('/file-manager/fm-button', 'fm', 'width=1400,height=800');
+    });
+
   });
+
+  // input
+  let inputId = '';
+
   // set file link
   function fmSetLink($url) {
-    document.getElementById('image_label').value = $url;
+    document.getElementById(inputId).value = $url;
   }
 </script>
-
 
 <script src="https://cdn.ckeditor.com/4.11.2/full/ckeditor.js"></script>
 
