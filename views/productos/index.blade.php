@@ -96,7 +96,7 @@
                                     <tbody>
                                      @foreach($productos as $producto)
                                         <tr>
-                                            <td class="text-center" style="width:1%"><img src="/{{ $producto->image }}" class="img-responsive" alt="Image"></td>
+                                            <td class="text-center" style="width:1%"><img src="{{ $producto->image }}" class="img-responsive" alt="Image"></td>
                                             <td class="text-center">{{ $producto->name }}</td>
                                           
                                             <td>$ {{ number_format($producto->precio,0,",",".") }}</td>
