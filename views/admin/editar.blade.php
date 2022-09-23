@@ -58,20 +58,20 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-text-input">Título</label>
                                             <div class="col-md-9">
-                                               {{Form::text('nombre', $categories->name, array('class' => 'form-control','placeholder'=>'Ingrese titulo'))}}
+                                               {{Form::text('nombre', $categories->name, array('class' => 'form-control','placeholder'=>'Ingrese titulo','required' => 'required'))}}
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-email-input">Descripción</label>
                                             <div class="col-md-9">
-                                                {{Form::text('descripcion', $categories->description, array('class' => 'form-control','placeholder'=>'Ingrese descripción'))}}
+                                                {{Form::text('descripcion', $categories->description, array('class' => 'form-control','placeholder'=>'Ingrese descripción','required' => 'required'))}}
                                             </div>
                                         </div>
 
                                          <div class="form-group">
                                             <label class="col-md-3 control-label" for="example-password-input">Color</label>
                                             <div class="col-md-9">
-                                                {{Form::text('color', $categories->color, array('id' => 'hue-demo', 'class' => 'form-control demo','data-control'=>'hue'))}}
+                                                {{Form::text('color', $categories->color, array('id' => 'hue-demo', 'class' => 'form-control demo','data-control'=>'hue','required' => 'required'))}}
                                             </div>
                                         </div>
 
