@@ -478,7 +478,7 @@ public function show()
     }
 
 
-       return view('carrito::admin.detalle', compact('productos', 'usuarios', 'informacion', 'totales', 'informacionorder', 'datos'));
+       return view('carrito::admin.detalle', compact('productos', 'users', 'informacion', 'totales', 'informacionorder', 'datos'));
     }
 
     

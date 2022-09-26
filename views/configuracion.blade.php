@@ -84,7 +84,8 @@
                                             <div class="col-md-9">
                                               {{ Form::select('tienda', [$categories->tienda => $categories->tienda,
                                               'PlaceToPay' => 'PlaceToPay',
-                                              'Epayco' => 'Epayco',     
+                                              'Epayco' => 'Epayco',  
+                                              'Cotizador' => 'Cotizador',     
                                               ], null, array('class' => 'form-control')) }}
                                              </div>
                                         </div>

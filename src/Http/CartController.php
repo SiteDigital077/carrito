@@ -79,7 +79,7 @@ foreach ($plantilla as $plantillas) {
 }
 $menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
 $cart = session()->get('cart');
-$url = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id', '=', 'inicio')->get();
+$url = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id', '=', 1)->get();
 $iva = $this->iva();
 $total = $this->total();
 $subtotal = $this->subtotal();
@@ -299,7 +299,7 @@ $departamento = \DigitalsiteSaaS\Carrito\Tenant\Departamento::all();
 $seo = \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get();
 $price = \DigitalsiteSaaS\Carrito\Tenant\Order::max('id');
 $suma = $price + 1;
-$configuracion = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::find(1);
+$configuracion = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id','=',1)->get();
 $plantilla = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
 foreach ($plantilla as $plantillas) {
  $templateweb = $plantillas->template;
@@ -321,8 +321,11 @@ $nombremunicipio = $this->nombremunicipio();
 $descuento = $this->descuento();
 $orderold  = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=', Auth::user()->id)->get();
 $categories = \DigitalsiteSaaS\Carrito\Tenant\Pais::all();
+$meta = \DigitalsiteSaaS\Pagina\Tenant\Page::where('slug','=','1')->get();
 $ordenes = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=' ,Auth::user()->id)->where('estado', '=', 'PENDING')->get();
 }
+
+
 return view('Templates.'.$templateweb.'.carrito.order', compact('cart', 'total', 'subtotal', 'plantilla', 'menu','configuracion','price','suma', 'iva', 'descuento', 'costoenvio', 'categories', 'precioenvio', 'preciomunicipio', 'plantillaes', 'nombremunicipio', 'seo','departamento','meta'));
 
 }
