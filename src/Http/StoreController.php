@@ -114,7 +114,7 @@ if($cart == null){}
         $url = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id', '=', 1)->get();
         $autores = \DigitalsiteSaaS\Carrito\Tenant\Autor::all();
         $autoresweb = \DigitalsiteSaaS\Carrito\Tenant\Autor::all();
-        $product = \DigitalsiteSaaS\Carrito\Tenant\Product::where('slug', $slug)->first();
+        $product = \DigitalsiteSaaS\Carrito\Tenant\Product::where('slug', $slug)->get();
         $categoriapro = \DigitalsiteSaaS\Carrito\Tenant\Categoria::all();
         $products = \DigitalsiteSaaS\Pagina\Tenant\Product::inRandomOrder()->take(4)->get();
         $categoriessd = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
