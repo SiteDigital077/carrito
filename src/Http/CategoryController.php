@@ -461,14 +461,14 @@ public function show()
     $totales = Order::where('id', '=', $id)->get();
     $informacionorder = Order::where('id', '=', $id)->get();
     $datos = Order::where('id', '=', $id)->get();
-
+    $configuracion = Configuracion::where('id', '=', 1)->get(); 
     }else{
 
     $productos = \DigitalsiteSaaS\Carrito\Tenant\OrderItem::join('products','products.id','=','order_items.product_id')
     ->join('orders','orders.id','=','order_items.order_id')
     ->where('order_id', '=', $id)->get();
     $users = \DigitalsiteSaaS\Carrito\Tenant\Order::where('id',  $id)->get();      
-    
+    $configuracion = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id', '=', 1)->get(); 
     $informacion = \DigitalsiteSaaS\Carrito\Tenant\Order::leftJoin('municipios', 'municipios.id', '=', 'orders.ciudad')
     ->leftJoin('departamentos', 'departamentos.id', '=', 'orders.departamento')
     ->where('orders.id', '=', $id)->get();
@@ -478,7 +478,7 @@ public function show()
     }
 
 
-       return view('carrito::admin.detalle', compact('productos', 'users', 'informacion', 'totales', 'informacionorder', 'datos'));
+       return view('carrito::admin.detalle', compact('productos', 'users', 'informacion', 'totales', 'informacionorder', 'datos','configuracion'));
     }
 
     
