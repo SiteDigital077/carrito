@@ -136,7 +136,7 @@
      @foreach($productos as $productos)
       <tr>
        <td class="text-center"><strong>IDT.{{$productos->id}}</strong></td>
-       <td class="text-center"><strong><img src="{{$productos->image}}"></strong></td>
+       <td class="text-center" width="10%"><strong><img src="{{$productos->image}}" class="img-responsive"></strong></td>
        <td>{{$productos->name}} </td>
        <td class="text-center text-primary"><b>{{$productos->referencia}}</b></td>
        <td class="text-center"><strong>{{$productos->cantidad}}</strong></td>
