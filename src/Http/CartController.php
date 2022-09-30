@@ -59,7 +59,7 @@ $departamento = Departamento::all();
 $whatsapp = Whatsapp::all();
 $seo = Seo::where('id','=',1)->get(); 
 $plantilla = \DigitalsiteSaaS\Pagina\Template::all();
-$menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
+$menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'asc')->get();
 $cart = session()->get('cart');
 $url = Configuracion::where('id', '=', 1)->get();
 $iva = $this->iva();
@@ -77,7 +77,7 @@ $meta = \DigitalsiteSaaS\Pagina\Tenant\Page::where('slug','=','1')->get();
 foreach ($plantilla as $plantillas) {
  $templateweb = $plantillas->template;
 }
-$menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
+$menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'asc')->get();
 $cart = session()->get('cart');
 $url = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id', '=', 1)->get();
 $iva = $this->iva();
@@ -277,7 +277,7 @@ foreach ($plantilla as $plantillas) {
 }
 $plantillaes = \DigitalsiteSaaS\Pagina\Template::all();
 $meta = \DigitalsiteSaaS\Pagina\Tenant\Page::where('slug','=','1')->get();
-$menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
+$menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'asc')->get();
 $cart = session()->get('cart');
 $total = $this->total();
 $subtotal = $this->subtotal();
@@ -305,7 +305,7 @@ foreach ($plantilla as $plantillas) {
  $templateweb = $plantillas->template;
 }
 $plantillaes = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
-$menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
+$menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'asc')->get();
 $cart = session()->get('cart');
 $total = $this->total();
 $subtotal = $this->subtotal();
