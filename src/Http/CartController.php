@@ -1659,7 +1659,7 @@ public function filtrowe()
 {
 $cat_id = Input::get('cat_id');
 if(!$this->tenantName){
-       $subcategories = \DigitalsiteSaaS\Carrito\Category::where('categoriapro_id', '=', $cat_id)->get();
+       $subcategories = Category::where('categoriapro_id', '=', $cat_id)->get();
     }else{
     $subcategories = \DigitalsiteSaaS\Carrito\Tenant\Category::where('categoriapro_id', '=', $cat_id)->get();
     }
