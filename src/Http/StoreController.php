@@ -94,6 +94,7 @@ if($cart == null){}
         $cart = session()->get('cart');
         $url = Configuracion::where('id', '=', 1)->get();
         $autores = Autor::all();
+        $meta = Page::where('slug','=','1')->get();
         $autoresweb = Autor::all();
     	$product = Product::where('slug', $slug)->first();
         $categoriapro = Categoria::all();
@@ -118,9 +119,10 @@ if($cart == null){}
         $categoriapro = \DigitalsiteSaaS\Carrito\Tenant\Categoria::all();
         $products = \DigitalsiteSaaS\Pagina\Tenant\Product::inRandomOrder()->take(4)->get();
         $categoriessd = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
+        $meta = \DigitalsiteSaaS\Pagina\Tenant\Page::where('slug','=','1')->get();
         $whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
         }
-    	return view('Templates.'.$templateweb.'.carrito.show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products','whatsapp'));
+    	return view('Templates.'.$templateweb.'.carrito.show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products','whatsapp','meta'));
     }
 
 
