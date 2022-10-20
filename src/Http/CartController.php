@@ -34,6 +34,7 @@ use Redirect;
 use GuzzleHttp;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
+use Mail;
 
 class CartController extends Controller{
  
