@@ -514,6 +514,16 @@ Order::where('id', $id_factura)
 
  public function mensajes(){
 
+$info = array(
+  'name' => Input::get('identificador')
+        );
+        Mail::send('emails', $info, function ($message)
+        {
+            $message->to('darioma07@hotmail.com', 'Cotización Productos')
+            ->subject('Solicitud Cotización Productos');
+            $message->from('micotizador@tcp.mx', 'TCP');
+        });
+
  Session::put('identificador', Input::get('identificador'));
  $fecha = date("Y-m-d h:i:s A");
  $cart = Session::get('cart');
