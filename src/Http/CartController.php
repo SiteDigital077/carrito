@@ -320,10 +320,12 @@ $costoenvio = $this->costoenvio();
 $preciomunicipio = $this->preciomunicipio();
 $nombremunicipio = $this->nombremunicipio();
 $descuento = $this->descuento();
-$orderold  = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=', Auth::user()->id)->get();
+
+$orderold  = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=', '1')->get();
+$ordenes = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=' ,'1')->where('estado', '=', 'PENDING')->get();
 $categories = \DigitalsiteSaaS\Carrito\Tenant\Pais::all();
 $meta = \DigitalsiteSaaS\Pagina\Tenant\Page::where('slug','=','1')->get();
-$ordenes = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=' ,Auth::user()->id)->where('estado', '=', 'PENDING')->get();
+
 }
 
 
@@ -688,13 +690,6 @@ session()->forget('cart');
 session()->forget('codigo');
 session()->forget('porcentaje');
 
-$subject = "Asunto del correo";
-        $for = ['darioma07@hotmail.com', 'dario.martinez@unionsoluciones.com.co','dario.martinez@sitedigital.com.co'];
-        Mail::send('email',$request->all(), function($msj) use($subject,$for){
-            $msj->from("darioma07@gmail.com","Bienvenido a RedMarket");
-            $msj->subject($subject);
-            $msj->to($for);
-        });
 
   foreach($cart as $producto){
    $this->saveOrderItem($producto, $contenido->id);  
