@@ -677,10 +677,18 @@ session()->forget('cart');
 session()->forget('codigo');
 session()->forget('porcentaje');
 
+$subject = "Asunto del correo";
+        $for = ['darioma07@hotmail.com', 'dario.martinez@unionsoluciones.com.co','dario.martinez@sitedigital.com.co'];
+        Mail::send('email',$request->all(), function($msj) use($subject,$for){
+            $msj->from("darioma07@gmail.com","Bienvenido a RedMarket");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
 
   foreach($cart as $producto){
    $this->saveOrderItem($producto, $contenido->id);  
   }
+
 
   }
   
@@ -759,13 +767,7 @@ $order = \DigitalsiteSaaS\Carrito\Tenant\Order::create([
 ]);
 }
 
-$subject = "Asunto del correo";
-        $for = ['darioma07@hotmail.com', 'dario.martinez@unionsoluciones.com.co','dario.martinez@sitedigital.com.co'];
-        Mail::send('email',$request->all(), function($msj) use($subject,$for){
-            $msj->from("darioma07@gmail.com","Bienvenido a RedMarket");
-            $msj->subject($subject);
-            $msj->to($for);
-        });
+
 
 foreach($cart as $producto){
 $this->saveOrderItem($producto, $order->id);
