@@ -102,6 +102,7 @@ if($cart == null){}
         $seo = Seo::where('id','=',1)->get();
         $products = Product::inRandomOrder()->take(4)->get();
         $whatsapp = Whatsapp::all();
+        $menufoot = Page::orderBy('posta', 'asc')->get();
         }else{
         $plantilla = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
         foreach ($plantilla as $plantillas) {
@@ -121,8 +122,9 @@ if($cart == null){}
         $categoriessd = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
         $meta = \DigitalsiteSaaS\Pagina\Tenant\Page::where('slug','=','1')->get();
         $whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
+        $menufoot = \DigitalsiteSaaS\Pagina\Tenant\Page::orderBy('posta', 'asc')->get();
         }
-    	return view('Templates.'.$templateweb.'.carrito.show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products','whatsapp','meta'));
+    	return view('Templates.'.$templateweb.'.carrito.show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products','whatsapp','meta','menufoot'));
     }
 
 
