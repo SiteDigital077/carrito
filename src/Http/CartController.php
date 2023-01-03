@@ -20,6 +20,7 @@ use DigitalsiteSaaS\Carrito\Departamento;
 use DigitalsiteSaaS\Pagina\Template;
 use DigitalsiteSaaS\Pagina\Seo;
 use DigitalsiteSaaS\Pagina\Whatsapp;
+use DigitalsiteSaaS\Pagina\Page;
 use App\User;
 use DB;
 use Input;
@@ -70,6 +71,7 @@ $descuento = $this->descuento();
 $plantillaes = Template::all();
 $categoriapro = Category::all();
 $meta = Page::where('slug','=','inicio')->get();
+$menufoot = Page::orderBy('posta', 'asc')->get();
 }else{
 $departamento = \DigitalsiteSaaS\Carrito\Tenant\Departamento::all();
 $seo = \DigitalsiteSaaS\Pagina\Tenant\Seo::where('id','=',1)->get(); 
@@ -88,8 +90,9 @@ $descuento = $this->descuento();
 $plantillaes = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
 $categoriapro = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
 $whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
+$menufoot = \DigitalsiteSaaS\Pagina\Tenant\Page::orderBy('posta', 'asc')->get();
 }
-return view('Templates.'.$templateweb.'.carrito.cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo', 'departamento','whatsapp','meta'));
+return view('Templates.'.$templateweb.'.carrito.cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo', 'departamento','whatsapp','meta','menufoot'));
 }
 
 
