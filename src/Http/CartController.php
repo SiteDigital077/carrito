@@ -1656,8 +1656,10 @@ return view('Templates.'.$templateweb.'.carrito.registrar')->with('plantilla', $
   $ordenes = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=' ,Auth::user()->id )->get();
       $menu = \DigitalsiteSaaS\Pagina\Tenant\Page::whereNull('page_id')->orderBy('posta', 'desc')->get();
  $categories = \DigitalsiteSaaS\Carrito\Tenant\Pais::all();
+ $meta = \DigitalsiteSaaS\Pagina\Tenant\Page::where('slug','=','1')->get();
+$whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
 }
- return view('carrito::detalle')->with('plantilla', $plantilla)->with('menu', $menu)->with('cart', $cart)->with('total', $total)->with('subtotal', $subtotal)->with('categories', $categories)->with('terminos', $terminos)->with('ordenes', $ordenes);
+ return view('carrito::detalle')->with('plantilla', $plantilla)->with('menu', $menu)->with('cart', $cart)->with('total', $total)->with('subtotal', $subtotal)->with('categories', $categories)->with('terminos', $terminos)->with('ordenes', $ordenes)->with('meta', $meta)->with('whatsapp', $whatsapp);
 
     }
 
