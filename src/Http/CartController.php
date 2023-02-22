@@ -280,6 +280,7 @@ $plantilla = \DigitalsiteSaaS\Pagina\Template::all();
 foreach ($plantilla as $plantillas) {
  $templateweb = $plantillas->template;
 }
+$menufoot = Page::orderBy('posta', 'asc')->get();
 $plantillaes = \DigitalsiteSaaS\Pagina\Template::all();
 $meta = \DigitalsiteSaaS\Pagina\Tenant\Page::where('slug','=','1')->get();
 $menu = \DigitalsiteSaaS\Pagina\Page::whereNull('page_id')->orderBy('posta', 'asc')->get();
@@ -330,11 +331,12 @@ $ordenes = \DigitalsiteSaaS\Carrito\Tenant\Order::where('user_id', '=' ,'1')->wh
 $categories = \DigitalsiteSaaS\Carrito\Tenant\Pais::all();
 $meta = \DigitalsiteSaaS\Pagina\Tenant\Page::where('slug','=','1')->get();
 $whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
+$menufoot = \DigitalsiteSaaS\Pagina\Tenant\Page::orderBy('posta', 'asc')->get();
 
 }
 
 
-return view('Templates.'.$templateweb.'.carrito.order', compact('cart', 'total', 'subtotal', 'plantilla', 'menu','configuracion','price','suma', 'iva', 'descuento', 'costoenvio', 'categories', 'precioenvio', 'preciomunicipio', 'plantillaes', 'nombremunicipio', 'seo','departamento','meta','whatsapp'));
+return view('Templates.'.$templateweb.'.carrito.order', compact('cart', 'total', 'subtotal', 'plantilla', 'menu','configuracion','price','suma', 'iva', 'descuento', 'costoenvio', 'categories', 'precioenvio', 'preciomunicipio', 'plantillaes', 'nombremunicipio', 'seo','departamento','meta','whatsapp','menufoot'));
 
 }
 
