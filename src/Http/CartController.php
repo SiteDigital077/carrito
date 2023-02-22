@@ -1601,6 +1601,7 @@ $respuesta = Request::input('x_respuesta');
       if(!$this->tenantName){
       $seo = Seo::where('id','=',1)->get();
       $meta = Page::where('slug','=','1')->get();
+      $whatsapp = Whatsapp::all();
       $plantilla = \DigitalsiteSaaS\Pagina\Template::all();
       $plantillaes = \DigitalsiteSaaS\Pagina\Template::all();
     $terminos = \DigitalsiteSaaS\Pagina\Template::all();
@@ -1624,8 +1625,9 @@ $ciudades = \DigitalsiteSaaS\Carrito\Tenant\Departamento::all();
 $categories = \DigitalsiteSaaS\Carrito\Tenant\Pais::all();
 $colors = DB::table('colors')->get();
 $meta = \DigitalsiteSaaS\Pagina\Tenant\Page::where('slug','=','1')->get();
+$whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
 }
-return view('carrito::users.registrar')->with('plantilla', $plantilla)->with('plantillaes', $plantillaes)->with('menu', $menu)->with('cart', $cart)->with('total', $total)->with('subtotal', $subtotal)->with('categories', $categories)->with('terminos', $terminos)->with('colors', $colors)->with('seo', $seo)->with('ciudades', $ciudades)->with('meta', $meta);
+return view('carrito::users.registrar')->with('plantilla', $plantilla)->with('plantillaes', $plantillaes)->with('menu', $menu)->with('cart', $cart)->with('total', $total)->with('subtotal', $subtotal)->with('categories', $categories)->with('terminos', $terminos)->with('colors', $colors)->with('seo', $seo)->with('ciudades', $ciudades)->with('meta', $meta)->with('whatsapp', $whatsapp);
 
    
 
