@@ -117,6 +117,7 @@ if($cart == null){}
         $autores = \DigitalsiteSaaS\Carrito\Tenant\Autor::all();
         $autoresweb = \DigitalsiteSaaS\Carrito\Tenant\Autor::all();
         $product = \DigitalsiteSaaS\Carrito\Tenant\Product::where('slug', $slug)->get();
+        $tamanos = \DigitalsiteSaaS\Carrito\Tenant\Tamano::all();
         $categoriapro = \DigitalsiteSaaS\Carrito\Tenant\Categoria::all();
         $products = \DigitalsiteSaaS\Pagina\Tenant\Product::inRandomOrder()->take(4)->get();
         $categoriessd = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
@@ -124,7 +125,7 @@ if($cart == null){}
         $whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
         $menufoot = \DigitalsiteSaaS\Pagina\Tenant\Page::orderBy('posta', 'asc')->get();
         }
-    	return view('Templates.'.$templateweb.'.carrito.show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products','whatsapp','meta','menufoot'));
+    	return view('Templates.'.$templateweb.'.carrito.show', compact('product', 'plantilla', 'menu', 'total', 'subtotal', 'cart', 'url', 'autores', 'autoresweb', 'categoriapro','categoriessd','seo','products','whatsapp','meta','menufoot','tamanos'));
     }
 
 
