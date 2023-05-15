@@ -36,6 +36,7 @@ use GuzzleHttp;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
 use Mail;
+ use App\Mail\Cotizador;
 
 class CartController extends Controller{
  
@@ -522,17 +523,19 @@ Order::where('id', $id_factura)
      return Redirect ('/');
 }
 
- public function mensajes(){
+ public function mensajes(){ 
 
-$info = array(
-  'name' => Input::get('identificador')
-        );
-        Mail::send('emails', $info, function ($message)
-        {
-            $message->to('darioma07@hotmail.com', 'Cotización Productos')
-            ->subject('Solicitud Cotización Productos');
-            $message->from('micotizador@tcp.mx', 'TCP');
-        });
+$configmail = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id','=',1)->get();
+foreach($configmail as $configmail){
+    $configmails = $configmail->url_produccion;
+}
+
+$userma = session()->get('cart');
+    Mail::to($configmails)
+    ->bcc($configmails)
+    ->cc('darioma07@gmail.com')
+    ->send(new Cotizador($userma));
+
 
  Session::put('identificador', Input::get('identificador'));
  $fecha = date("Y-m-d h:i:s A");
