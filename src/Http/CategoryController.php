@@ -531,6 +531,10 @@ public function show()
     $categoria->monedaplace = Input::get('monedaplace');
     $categoria->url = Input::get('redireccion');
     $categoria->url_produccion = Input::get('url_produccion');
+    $categoria->cot_email = Input::get('cot_email');
+    $categoria->cot_sujeto = Input::get('cot_sujeto');
+    $categoria->cot_asunto = Input::get('cot_asunto');
+    $categoria->cot_mensaje = Input::get('cot_mensaje');
     $categoria->save();
     return redirect('gestion/carrito/configuracion')->with('status', 'ok_update');
     }

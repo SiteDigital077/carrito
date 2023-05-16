@@ -276,6 +276,74 @@
                           
 </div>
 
+@elseif($categories->tienda == 'Cotizador')
+
+<div class="container">
+  <div class="row">
+                            <div class="col-md-12">
+                                <!-- Basic Form Elements Block -->
+                                <div class="block">
+                                    <!-- Basic Form Elements Title -->
+                                    <div class="block-title">
+                                        <div class="block-options pull-right">
+                                            
+                                        </div>
+                                        <h2><strong>Configuración </strong>Cotizador</h2>
+                                    </div>
+                                    <!-- END Form Elements Title -->
+                                    
+                                    <!-- Basic Form Elements Content -->
+                                     {{ Form::open(array('method' => 'POST','class' => 'form-horizontal','id' => 'defaultForm', 'url' => array('gestion/carrito/crearconfiguracionplace'))) }}
+                                      {{Form::hidden('tienda', $categories->tienda, array('class' => 'form-control','placeholder'=>'Ingrese P_Key'))}}
+                                      {{Form::hidden('id_cliente', $categories->id_cliente, array('class' => 'form-control','placeholder'=>'Ingrese ID Cliente'))}}
+                                      {{Form::hidden('p_key', $categories->p_key, array('class' => 'form-control','placeholder'=>'Ingrese P_Key'))}}
+                                      {{Form::hidden('moneda', $categories->moneda, array('class' => 'form-control','placeholder'=>'Ingrese P_Key'))}}
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Email Notificación</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('cot_email', $categories->cot_email, array('class' => 'form-control','placeholder'=>'Ingrese Mail Notificación'))}}
+                                            </div>
+                                        </div>
+
+                                         <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Sujeto</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('cot_sujeto', $categories->cot_sujeto, array('class' => 'form-control','placeholder'=>'Ingrese Sujeto Mensaje '))}}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Asunto</label>
+                                            <div class="col-md-9">
+                                                {{Form::text('cot_asunto', $categories->cot_asunto, array('class' => 'form-control','placeholder'=>'Cuerpo Mensaje Mensaje '))}}
+                                            </div>
+                                        </div>
+
+                                       
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="example-text-input">Mensaje</label>
+                                            <div class="col-md-9">
+                                                {{Form::textarea('cot_mensaje', $categories->cot_mensaje, array('class' => 'form-control','placeholder'=>'Ingrese Mensaje'))}}
+                                            </div>
+                                        </div>
+
+                                         
+
+                                        <div class="form-group form-actions">
+                                            <div class="col-md-9 col-md-offset-3">
+                                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
+                                                <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Reset</button>
+                                            </div>
+                                        </div>
+                                    {{ Form::close() }}
+                                
+                                </div>
+                                <!-- END Basic Form Elements Block -->
+                            </div>
+                          </div>
+                          
+</div>
+
 @endif
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 

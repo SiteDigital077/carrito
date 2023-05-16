@@ -527,7 +527,7 @@ Order::where('id', $id_factura)
 
 $configmail = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id','=',1)->get();
 foreach($configmail as $configmail){
-    $configmails = $configmail->url_produccion;
+    $configmails = $configmail->cot_email;
 }
 
 $userma = session()->get('cart');
