@@ -63,7 +63,7 @@
  </div>
 
 <div class="container">
-    <a href="/gestion/productos/crear/{{Request::segment(4)}}" class="btn btn-primary pull-right">Crear Producto</a>
+    <a href="/gestion/productos/crear/{{Request::segment(4)}}" class="btn btn-primary pull-right">Crear Programación</a>
     <br>
     <br>
     <br>
@@ -81,38 +81,34 @@
                                 <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">Imagen</th>
-                                            <th class="text-center">Nombre</th>
+                                            <th class="text-center">ID</th>
+                                            <th class="text-center">Fecha</th>
                                            
-                                            <th>Precio</th>
+                                            <th>Cupos</th>
                                             
                                           
-                                            <th>Precio iva</th>
-                                            <th>Estado</th>
-                                            <th>Disponibilidad</th>
+                                            <th>Prodcuto</th>
+                                            <th>Creación</th>
+                                            <th>Actualziación</th>
                                             <th class="text-center">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                      @foreach($productos as $producto)
                                         <tr>
-                                            <td class="text-center" style="width:1%"><img src="{{ $producto->image }}" class="img-responsive" alt="Image"></td>
-                                            <td class="text-center">{{ $producto->name }}</td>
+                                            <td class="text-center" style="width:1%">{{ $producto->id }}</td>
+                                            <td class="text-center">{{ $producto->fecha }}</td>
                                           
-                                            <td>$ {{ number_format($producto->precio,0,",",".") }}</td>
+                                            <td class="text-center">{{ $producto->cupos }}</td>
                                             
                                   
-                                            <td>$ {{number_format($producto->precioinivafin,0,",",".") }}</td>
-                                            @if($producto->visible == 1)
-                                            <td><span class="label label-success">Activo</span></td>
-                                            @else
-                                            <td><span class="label label-danger">No activo</span></td>
-                                            @endif
-                                            @if($producto->position == 0)
-                                            <td><span class="label label-success">Disponible</span></td>
-                                            @else
-                                            <td><span class="label label-danger">No disponible</span></td>
-                                            @endif
+                                            <td class="text-center">{{ $producto->product_id }}</td>
+                                        
+                                            <td><span class="label label-success">{{ $producto->created_at }}</span></td>
+                                           
+                                          
+                                            <td><span class="label label-danger">{{ $producto->updated_at }}</span></td>
+                                        
                                             <td class="text-center">
                                              <a href="<?=URL::to('gestion/productos/imagenes/');?>/{{ $producto->id }}"><span id="tup" data-toggle="tooltip" data-placement="bottom" title="Crear Imagen" class="btn btn-success"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
                                              <a href="<?=URL::to('gestion/productos/editarproducto/');?>/{{ $producto->id }}"><span  id="tip" data-toggle="tooltip" data-placement="top" title="Editar Contenido" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>

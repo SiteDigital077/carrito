@@ -48,6 +48,16 @@ class ProductoController extends Controller{
 	}
 
 
+  public function programacion($id){
+  if(!$this->tenantName){   
+  $productos = Programacion::find($id)->Products;
+    }else{
+    $productos = \DigitalsiteSaaS\Carrito\Tenant\Programacion::all();
+    }
+  return view('carrito::productos.rutas', compact('productos'));
+  }
+
+
     public function imagenes($id){
     if(!$this->tenantName){
         $paginas = \DigitalsiteSaaS\Pagina\Page::all();

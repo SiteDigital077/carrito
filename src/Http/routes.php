@@ -187,6 +187,7 @@ Route::get('gestion/parametro/eliminar/{id}', 'DigitalsiteSaaS\Carrito\Http\Cate
 
 Route::resource('gestion/productos', 'DigitalsiteSaaS\Carrito\Http\ProductoController');
 Route::get('gestion/productos/digitales/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@digitales');
+Route::get('gestion/productos/programacion/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@programacion');
 Route::get('gestion/productos/crear/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@crear');
 Route::resource('gestion/productos/crearproducto', 'DigitalsiteSaaS\Carrito\Http\ProductoController@show');
 Route::get('gestion/productos/editarproducto/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@editarproducto');

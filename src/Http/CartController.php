@@ -15,6 +15,7 @@ use DigitalsiteSaaS\Carrito\OrderItem;
 use DigitalsiteSaaS\Carrito\Municipio;
 use DigitalsiteSaaS\Carrito\Category;
 use DigitalsiteSaaS\Carrito\Transaccion;
+use DigitalsiteSaaS\Carrito\Programacion;
 use DigitalsiteSaaS\Carrito\Cupon;
 use DigitalsiteSaaS\Carrito\Departamento;
 use DigitalsiteSaaS\Pagina\Template;
@@ -72,6 +73,7 @@ $descuento = $this->descuento();
 $plantillaes = Template::all();
 $categoriapro = Category::all();
 $meta = Page::where('slug','=','inicio')->get();
+$programacion = Programacion::all();
 $menufoot = Page::orderBy('posta', 'asc')->get();
 }else{
 $departamento = \DigitalsiteSaaS\Carrito\Tenant\Departamento::all();
@@ -91,9 +93,10 @@ $descuento = $this->descuento();
 $plantillaes = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
 $categoriapro = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
 $whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
-$menufoot = \DigitalsiteSaaS\Pagina\Tenant\Page::orderBy('posta', 'asc')->get();
+$menufoot = \DigitalsiteSaaS\Pagina\Tenant\Page::orderBy('posta', 'asc')->get();d
+$programacion = \DigitalsiteSaaS\Carrito\Tenant\Programacion::all();
 }
-return view('Templates.'.$templateweb.'.carrito.cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo', 'departamento','whatsapp','meta','menufoot'));
+return view('Templates.'.$templateweb.'.carrito.cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo', 'departamento','whatsapp','meta','menufoot','programacion'));
 }
 
 
@@ -525,16 +528,6 @@ Order::where('id', $id_factura)
 
  public function mensajes(){ 
 
-$configmail = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id','=',1)->get();
-foreach($configmail as $configmail){
-    $configmails = $configmail->cot_email;
-}
-
-$userma = session()->get('cart');
-    Mail::to($configmails)
-    ->bcc($configmails)
-    ->cc('darioma07@gmail.com')
-    ->send(new Cotizador($userma));
 
 
  Session::put('identificador', Input::get('identificador'));
@@ -643,7 +636,7 @@ session()->forget('email');
 session()->forget('direnvio');
 session()->forget('inmueble');
 session()->forget('informacion');
-session()->forget('identificador');
+
 session()->forget('terminos');
 session()->forget('cart');
 session()->forget('codigo');
@@ -694,11 +687,12 @@ session()->forget('email');
 session()->forget('direnvio');
 session()->forget('inmueble');
 session()->forget('informacion');
-session()->forget('identificador');
+
 session()->forget('terminos');
 session()->forget('cart');
 session()->forget('codigo');
 session()->forget('porcentaje');
+
 
 
   foreach($cart as $producto){
@@ -809,6 +803,20 @@ OrderItem::create([
 'order_id' => $order_id,
 'user_id' => '1'
 ]);
+
+$configmail = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id','=',1)->get();
+foreach($configmail as $configmail){
+    $configmails = $configmail->cot_email;
+}
+
+$userma = session()->get('cart');
+    Mail::to($configmails)
+    ->bcc($configmails)
+    ->cc('darioma07@gmail.com')
+    ->send(new Cotizador($userma));
+
+session()->forget('identificador');
+
 }
 
 }
