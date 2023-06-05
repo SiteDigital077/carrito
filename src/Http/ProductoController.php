@@ -57,6 +57,11 @@ class ProductoController extends Controller{
   return view('carrito::productos.rutas', compact('productos'));
   }
 
+    public function crearprogramacion($id){
+ 
+  return view('carrito::productos.crearprogramacion');
+  }
+
 
     public function imagenes($id){
     if(!$this->tenantName){
@@ -180,6 +185,18 @@ class ProductoController extends Controller{
        return Redirect('/gestion/productos/digitales/'.$categoria->category_id)->with('status', 'ok_create');
     }
 
+        public function showruta(){
+    if(!$this->tenantName){
+    $categoria = new Programacion;
+    }else{
+    $categoria = new \DigitalsiteSaaS\Carrito\Tenant\Programacion;   
+    }
+    $categoria->fecha = Input::get('fecha');
+    $categoria->cupos = Input::get('cupos');
+    $categoria->product_id = Input::get('peca');
+    $categoria->save();
+       return Redirect('/gestion/productos/programacion/'.$categoria->product_id)->with('status', 'ok_create');
+    }
  
     public function actualizar($id){
     $input = Input::all();

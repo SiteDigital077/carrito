@@ -190,10 +190,12 @@ Route::get('gestion/productos/digitales/{id}', 'DigitalsiteSaaS\Carrito\Http\Pro
 Route::get('gestion/productos/programacion/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@programacion');
 Route::get('gestion/productos/crear/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@crear');
 Route::resource('gestion/productos/crearproducto', 'DigitalsiteSaaS\Carrito\Http\ProductoController@show');
+Route::post('gestion/ruta/crearruta', 'DigitalsiteSaaS\Carrito\Http\ProductoController@showruta');
 Route::get('gestion/productos/editarproducto/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@editarproducto');
 Route::post('gestion/productos/actualizar/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@actualizar');
 Route::get('gestion/productos/eliminar/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@eliminar');
 Route::get('gestion/productos/imagenes/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@imagenes');
+Route::get('gestion/ruta/programacion/{id}', 'DigitalsiteSaaS\Carrito\Http\ProductoController@crearprogramacion');
 
 
 

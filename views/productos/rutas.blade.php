@@ -63,7 +63,7 @@
  </div>
 
 <div class="container">
-    <a href="/gestion/productos/crear/{{Request::segment(4)}}" class="btn btn-primary pull-right">Crear Programación</a>
+    <a href="/gestion/ruta/programacion/{{Request::segment(4)}}" class="btn btn-primary pull-right">Crear Programación</a>
     <br>
     <br>
     <br>
@@ -116,8 +116,7 @@
                                              function confirmar ( mensaje ) {
                                              return confirm( mensaje );}
                                              </script>
-                                             <a href="<?=URL::to('gestion/productos/eliminar/');?>/{{ $producto->id }}" onclick="return confirmar('¿Está seguro que desea eliminar el registro?')"><span id="tup" data-toggle="tooltip" data-placement="bottom" title="Editar Página" class="btn btn-danger"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
-                                             <a href="<?=URL::to('gestion/productos/programacion/');?>/{{ $producto->id }}"><span id="tup" data-toggle="tooltip" data-placement="bottom" title="Crear Imagen" class="btn btn-info"><i class="fas fa-clock"></i></span></a>
+                                             
                                             </td>
                                         </tr>
                                       @endforeach 
