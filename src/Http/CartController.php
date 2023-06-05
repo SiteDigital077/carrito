@@ -95,6 +95,12 @@ $categoriapro = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
 $whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
 $menufoot = \DigitalsiteSaaS\Pagina\Tenant\Page::orderBy('posta', 'asc')->get();
 $programacion = \DigitalsiteSaaS\Carrito\Tenant\Programacion::all();
+$validacion = \DigitalsiteSaaS\Carrito\Tenant\OrderItem::
+select('product_id','fecha')
+->selectRaw('count(product_id) as sum')
+->groupBy('product_id')
+->get();
+
 }
 return view('Templates.'.$templateweb.'.carrito.cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo', 'departamento','whatsapp','meta','menufoot','programacion'));
 }
@@ -801,7 +807,8 @@ OrderItem::create([
 'quantity' => $producto->quantity,
 'product_id' => $producto->id,
 'order_id' => $order_id,
-'user_id' => '1'
+'user_id' => '1',
+'fecha' => Request('dia')
 ]);
 
 $configmail = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id','=',1)->get();
