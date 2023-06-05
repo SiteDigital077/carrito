@@ -96,7 +96,7 @@ $whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
 $menufoot = \DigitalsiteSaaS\Pagina\Tenant\Page::orderBy('posta', 'asc')->get();
 $programacion = \DigitalsiteSaaS\Carrito\Tenant\Programacion::all();
 $validacion = \DigitalsiteSaaS\Carrito\Tenant\OrderItem::
-select('product_id','fecha')
+select('product_id','fechad')
 ->selectRaw('count(product_id) as sum')
 ->groupBy('product_id')
 ->get();
@@ -808,7 +808,7 @@ OrderItem::create([
 'product_id' => $producto->id,
 'order_id' => $order_id,
 'user_id' => '1',
-'fecha' => Request('dia')
+'fechad' => session()->get('dia')
 ]);
 
 $configmail = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id','=',1)->get();
@@ -823,6 +823,7 @@ $userma = session()->get('cart');
     ->send(new Cotizador($userma));
 
 session()->forget('identificador');
+session()->forget('dia');
 
 }
 
