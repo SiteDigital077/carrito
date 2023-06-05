@@ -93,7 +93,7 @@ $descuento = $this->descuento();
 $plantillaes = \DigitalsiteSaaS\Pagina\Tenant\Template::all();
 $categoriapro = \DigitalsiteSaaS\Carrito\Tenant\Category::all();
 $whatsapp = \DigitalsiteSaaS\Pagina\Tenant\Whatsapp::all();
-$menufoot = \DigitalsiteSaaS\Pagina\Tenant\Page::orderBy('posta', 'asc')->get();d
+$menufoot = \DigitalsiteSaaS\Pagina\Tenant\Page::orderBy('posta', 'asc')->get();
 $programacion = \DigitalsiteSaaS\Carrito\Tenant\Programacion::all();
 }
 return view('Templates.'.$templateweb.'.carrito.cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo', 'departamento','whatsapp','meta','menufoot','programacion'));
