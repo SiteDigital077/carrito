@@ -811,6 +811,11 @@ OrderItem::create([
 'fechad' => session()->get('dia')
 ]);
 
+\DigitalsiteSaaS\Carrito\Tenant\Pumadrive::create([
+'ruta' => $producto->category_id,
+'fecha' => session()->get('dia')
+]);
+
 $configmail = \DigitalsiteSaaS\Carrito\Tenant\Configuracion::where('id','=',1)->get();
 foreach($configmail as $configmail){
     $configmails = $configmail->cot_email;

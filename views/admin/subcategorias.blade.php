@@ -108,6 +108,7 @@ function confirmar ( mensaje ) {
 return confirm( mensaje );}
 </script>
     <a href="<?=URL::to('gestion/carrito/eliminarproducto/');?>/{{ $subcategorias->id }}" onclick="return confirmar('¿Está seguro que desea eliminar el registro?')"><span id="tup" data-toggle="tooltip" data-placement="bottom" title="Editar Página" class="btn btn-danger"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
+    <a href="<?=URL::to('gestion/productos/programacion/');?>/{{ $subcategorias->id }}"><span id="tup" data-toggle="tooltip" data-placement="bottom" title="Crear Imagen" class="btn btn-info"><i class="fas fa-clock"></i></span></a>
                                             </td>
                                         </tr>
                                       @endforeach 
