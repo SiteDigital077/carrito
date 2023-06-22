@@ -102,7 +102,7 @@ select('ruta','fecha')
 ->groupBy('ruta')
 ->get();
 
-$programacion = \DigitalsiteSaaS\Carrito\Tenant\Programacion::where('fecha', '>=', date('Y-m-d'))->get()
+$programacion = \DigitalsiteSaaS\Carrito\Tenant\Programacion::where('fecha', '>=', date('Y-m-d'))->get();
 
 foreach($cart as $item){
 }
