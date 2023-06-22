@@ -121,7 +121,7 @@
                                              return confirm( mensaje );}
                                              </script>
                                              <a href="<?=URL::to('gestion/productos/eliminar/');?>/{{ $producto->id }}" onclick="return confirmar('¿Está seguro que desea eliminar el registro?')"><span id="tup" data-toggle="tooltip" data-placement="bottom" title="Editar Página" class="btn btn-danger"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
-                                             <a href="<?=URL::to('gestion/productos/programacion/');?>/{{ $producto->id }}"><span id="tup" data-toggle="tooltip" data-placement="bottom" title="Crear Imagen" class="btn btn-info"><i class="fas fa-clock"></i></span></a>
+                                             <a href="<?=URL::to('gestion/productos/programacion/');?>/{{ $producto->id }}"><span id="tup" data-toggle="tooltip" data-placement="bottom" title="Programación Ruta" class="btn btn-info"><i class="fa fa-calendar-plus-o"></i></span></a>
                                             </td>
                                         </tr>
                                       @endforeach 
