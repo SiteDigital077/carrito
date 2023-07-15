@@ -105,10 +105,12 @@ select('ruta','fecha')
 $programacion = \DigitalsiteSaaS\Carrito\Tenant\Programacion::where('fecha', '>=', date('Y-m-d'))->get();
 
 foreach($cart as $item){
+
+    $data = \DigitalsiteSaaS\Carrito\Tenant\Pumadrive::where('fecha', '=', session()->get('dia'))->where('ruta','=',$item->category_id)->count();
+$programa = \DigitalsiteSaaS\Carrito\Tenant\Programacion::where('fecha', '=', session()->get('dia'))->where('product_id','=',$item->category_id)->get();
 }
 
-$data = \DigitalsiteSaaS\Carrito\Tenant\Pumadrive::where('fecha', '=', session()->get('dia'))->where('ruta','=',$item->category_id)->count();
-$programa = \DigitalsiteSaaS\Carrito\Tenant\Programacion::where('fecha', '=', session()->get('dia'))->where('product_id','=',$item->category_id)->get();
+
 
 }
 return view('Templates.'.$templateweb.'.carrito.cart', compact('cart', 'total', 'plantilla', 'menu', 'subtotal', 'iva', 'descuento', 'url', 'categoriapro', 'plantillaes', 'seo', 'departamento','whatsapp','meta','menufoot','programacion','programa','data'));
