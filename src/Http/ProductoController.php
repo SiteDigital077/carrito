@@ -52,7 +52,7 @@ class ProductoController extends Controller{
   if(!$this->tenantName){   
   $productos = Programacion::find($id)->Products;
     }else{
-    $productos = \DigitalsiteSaaS\Carrito\Tenant\Programacion::all();
+    $productos = \DigitalsiteSaaS\Carrito\Tenant\Programacion::where('producto_id','=',$id)->get();
     }
   return view('carrito::productos.rutas', compact('productos'));
   }
